@@ -1,4 +1,10 @@
 package commandline;
+/*
+This class defines the card, its attribues and values
+Arrays are used for Attributes and Values 
+Description is kept in string format
+*/
+
 
 public class Card {
     String description;
@@ -21,5 +27,12 @@ public class Card {
         return values;
     }
 
-
+    public String toString() {
+        String output = "";
+        output += "Description : " + description +"\n";
+        for (int i =0; i < attributes.length; i++) {
+            output += attributes[i] + " : " + values[i] + "\n";
+        }
+        return output;
+    }
 }
