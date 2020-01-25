@@ -25,6 +25,90 @@ public class TopTrumpsCLIApplication {
 			// Add your game logic here based on the requirements
 			// ----------------------------------------------------
 			
+			/*
+			 * Select between game and historical data
+			 */
+			
+			// boolean whether user wants to view data
+			boolean checkData = false;
+						
+			if(checkData) {
+				// Functionality for accessing database to be placed here
+			}
+			
+			/*
+			 *  Game logic 
+			 */
+			
+			
+			//MVC initialisation (draft)
+			
+//			TopTrumpsModel model = new TopTrumpsModel();
+//			CliController controller = new CliController(model);
+//			CliView view = new CliView(model, controller);
+//			controller.setView(view);
+			
+			/*
+			 * Game loop
+			 */
+			
+			// boolean to track whether game is finished
+			boolean gamePlay = true;
+			
+			while(gamePlay) {
+				
+				
+				// Draft logic added with temp variable/method names
+				// to be updated once relevant classes created
+				
+//				/*
+//				 * Print top card
+//				 */
+//				
+//				view.printTopCard();
+//				
+//				
+//				/*
+//				 * Attribute selection
+//				 */
+//				 
+//				// if human player is active
+//				if(model.getPlayer.isActivePlayer()) {
+//					controller.selectCategory();
+//				}
+//				// if AI player is active 	
+//				else {
+//					model.getActivePlayer().AIPlay();
+//				}
+//				
+//				/*
+//				 * Result
+//				 */
+//				if(model.getResult = draw) {
+//					view.displayDraw();
+//				}
+//				else {
+//					view.DisplayRoundWinner();
+//				}
+//				
+//				// Display any eliminated users
+//				if(model.userEliminated()) {
+//					view.displayElimination();
+//				}
+//				
+//				/*
+//				 * Check if game finished
+//				 */
+//				if(model.getPlayers.size() == 1) {
+//				view.displayWinner();	
+//				gamePlay = false;
+//				}
+				
+				// temp to avoid infinite loop
+				gamePlay = false;
+			}
+			
+			
 			userWantsToQuit=true; // use this when the user wants to exit the game
 			
 		}
