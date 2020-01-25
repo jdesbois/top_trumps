@@ -14,11 +14,36 @@ public class Deck {
     ArrayList<Card> deck = new ArrayList<Card>();
 
     public Deck() {
-    
+        //Creates deck by using the import deck function
+        try {
+            importDeck();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     //getters/setters
-    public ArrayList getDeck() {
+    public ArrayList<Card> getDeck() {
         return deck;
+    }
+    //Returns the card using the toString() method of the card object
+    public Card getCard(int i) {
+        return deck.get(i);
+    }
+    /*
+    This is the toString() method which iterates over the deck, adds each card to the String on a new line
+    Returns the completed String as a whole.
+    */
+    public String toString() {
+        String output = "";
+        for (int i = 0; i < deck.size(); i++) {
+            output += deck.get(i) + "\n";
+        }    
+        return output;    
+    }
+
+    //Method to shuffle deck 
+    public void shuffleDeck() {
+        Collections.shuffle(this.deck);
     }
 
     public void importDeck() throws Exception {
@@ -32,6 +57,7 @@ public class Deck {
         Scanner myScanner = new Scanner(fr);
         //Creates attributes array to be passed to Card Constructor
         String[] attributes = new String[5];
+
         /*
         These lines sctrip the first line from the file
         Split the first line into an array
@@ -45,7 +71,7 @@ public class Deck {
         
         /*
         Iterates over rest of file in scanner line by line
-        Takes a line and splits it content
+        Takes a line and splits its contents
         Iterates over line from position 1, to avoid taking in the string, and puts values into values array
         Then creates a card object for each line in file, passing Description name, attributes headers and values to constructor
         */
@@ -58,14 +84,6 @@ public class Deck {
             }
             deck.add(new Card(split[0], attributes, values));
         }
-        System.out.println(deck);
         myScanner.close();
-
-    }
-
-
-    //Method to shuffle deck 
-    public void shuffleDeck() {
-        Collections.shuffle(this.deck);
     }
 }
