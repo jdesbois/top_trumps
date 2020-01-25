@@ -27,6 +27,9 @@ public class Card {
     public int[] getValues() {
         return values;
     }
+    public int getValue(int i) {
+        return values[i];
+    }
     //This is the toString method, puts description then each header/value in a new line and returns the complete string
     public String toString() {
         String output = "";
