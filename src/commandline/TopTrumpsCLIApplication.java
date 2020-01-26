@@ -25,6 +25,25 @@ public class TopTrumpsCLIApplication {
 			// Add your game logic here based on the requirements
 			// ----------------------------------------------------
 			
+			//MVC initialisation (draft)
+			
+//			TopTrumpsModel model = new TopTrumpsModel();
+//			CliController controller = new CliController(model);
+//			CliView view = new CliView(model, controller);
+//			controller.setView(view);
+			
+			/*
+			 *  Temporary controller call for testing
+			 */
+			CLIController controller = new CLIController();
+			
+			// Method to select category as an integer from 1-5
+			controller.selectCategory();
+			
+			// Method to prompt user to start a new games or view stats
+			controller.selectStats();
+			
+			
 			/*
 			 * Select between game and historical data
 			 */
@@ -36,17 +55,6 @@ public class TopTrumpsCLIApplication {
 				// Functionality for accessing database to be placed here
 			}
 			
-			/*
-			 *  Game logic 
-			 */
-			
-			
-			//MVC initialisation (draft)
-			
-//			TopTrumpsModel model = new TopTrumpsModel();
-//			CliController controller = new CliController(model);
-//			CliView view = new CliView(model, controller);
-//			controller.setView(view);
 			
 			/*
 			 * Game loop
@@ -87,6 +95,7 @@ public class TopTrumpsCLIApplication {
 //				if(model.getResult = draw) {
 //					view.displayDraw();
 //				}
+				
 //				else {
 //					view.DisplayRoundWinner();
 //				}
