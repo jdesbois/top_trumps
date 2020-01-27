@@ -32,73 +32,66 @@ public class TopTrumpsCLIApplication {
 //			CliView view = new CliView(model, controller);
 //			controller.setView(view);
 			
-			/*
-			 *  Temporary view call for testing
-			 */
+			// temporary
 			CLIView view = new CLIView();
-			
-			// Method to select category as an integer from 1-5
-			view.selectCategory();
-			
-			// Method to prompt user to start a new games or view stats
-			view.selectStats();
-			
-			
+		
 			/*
 			 * Select between game and historical data
+			 */	
+			
+			int playChoice = 0;
+			
+			/*
+			 * Loop until new game selected (when value of 1 is returned from view)
 			 */
-			
-			// boolean whether user wants to view data
-			boolean checkData = false;
-						
-			if(checkData) {
-				// Functionality for accessing database to be placed here
+			while(playChoice != 1) {
+				playChoice = view.selectStats();
+				if(playChoice == 2) {
+					/*
+					 *  Insert logic to view stats
+					 */
+				}
 			}
-			
 			
 			/*
 			 * Game loop
 			 */
-			
+						
 			// boolean to track whether game is finished
 			boolean gamePlay = true;
 			
-			while(gamePlay) {
-				
-				
-				// Draft logic added with temp variable/method names
-				// to be updated once relevant classes created
-				
-//				/*
-//				 * Print top card
-//				 */
-//				
-//				view.printTopCard();
+			// game started
+			view.gameStarted();
+			
+			// loop for game rounds
+//			while(gamePlay) {
 //				
 //				
-//				/*
-//				 * Attribute selection
-//				 */
+//				// Draft logic added with temp variable/method names
+//				// to be updated once relevant classes created
+//				
+//				// Display round number
+//				view.roundNumber();
+//				
+//				// Print top card
+//				// Needs to be passed a card from model
+//				view.displayCard();
+//				
+//				
+//				//Attribute selection
 //				 
 //				// if human player is active
 //				if(model.getPlayer.isActivePlayer()) {
-//					controller.selectCategory();
+//					view.selectCategory();
 //				}
 //				// if AI player is active 	
 //				else {
 //					model.getActivePlayer().AIPlay();
 //				}
 //				
-//				/*
-//				 * Result
-//				 */
-//				if(model.getResult = draw) {
-//					view.displayDraw();
-//				}
-				
-//				else {
-//					view.DisplayRoundWinner();
-//				}
+//				// Result
+//				// Needs to be passed a card from model
+//				view.displayResult();
 //				
 //				// Display any eliminated users
 //				if(model.userEliminated()) {
@@ -109,13 +102,13 @@ public class TopTrumpsCLIApplication {
 //				 * Check if game finished
 //				 */
 //				if(model.getPlayers.size() == 1) {
-//				view.displayWinner();	
-//				gamePlay = false;
+//					view.displayWinner();	
+//					gamePlay = false;
 //				}
-				
-				// temp to avoid infinite loop
-				gamePlay = false;
-			}
+//				
+//				// temp to avoid infinite loop
+//				gamePlay = false;
+//			}
 			
 			
 			userWantsToQuit=true; // use this when the user wants to exit the game

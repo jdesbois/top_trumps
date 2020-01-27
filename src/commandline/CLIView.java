@@ -8,7 +8,7 @@ import java.util.Scanner;
  * <br><br>
  * 
  * Constructor:<br>
- * 	CLIController()<br><br>
+ * 	CLIViewr()<br><br>
  * 
  * Public methods:<br>
  * 	public void selectCategory()<br>
@@ -23,10 +23,68 @@ public class CLIView {
 	
 	/*
 	 *  Constructor
-	 *  To be updated to take model and view as parameters
+	 *  To be updated to take model and controller as parameters
 	 */
 	public CLIView(){
 		
+	}
+	
+	/**
+	 * Method to prompt the user to select between playing
+	 * a new game or viewing statistics from previous games
+	 * 
+	 * @return 2 if game selected, 1 if stats selected, 0 if input invalid
+	 */
+	public int selectStats() {
+		
+		// String to store answer
+		String choice = "";
+
+		System.out.println("Select 'G' to play, "
+				+ "or 'S' to view statistics from previous games:");
+		
+		// Take user input from scanner
+		choice = s.nextLine();
+		
+		// If new game is selected
+		if(choice.toUpperCase().equals("G")) {
+			System.out.println("Player selected 'G' to play a new game\n");
+			return 1;
+		}
+		
+		// If view statistics is selected
+		else if(choice.toUpperCase().equals("S")) {
+			System.out.println("Player selected 'S' to see statistics\n");
+			return 2;
+		}
+		
+		System.out.println();
+		return 0;
+
+	}
+	
+	/**
+	 * Method to indicate game has started
+	 */
+	public void gameStarted() {
+		System.out.println("New game started.\n");
+	}
+	
+	/**
+	 * Method to display current round number
+	 */
+	public void roundNumber() {
+		//to be updated with reference to model
+		int roundNumber = 1;
+		
+		System.out.println("Round number: " + roundNumber);
+	}
+	
+	/**
+	 * Method to display contents of a card
+	 */
+	public void displayCard(Card c) {
+		System.out.println(c);
 	}
 	
 	/**
@@ -53,7 +111,7 @@ public class CLIView {
 		 */
 		while(!intGiven || category < minVal || category > maxVal) {
 			
-			System.out.println("Select a category (1-5):");
+			System.out.println("\nSelect a category (1-5):");
 			
 			// If integer entered via scanner assign value to category
 			if(s.hasNextInt()) {
@@ -72,42 +130,42 @@ public class CLIView {
 		 * Method call to model to select appropriate category
 		 * to be added.
 		 */	
-		
-		
 	}
 	
 	/**
-	 * Method to prompt the user to select between playing 
-	 * a new game or viewing statistics from previous games
+	 * Method to display round result
 	 */
-	public void selectStats() {
+	public void displayResult(Card winner) {
+		int result = 1;
+		int commonCards = 5;
+		String winningPlayer = "AI-1";
 		
-		// String to store answer
-		String choice = "";
-		
-		// Boolean to indicate whether loop should continue
-		Boolean promptLoop = true;
-		
-		// Loop to continue until a game is started
-		while(promptLoop) {
-			
-			System.out.println("Select 'G' to play, "
-					+ "or 'S' to view statistics from previous games:");
-			
-			// Take user input from scanner
-			choice = s.nextLine();
-			
-			// If new game is selected
-			if(choice.toUpperCase().equals("G")) {
-				promptLoop = false;
-				System.out.println("Player selected 'G' to play a new game\n");
-			}
-			
-			// If view statistics is selected
-			else if(choice.toUpperCase().equals("S")) {
-				System.out.println("Player selected 'S' to see statistics\n");
-			}
+		// replace with boolean representing draw based on model
+		if(result == 0) {
+			System.out.println("Draw. The common pile now has " 
+								+ commonCards + " cards.");
 		}
-
+		else {
+			System.out.println(winningPlayer + " won this round.");
+			
+			// Update to include winning card with selected attribute highlighted
+			System.out.println("Winning card:\n" + winner);
+		}
+	}
+	
+	/**
+	 * Method to display any players who have been eliminated
+	 * Possible that multiple players eliminated in one round
+	 */
+	public void displayElimination() {
+		System.out.println("Placeholder to display eliminated player(s)");
+	}
+	
+	/**
+	 * Method to display overall game winner
+	 * Player parameter to be added
+	 */
+	public void displayWinner() {
+		System.out.println("Player X is the winner");
 	}
 }
