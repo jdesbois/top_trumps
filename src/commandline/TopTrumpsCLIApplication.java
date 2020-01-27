@@ -33,15 +33,15 @@ public class TopTrumpsCLIApplication {
 //			controller.setView(view);
 			
 			/*
-			 *  Temporary controller call for testing
+			 *  Temporary view call for testing
 			 */
-			CLIController controller = new CLIController();
+			CLIView view = new CLIView();
 			
 			// Method to select category as an integer from 1-5
-			controller.selectCategory();
+			view.selectCategory();
 			
 			// Method to prompt user to start a new games or view stats
-			controller.selectStats();
+			view.selectStats();
 			
 			
 			/*
