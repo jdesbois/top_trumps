@@ -4,8 +4,6 @@ This class defines the card, its attribues and values
 Arrays are used for Attributes and Values 
 Description is kept in string format
 */
-
-
 public class Card {
     String description;
     String[] attributes = new String[5];
@@ -20,18 +18,24 @@ public class Card {
     public String getDesc() {
         return description;
     }
+    public String getPair(int i) {
+        return attributes[i] + " : " + values[i];
+    }
     public String[] getAttri() {
         return attributes;
     }
     public int[] getValues() {
         return values;
     }
-
+    public int getValue(int i) {
+        return values[i];
+    }
+    //This is the toString method, puts description then each header/value in a new line and returns the complete string
     public String toString() {
         String output = "";
-        output += "Description : " + description +"\n";
+        output += "Description: " + description +"\n";
         for (int i =0; i < attributes.length; i++) {
-            output += attributes[i] + " : " + values[i] + "\n";
+            output += attributes[i] + ": " + values[i] + "\n";
         }
         return output;
     }
