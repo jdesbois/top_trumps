@@ -11,16 +11,8 @@ public class TestFileRead {
         Deck deck = new Deck();
 
         deck.shuffleDeck();
-        System.out.println(deck.getCard(5));
-        System.out.println("===============================");
-        deck.shuffleDeck();
+        deck.deal();
 
-        System.out.println(deck.getCard(5));
-        System.out.println("===============================");
-        deck.shuffleDeck();
-
-        System.out.println(deck.getCard(5));
-        System.out.println("===============================");
 
     }
 }
