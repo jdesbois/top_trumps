@@ -10,6 +10,9 @@ public class PlayerHand {
     public void add(Card c) {
         hand.add(c);
     }
+    public void addMultipleCards(ArrayList<Card> cards) {
+        //this method is still to be completed 
+    }
     public ArrayList<Card> getHand() {
         return this.hand;
     }
