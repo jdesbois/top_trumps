@@ -27,14 +27,9 @@ public class TopTrumpsCLIApplication {
 			
 			//MVC initialisation (draft)
 			
-//			TopTrumpsModel model = new TopTrumpsModel();
-//			CliController controller = new CliController(model);
-//			CliView view = new CliView(model, controller);
-//			controller.setView(view);
-			
-			// temporary
 			GameState model = new GameState();
-			CLIView view = new CLIView();
+			CLIView view = new CLIView(model);
+			CLIController controller = new CLIController(model, view);
 			
 		
 			/*
@@ -79,7 +74,7 @@ public class TopTrumpsCLIApplication {
 				// Needs to be passed a card from model
 				
 				if(model.getHumanPlayer() != null) {
-					view.displayCard(model.getHumanPlayer().getCard()));
+					view.displayCard(model.getHumanPlayer().getCard());
 				}
 				
 				//Attribute selection

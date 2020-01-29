@@ -1,5 +1,6 @@
 package commandline;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -17,6 +18,7 @@ import java.util.Scanner;
  */
 
 public class CLIView {
+	private GameState model;
 	
 	// Scanner object for reading user input
 	Scanner s = new Scanner(System.in);
@@ -25,8 +27,8 @@ public class CLIView {
 	 *  Constructor
 	 *  To be updated to take model and controller as parameters
 	 */
-	public CLIView(){
-		
+	public CLIView(GameState model){
+		this.model = model;
 	}
 	
 	/**
@@ -157,7 +159,7 @@ public class CLIView {
 	public void displayElimination() {
 		ArrayList<Player> usersEliminated = model.userEliminated();
 		for(int i = 0; i < usersEliminated.size(); i++) {
-			System.out.println(usersEliminated().get(i));
+			System.out.println(model.userEliminated().get(i));
 		}
 	}
 	
