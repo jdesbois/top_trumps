@@ -33,7 +33,9 @@ public class TopTrumpsCLIApplication {
 //			controller.setView(view);
 			
 			// temporary
+			GameState model = new GameState();
 			CLIView view = new CLIView();
+			
 		
 			/*
 			 * Select between game and historical data
@@ -64,51 +66,53 @@ public class TopTrumpsCLIApplication {
 			view.gameStarted();
 			
 			// loop for game rounds
-//			while(gamePlay) {
-//				
-//				
-//				// Draft logic added with temp variable/method names
-//				// to be updated once relevant classes created
-//				
-//				// Display round number
-//				view.roundNumber();
-//				
-//				// Print top card
-//				// Needs to be passed a card from model
-//				view.displayCard();
-//				
-//				
-//				//Attribute selection
-//				 
-//				// if human player is active
-//				if(model.getPlayer.isActivePlayer()) {
-//					view.selectCategory();
-//				}
-//				// if AI player is active 	
-//				else {
-//					model.getActivePlayer().AIPlay();
-//				}
-//				
-//				// Result
-//				// Needs to be passed a card from model
-//				view.displayResult();
-//				
-//				// Display any eliminated users
-//				if(model.userEliminated()) {
-//					view.displayElimination();
-//				}
-//				
-//				/*
-//				 * Check if game finished
-//				 */
-//				if(model.getPlayers.size() == 1) {
-//					view.displayWinner();	
-//					gamePlay = false;
-//				}
-//				
-//				// temp to avoid infinite loop
-//				gamePlay = false;
-//			}
+			while(gamePlay) {
+				
+				
+				// Draft logic added with temp variable/method names
+				// to be updated once relevant classes created
+				
+				// Display round number
+				view.roundNumber();
+				
+				// Print top card
+				// Needs to be passed a card from model
+				
+				if(model.getHumanPlayer() != null) {
+					view.displayCard(model.getHumanPlayer().getCard()));
+				}
+				
+				//Attribute selection
+				 
+				// if human player is active
+				if(model.getActivePlayer().equals(model.getHumanPlayer())) {
+					controller.humanRound();
+				}
+				// if AI player is active 	
+				else {
+					controller.AIRound();
+				}
+				
+				// Result
+				// Needs to be passed a card from model
+				view.displayResult(model.getWinner().getCard());
+				
+				// Display any eliminated users
+				if(!model.userEliminated().isEmpty()) {
+					view.displayElimination();
+				}
+				
+				/*
+				 * Check if game finished
+				 */
+				if(model.getPlayers.size() == 1) {
+					view.displayWinner();	
+					gamePlay = false;
+				}
+				 
+				// temp to avoid infinite loop
+				gamePlay = false;
+			}
 			
 			
 			userWantsToQuit=true; // use this when the user wants to exit the game

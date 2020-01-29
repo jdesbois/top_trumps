@@ -90,7 +90,7 @@ public class CLIView {
 	/**
 	 * Method to take user input (Integer from 1-5)
 	 */
-	public void selectCategory() {
+	public int selectCategory() {
 		
 		// Boolean to indicate whether integer in range 1-5 has been submitted
 		boolean intGiven = false;
@@ -126,10 +126,7 @@ public class CLIView {
 		
 		System.out.println("Stored number: " + category + "\n");
 		
-		/*
-		 * Method call to model to select appropriate category
-		 * to be added.
-		 */	
+		return category;
 	}
 	
 	/**
@@ -158,7 +155,10 @@ public class CLIView {
 	 * Possible that multiple players eliminated in one round
 	 */
 	public void displayElimination() {
-		System.out.println("Placeholder to display eliminated player(s)");
+		ArrayList<Player> usersEliminated = model.userEliminated();
+		for(int i = 0; i < usersEliminated.size(); i++) {
+			System.out.println(usersEliminated().get(i));
+		}
 	}
 	
 	/**
@@ -166,6 +166,6 @@ public class CLIView {
 	 * Player parameter to be added
 	 */
 	public void displayWinner() {
-		System.out.println("Player X is the winner");
+		System.out.println(model.getWinner());
 	}
 }
