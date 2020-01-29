@@ -11,7 +11,9 @@ public class PlayerHand {
         hand.add(c);
     }
     public void addMultipleCards(ArrayList<Card> cards) {
-        //this method is still to be completed 
+        for (Card card : cards) {
+            this.hand.add(card);
+        }
     }
     public ArrayList<Card> getHand() {
         return this.hand;
@@ -24,7 +26,7 @@ public class PlayerHand {
         for (Card c  : hand) {
             output += c + " ";
         }
-        output += "END OF HAND!!!!! ======";
+        output += "====================";
         return output;
     }
 

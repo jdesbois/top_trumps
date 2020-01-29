@@ -12,7 +12,5 @@ public class TestFileRead {
 
         deck.shuffleDeck();
         deck.deal();
-
-
     }
 }
