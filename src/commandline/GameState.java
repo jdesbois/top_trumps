@@ -1,6 +1,7 @@
 package commandline;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameState {
 
@@ -8,10 +9,14 @@ public class GameState {
 	private ArrayList<Player> players = new ArrayList<Player>();
 	// Current Player object responsible for choosing attribute
 	private Player activePlayer;
-	// The Player object assigned to the human player
+	// Stores which Player Object is controlled by the player
 	private Player humanPlayer;
 	// The current round number
 	private int roundNumber = 0;
+	// Stores Round winner
+	private Player winner;
+	// Stores the amount of round each player wins
+	private HashMap<Player, Integer> scores = new HashMap<Player, Integer>(); // Might change
 	// The attribute Chosen by activePlayer
 	private int chosenAttribute;
 	// Stores the communal pile in the result of a draw
@@ -24,9 +29,13 @@ public class GameState {
 	 */
 	public GameState() {
 		
+		gameDeck.shuffleDeck();
+		
+		ArrayList<PlayerHand> h = gameDeck.deal();
+		
 		for(int i = 0; i < 5; i++) {
 			
-			Player p = new Player("Player" + (i + 1));
+			Player p = new Player("Player" + (i + 1), h.get(i));
 			
 			players.add(p);
 			if(humanPlayer == null) {
@@ -38,24 +47,13 @@ public class GameState {
 		int rand = (int)(Math.floor(Math.random() * 5));
 		
 		activePlayer = players.get(rand);
-		
-		//dealCards(gameDeck);
-	}
-	
-	/**
-	 * Deals out the cards to all Players
-	 * @param Deck d
-	 */
-	private static void dealCards(Deck d) {
-		
-		
 	}
 	
 	/**
 	 * Calculates and returns the player with the highest attribute value
 	 * @return Player round winner
 	 */
-	public Player getWinningPlayer() {
+	public void getWinningPlayer() {
 		
 		int highestVal = 0;
 		Player winner = null;
@@ -72,7 +70,40 @@ public class GameState {
 			}
 		}
 		
-		return winner;
+		this.winner = winner;
+		
+		changeActivePlayer(winner);
+	}
+	
+	/**
+	 * Returns and ArrayList<Player> and deletes them from players
+	 * @return ArrayList<Player>
+	 */
+	public ArrayList<Player> userEliminated(){
+		
+		ArrayList<Player> eliminatedPlayer = new ArrayList<Player>();
+		
+		for(int i = 0; i < players.size(); i++) {
+			
+			Player p = players.get(i);
+			
+			if(p.handSize() == 0) {
+				
+				eliminatedPlayer.add(p);
+				players.remove(i);
+			}
+			
+			return eliminatedPlayer;
+		}
+	}
+	
+	/**
+	 * Updates Player scores
+	 * @param Player p
+	 */
+	private static void updateScores(Player p) {
+		
+		
 	}
 	
 	/**
@@ -89,7 +120,7 @@ public class GameState {
 	 * Updates the active Player object
 	 * @param Player p
 	 */
-	public void changeActivePlayer(Player p) {
+	private static void changeActivePlayer(Player p) {
 		
 		activePlayer = p;
 	}
@@ -117,7 +148,7 @@ public class GameState {
 		return chosenAttribute;
 	}
 	
-	/*
+	/**
 	 * Sets the chosenAttribute after one has been selected
 	 */
 	public void setCurrentAttribute(int n) {
@@ -138,6 +169,15 @@ public class GameState {
 	}
 	
 	/**
+	 * Returns the Player Object controlled by the human player
+	 * @return Player humanPlayer
+	 */
+	public Player getHumanPlayer() {
+		
+		return humanPlayer;
+	}
+	
+	/**
 	 * Returns the communalPile ArrayList
 	 * @return ArrayList<Card> communalPile
 	 */
@@ -153,5 +193,14 @@ public class GameState {
 	public int getRoundMumber() {
 		
 		return roundNumber;
+	}
+	
+	/**
+	 * Returns round winner
+	 * @return Player winner
+	 */
+	public Player getWinner() {
+		
+		return winner;
 	}
 }
