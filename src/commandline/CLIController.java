@@ -22,7 +22,7 @@ public class CLIController {
 	/**
 	 * Handles logic for human player round
 	 */
-	public void humanRound() {
+	public int humanRound() {
 		
 		// All Player Objects draw new Card
 		model.drawNewCard();
@@ -31,16 +31,16 @@ public class CLIController {
 		int choice = view.selectCategory();
 		
 		// Update model with chosen attribute
-		model.setCurrentAttribute(choice);
+		model.setCurrentAttribute(choice - 1);
 		
-		// Gets winning Player
-		model.getWinningPlayer();
+		// Returns round result
+		return model.getResult();
 	}
 	
 	/**
 	 * Handles logic for AI round
 	 */
-	public void AIRound() {
+	public int AIRound() {
 		
 		// All Player Objects draw new Card
 		model.drawNewCard();
@@ -49,9 +49,9 @@ public class CLIController {
 		int choice = model.getActivePlayer().getHighestAttribute();
 				
 		// Update model with chosen attribute
-		model.setCurrentAttribute(choice);
+		model.setCurrentAttribute(choice - 1);
 		
-		// Gets winning Player
-		model.getWinningPlayer();
+		// Returns round result
+		return model.getResult();
 	}
 }

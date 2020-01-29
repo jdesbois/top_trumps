@@ -50,17 +50,35 @@ public class GameState {
 	}
 	
 	/**
+	 * Returns an int representing the round result: 1 - win, 2 - draw
+	 */
+	public int getResult() {
+		
+		if(!getWinningPlayer()) {
+			
+			addCommunalPile();
+			return 2;
+		}
+		
+		return 1;
+	}
+	
+	/**
 	 * Calculates and returns the player with the highest attribute value
 	 * @return Player round winner
 	 */
-	public void getWinningPlayer() {
+	private static boolean getWinningPlayer() {
 		
 		int highestVal = 0;
-		Player winner = null;
 		
 		for(int i = 0; i < players.size(); i++) {
 			
 			int n = players.get(i).getCard().getValue(chosenAttribute);
+			
+			if(n == highestVal) {
+				
+				return false;
+			}
 			
 			highestVal = Math.max(highestVal, n);
 			
@@ -70,9 +88,17 @@ public class GameState {
 			}
 		}
 		
-		this.winner = winner;
-		
 		changeActivePlayer(winner);
+		
+		return true;
+	}
+	
+	/**
+	 * Adds communalPile to winner hand
+	 */
+	private static void dealCommunalPile() {
+		
+		winner.addCard(communalPile);
 	}
 	
 	/**
@@ -160,7 +186,7 @@ public class GameState {
 	 * Adds an ArrayList of Cards to the communalPile
 	 * @param ArrayList<Card> c 
 	 */
-	public void addCommunalPile() {
+	private static void addCommunalPile() {
 		
 		for(int i = 0; i < players.size(); i++) {
 			
@@ -190,7 +216,7 @@ public class GameState {
 	 * Returns the round number
 	 * @return int roundNumber
 	 */
-	public int getRoundMumber() {
+	public int getRoundNumber() {
 		
 		return roundNumber;
 	}
