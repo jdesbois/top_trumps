@@ -18,8 +18,8 @@ public class PlayerHand {
     public ArrayList<Card> getHand() {
         return this.hand;
     }
-    public Card getCard(int i) {
-        return this.hand.get(i);
+    public Card getTopCard() {
+        return this.hand.remove(0);
     }
     public String toString() {
         String output = "";
