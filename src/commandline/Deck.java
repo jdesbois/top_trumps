@@ -52,15 +52,17 @@ public class Deck {
     While the deck is not equal to 0, method iterates over player hands, taking 0th index item, removing it from deck and placing it into a player hand. 
     */
     public ArrayList<PlayerHand> deal() {
+        //Create 5 Player hand objects (will later be modified to accept int and create only those about of hands)
         PlayerHand hand1 = new PlayerHand();
         PlayerHand hand2 = new PlayerHand();
         PlayerHand hand3 = new PlayerHand();
         PlayerHand hand4 = new PlayerHand();
         PlayerHand hand5 = new PlayerHand();
-
+        //Adds the PlayerHand objects to the Hands ArrayList
         hands.add(hand1);hands.add(hand2);hands.add(hand3);hands.add(hand4);hands.add(hand5);
-
+        //Will perform until deck reaches 0
         while (deck.size() != 0) {
+            //iterates over the hands arraylist adding top card from deck to each hand, until deck is empty
             for (int i=0; i<hands.size(); i++) {
                 hands.get(i).add(deck.remove(0));
             }
