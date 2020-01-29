@@ -79,7 +79,7 @@ public class CLIView {
 		//to be updated with reference to model
 		int roundNumber = 1;
 		
-		System.out.println("Round number: " + roundNumber);
+		System.out.println("Round number: " + model.getRoundNumber());
 	}
 	
 	/**
@@ -134,21 +134,19 @@ public class CLIView {
 	/**
 	 * Method to display round result
 	 */
-	public void displayResult(Card winner) {
-		int result = 1;
-		int commonCards = 5;
-		String winningPlayer = "AI-1";
+	public void displayResult(int r) {
+		int result = r;
 		
 		// replace with boolean representing draw based on model
-		if(result == 0) {
+		if(result == 2) {
 			System.out.println("Draw. The common pile now has " 
-								+ commonCards + " cards.");
+								+ model.getCommunalPile().size() + " cards.");
 		}
 		else {
-			System.out.println(winningPlayer + " won this round.");
+			System.out.println(model.getWinner() + " won this round.");
 			
 			// Update to include winning card with selected attribute highlighted
-			System.out.println("Winning card:\n" + winner);
+			System.out.println("Winning card:\n" + model.getWinner().getCard());
 		}
 	}
 	
