@@ -78,19 +78,19 @@ public class TopTrumpsCLIApplication {
 				}
 				
 				//Attribute selection
-				 
+				int result;
 				// if human player is active
 				if(model.getActivePlayer().equals(model.getHumanPlayer())) {
-					controller.humanRound();
+					result = controller.humanRound();
 				}
 				// if AI player is active 	
 				else {
-					controller.AIRound();
+					result = controller.AIRound();
 				}
 				
 				// Result
 				// Needs to be passed a card from model
-				view.displayResult(model.getWinner().getCard());
+				view.displayResult(result);
 				
 				// Display any eliminated users
 				if(!model.userEliminated().isEmpty()) {
