@@ -30,6 +30,18 @@ public class Card {
     public int getValue(int i) {
         return values[i];
     }
+    public String printWin(int index) {
+        String output = "";
+        output += "Description: " + description +"\n";
+        for (int i =0; i < attributes.length; i++) {
+            if (index == i) {
+                output += attributes[i] + ": " + values[i] + " <------- \n";
+                continue;
+            }
+            output += attributes[i] + ": " + values[i] + "\n";
+        }
+        return output;
+    }
     //This is the toString method, puts description then each header/value in a new line and returns the complete string
     public String toString() {
         String output = "";
