@@ -12,6 +12,7 @@ Store them in an array list
 */
 public class Deck {
     ArrayList<Card> deck = new ArrayList<Card>();
+    ArrayList<PlayerHand> hands = new ArrayList<PlayerHand>();
 
     public Deck() {
         //Creates deck by using the import deck function
@@ -45,6 +46,27 @@ public class Deck {
     public void shuffleDeck() {
         Collections.shuffle(this.deck);
     }
+    /*
+    Method to take call card objects in deck and deal them to 5 players (can be modified for specific number of players later)
+    Instaniates 5 player hand objects, adds these playerhand objects to a Hands arraylist
+    While the deck is not equal to 0, method iterates over player hands, taking 0th index item, removing it from deck and placing it into a player hand. 
+    */
+    public ArrayList<PlayerHand> deal() {
+        PlayerHand hand1 = new PlayerHand();
+        PlayerHand hand2 = new PlayerHand();
+        PlayerHand hand3 = new PlayerHand();
+        PlayerHand hand4 = new PlayerHand();
+        PlayerHand hand5 = new PlayerHand();
+
+        hands.add(hand1);hands.add(hand2);hands.add(hand3);hands.add(hand4);hands.add(hand5);
+
+        while (deck.size() != 0) {
+            for (int i=0; i<hands.size(); i++) {
+                hands.get(i).add(deck.remove(0));
+            }
+        }
+        return hands;
+    }
 
     public void importDeck() throws Exception {
         //Creates file object
@@ -59,7 +81,7 @@ public class Deck {
         String[] attributes = new String[5];
 
         /*
-        These lines sctrip the first line from the file
+        These lines strip the first line from the file
         Split the first line into an array
         Iterates over the split array and puts the attribute headers into the attribues array
         */
