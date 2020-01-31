@@ -76,8 +76,6 @@ public class CLIView {
 	 * Method to display current round number
 	 */
 	public void roundNumber() {
-		//to be updated with reference to model
-		int roundNumber = 1;
 		
 		System.out.println("Round number: " + model.getRoundNumber());
 	}
@@ -140,10 +138,9 @@ public class CLIView {
 		// replace with boolean representing draw based on model
 		if(result == 2) {
 			System.out.println("Draw. The common pile now has " 
-								+ model.getCommunalPile().size() + " cards.");
+								+ model.getCommunalPileSize() + " cards.");
 		}
 		else {
-			System.out.println(model.getWinner() + " won this round.");
 			
 			// Update to include winning card with selected attribute highlighted
 			System.out.println("Winning card:\n" + model.getWinner().getCard());
@@ -157,7 +154,7 @@ public class CLIView {
 	public void displayElimination() {
 		ArrayList<Player> usersEliminated = model.userEliminated();
 		for(int i = 0; i < usersEliminated.size(); i++) {
-			System.out.println(model.userEliminated().get(i));
+			System.out.println(model.userEliminated().get(i).getName());
 		}
 	}
 	
@@ -166,6 +163,6 @@ public class CLIView {
 	 * Player parameter to be added
 	 */
 	public void displayWinner() {
-		System.out.println(model.getWinner());
+		System.out.println("The Winner is: " + model.getWinner().getName());
 	}
 }

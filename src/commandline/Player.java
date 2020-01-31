@@ -29,7 +29,7 @@ public class Player {
 		return currentCard;
 	}
 	
-	public int getHighestAtribute() 
+	public int getHighestAttribute() 
 	{ // fill tempArray with values from current card
 		int[] tempArray = new int[5];
 		tempArray= currentCard.getValues();
@@ -44,14 +44,15 @@ public class Player {
 			
 		}
 		// return index of highest value as "AI" move selection
-		}return index;
+		}return index +1;
 	}
 	
 	// method to add winnings to playerHand if needed
 	public void addCardAtBottom(ArrayList<Card> winPool)
 	{		
-		gameHand.getHand().addAll(winPool);
+		gameHand.addMultipleCards(winPool);
 	}
+	
 	// print contents of playerHand for testing purposes
 	public void printCards()
 	{
@@ -60,6 +61,14 @@ public class Player {
 			Card c = gameHand.getHand().get(i);
 			System.out.print(c.toString());
 		}
+	}
+	/**
+	 * Returns name
+	 * @return String
+	 */
+	public String getName() {
+		
+		return name;
 	}
 }
 

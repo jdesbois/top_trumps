@@ -1,7 +1,7 @@
 package commandline;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.HashMap;
 
 public class GameState {
 
@@ -12,11 +12,11 @@ public class GameState {
 	// Stores which Player Object is controlled by the player
 	private Player humanPlayer;
 	// The current round number
-	private int roundNumber = 0;
+	private int roundNumber = 1;
 	// Stores Round winner
 	private Player winner;
 	// Stores the amount of round each player wins
-	private HashMap<Player, Integer> scores = new HashMap<Player, Integer>(); // Might change
+	//private HashMap<Player, Integer> scores = new HashMap<Player, Integer>(); // Might change
 	// The attribute Chosen by activePlayer
 	private int chosenAttribute;
 	// Stores the communal pile in the result of a draw
@@ -35,7 +35,7 @@ public class GameState {
 		
 		for(int i = 0; i < 5; i++) {
 			
-			Player p = new Player("Player" + (i + 1), h.get(i));
+			Player p = new Player("Player" + (i + 1), h.remove(0));
 			
 			players.add(p);
 			if(humanPlayer == null) {
@@ -54,9 +54,10 @@ public class GameState {
 	 */
 	public int getResult() {
 		
+		addCommunalPile();
+		
 		if(!getWinningPlayer()) {
 			
-			addCommunalPile();
 			return 2;
 		}
 		
@@ -67,9 +68,10 @@ public class GameState {
 	 * Calculates and returns the player with the highest attribute value
 	 * @return Player round winner
 	 */
-	private static boolean getWinningPlayer() {
+	private boolean getWinningPlayer() {
 		
 		int highestVal = 0;
+		int index = 10;
 		
 		for(int i = 0; i < players.size(); i++) {
 			
@@ -79,26 +81,24 @@ public class GameState {
 				
 				return false;
 			}
-			
+
 			highestVal = Math.max(highestVal, n);
-			
-			if(n == highestVal) {
-				
-				winner = players.get(i);
-			}
+			index = i;
 		}
 		
+		winner = players.get(index);
 		changeActivePlayer(winner);
-		
+		dealCommunalPile();
 		return true;
 	}
 	
 	/**
 	 * Adds communalPile to winner hand
 	 */
-	private static void dealCommunalPile() {
+	private void dealCommunalPile() {
 		
-		winner.addCard(communalPile);
+		winner.addCardAtBottom(communalPile);
+		communalPile.clear();
 	}
 	
 	/**
@@ -111,26 +111,23 @@ public class GameState {
 		
 		for(int i = 0; i < players.size(); i++) {
 			
-			Player p = players.get(i);
-			
-			if(p.handSize() == 0) {
+			while(players.get(i).getHandSize() == 0) {
 				
-				eliminatedPlayer.add(p);
-				players.remove(i);
+				eliminatedPlayer.add(players.remove(i));
 			}
-			
-			return eliminatedPlayer;
 		}
+		
+		return eliminatedPlayer;
 	}
 	
 	/**
 	 * Updates Player scores
 	 * @param Player p
 	 */
-	private static void updateScores(Player p) {
-		
-		
-	}
+//	private void updateScores(Player p) {
+//		
+//		
+//	}
 	
 	/**
 	 * Returns a random Player to start the game
@@ -146,7 +143,7 @@ public class GameState {
 	 * Updates the active Player object
 	 * @param Player p
 	 */
-	private static void changeActivePlayer(Player p) {
+	private void changeActivePlayer(Player p) {
 		
 		activePlayer = p;
 	}
@@ -186,11 +183,13 @@ public class GameState {
 	 * Adds an ArrayList of Cards to the communalPile
 	 * @param ArrayList<Card> c 
 	 */
-	private static void addCommunalPile() {
+	private void addCommunalPile() {
 		
 		for(int i = 0; i < players.size(); i++) {
 			
-			communalPile.add(players.get(i).getCard());
+			Card c = players.get(i).getCard();
+			
+			communalPile.add(c);
 		}
 	}
 	
@@ -207,9 +206,9 @@ public class GameState {
 	 * Returns the communalPile ArrayList
 	 * @return ArrayList<Card> communalPile
 	 */
-	public ArrayList<Card> getCommunalPile(){
+	public int getCommunalPileSize(){
 		
-		return communalPile;
+		return communalPile.size();
 	}
 	
 	/**
@@ -228,5 +227,14 @@ public class GameState {
 	public Player getWinner() {
 		
 		return winner;
+	}
+	
+	/**
+	 * Returns players
+	 * @return ArrayList<Player> 
+	 */
+	public int getPlayersSize(){
+		
+		return players.size();
 	}
 }
