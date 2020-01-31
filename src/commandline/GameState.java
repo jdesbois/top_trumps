@@ -82,8 +82,12 @@ public class GameState {
 				return false;
 			}
 
+			if(n > highestVal) {
+				
+				index = i;
+			}
+			
 			highestVal = Math.max(highestVal, n);
-			index = i;
 		}
 		
 		winner = players.get(index);
@@ -101,7 +105,7 @@ public class GameState {
 		communalPile.clear();
 	}
 	
-	/**
+	/**it 
 	 * Returns and ArrayList<Player> and deletes them from players
 	 * @return ArrayList<Player>
 	 */
@@ -111,7 +115,8 @@ public class GameState {
 		
 		for(int i = 0; i < players.size(); i++) {
 			
-			while(players.get(i).getHandSize() == 0) {
+			while(i < players.size() && 
+					players.get(i).getHandSize() == 0) {
 				
 				eliminatedPlayer.add(players.remove(i));
 			}

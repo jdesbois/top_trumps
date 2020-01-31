@@ -159,10 +159,16 @@ public class CLIView {
 	}
 	
 	/**
+	 * Method to display round winner
+	 */
+	public void displayDraw() {
+		System.out.println("The Winner is: " + model.getWinner().getName());
+	}
+	
+	/**
 	 * Method to display overall game winner
-	 * Player parameter to be added
 	 */
 	public void displayWinner() {
-		System.out.println("The Winner is: " + model.getWinner().getName());
+		System.out.println(model.getWinner().getName() + " has won the game!");
 	}
 }
