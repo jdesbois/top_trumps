@@ -70,22 +70,23 @@ public class TopTrumpsCLIApplication {
 				// Display round number
 				view.roundNumber();
 				
-				// Print top card
-				// Needs to be passed a card from model
-				
-				if(model.getHumanPlayer() != null) {
-					view.displayCard(model.getHumanPlayer().getCard());
-				}
-				
 				//Attribute selection
 				int result;
 				// if human player is active
-				if(model.getActivePlayer().equals(model.getHumanPlayer())) {
+				if(model.getActivePlayer().getName().equals(
+						model.getHumanPlayer().getName())) {
 					result = controller.humanRound();
 				}
 				// if AI player is active 	
 				else {
 					result = controller.AIRound();
+				}
+				
+				// Print top card
+				// Needs to be passed a card from model
+				
+				if(model.getHumanPlayer() != null) {
+					view.displayCard(model.getHumanPlayer().getCard());
 				}
 				
 				// Result
@@ -100,13 +101,10 @@ public class TopTrumpsCLIApplication {
 				/*
 				 * Check if game finished
 				 */
-				if(model.getPlayers.size() == 1) {
+				if(model.getPlayersSize() == 1) {
 					view.displayWinner();	
 					gamePlay = false;
 				}
-				 
-				// temp to avoid infinite loop
-				gamePlay = false;
 			}
 			
 			
