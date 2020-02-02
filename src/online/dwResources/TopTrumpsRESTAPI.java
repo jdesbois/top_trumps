@@ -16,6 +16,8 @@ import online.configuration.TopTrumpsJSONConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import commandline.Deck;
+
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
 @Consumes(MediaType.APPLICATION_JSON) // This resource can take JSON content as input
@@ -84,4 +86,20 @@ public class TopTrumpsRESTAPI {
 		return "Hello "+Word;
 	}
 	
+	@GET
+	@Path("/getDeck")
+	/**
+	 * Here is an example of how to read parameters provided in an HTML Get request.
+	 * @param Word - A word
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public String getDeck() throws IOException {
+		Deck deck = new Deck();
+
+		String convertedDeck = oWriter.writeValueAsString(deck);
+
+		return convertedDeck;
+	}
+
 }

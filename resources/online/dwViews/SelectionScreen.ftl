@@ -25,6 +25,7 @@
     	<div class="container">
 
 			<!-- Add your HTML Here -->
+			<ul class="list"> </ul>
 		
 		</div>
 		
@@ -38,8 +39,7 @@
 				// --------------------------------------------------------------------------
 				
 				// For example, lets call our sample methods
-				helloJSONList();
-				helloWord("Student");
+				getDeck();
 				
 			}
 			
@@ -115,6 +115,39 @@
 				xhr.onload = function(e) {
  					var responseText = xhr.response; // the text of the response
 					alert(responseText); // lets produce an alert
+				};
+				
+				// We have done everything we need to prepare the CORS request, so send it
+				xhr.send();		
+			}
+
+			function getDeck() {
+			
+				// First create a CORS request, this is the message we are going to send (a get request in this case)
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getDeck"); // Request type and URL+parameters
+				
+				// Message is not sent yet, but we can check that the browser supports CORS
+				if (!xhr) {
+  					alert("CORS not supported");
+				}
+
+				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
+				// to do when the response arrives 
+				xhr.onload = function(e) {
+ 					var responseText = xhr.response; // the text of the response
+					var jsonConvert = JSON.parse(responseText);
+					console.log(jsonConvert['deck'][0]);
+
+					for (var i=0; i<40; i++) {
+						var stringAppend = "Card: ";
+						stringAppend +="Description: " + jsonConvert['deck'][i]['desc'] + " ";
+						for(var j=0; j < 5; j++) {
+							stringAppend += jsonConvert['deck'][i]['attri'][j] + " : " + jsonConvert['deck'][i]['values'][j] + " "; 
+						}
+						$(".list").append("<li>" + stringAppend +" </li>");
+					}
+					
+
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
