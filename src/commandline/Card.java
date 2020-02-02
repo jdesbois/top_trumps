@@ -42,7 +42,7 @@ public class Card {
         }
         return output;
     }
-    //This is the toString method, puts description then each header/value in a new line and returns the complete string
+    //This is the toString method, puts description then each header/value in a new line and returns the complete string. Also adds number for user to select correct attribute.
     public String toString() {
         String output = "";
         output += "\tDescription: " + description +"\n";
