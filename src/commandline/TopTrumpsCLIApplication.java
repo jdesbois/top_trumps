@@ -58,20 +58,22 @@ public class TopTrumpsCLIApplication {
 			boolean gamePlay = true;
 			
 			// game started
+			view.breakLine();
 			view.gameStarted();
+			view.breakLine();
 			
 			// loop for game rounds
 			while(gamePlay) {
 				
-				
-				// Draft logic added with temp variable/method names
-				// to be updated once relevant classes created
-				
 				// Display round number
 				view.roundNumber();
 				
-				//Attribute selection
+				//Displayer remaining number of cards in hand
+				view.displayHumanHandSize();
+				
+				// Attribute selection
 				int result;
+				
 				// if human player is active
 				if(model.getActivePlayer().getName().equals(
 						model.getHumanPlayer().getName())) {
@@ -82,25 +84,19 @@ public class TopTrumpsCLIApplication {
 					result = controller.AIRound();
 				}
 				
-				// Print top card
-				// Needs to be passed a card from model
-				
-				if(model.getHumanPlayer() != null) {
-					view.displayCard(model.getHumanPlayer().getCard());
-				}
-				
 				// Result
-				// Needs to be passed a card from model
+				
+				// Display winner name and winner card
 				view.displayResult(result);
 				
 				// Display any eliminated users
-				if(!model.userEliminated().isEmpty()) {
-					view.displayElimination();
-				}
+				view.displayElimination();
 				
-				/*
-				 * Check if game finished
-				 */
+				// Break line between rounds
+				view.breakLine();
+				
+				// Check if game finished
+
 				if(model.getPlayersSize() == 1) {
 					view.displayWinner();	
 					gamePlay = false;

@@ -27,6 +27,9 @@ public class CLIController {
 		// All Player Objects draw new Card
 		model.drawNewCard();
 		
+		// Display player's drawn card
+		view.displayHumanPlayerCard();
+		
 		// Requests and stores user input
 		int choice = view.selectCategory();
 		
@@ -44,9 +47,16 @@ public class CLIController {
 		
 		// All Player Objects draw new Card
 		model.drawNewCard();
+		
+		// Display player's drawn card
+		view.displayHumanPlayerCard();
 				
 		// Requests and stores user input
 		int choice = model.getActivePlayer().getHighestAttribute();
+		
+		// Print out choice
+		System.out.println("Selected category: " + choice + "\n");
+		
 				
 		// Update model with chosen attribute
 		model.setCurrentAttribute(choice - 1);
