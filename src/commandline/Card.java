@@ -35,19 +35,19 @@ public class Card {
         output += "\tDescription: " + description +"\n";
         for (int i =0; i < attributes.length; i++) {
             if (index == i) {
-                output += "\t" + i". " + attributes[i] + ": " + values[i] + " <------- \n";
+                output += "\t" + (i+1) + ". " + attributes[i] + ": " + values[i] + " <------- \n";
                 continue;
             }
-            output += "\t" + i". " + attributes[i] + ": " + values[i] + "\n";
+            output += "\t" + (i+1) + ". " + attributes[i] + ": " + values[i] + "\n";
         }
         return output;
     }
-    //This is the toString method, puts description then each header/value in a new line and returns the complete string
+    //This is the toString method, puts description then each header/value in a new line and returns the complete string. Also adds number for user to select correct attribute.
     public String toString() {
         String output = "";
         output += "\tDescription: " + description +"\n";
         for (int i =0; i < attributes.length; i++) {
-            output += "\t" + i". " + attributes[i] + ": " + values[i] + "\n";
+            output += "\t" + (i+1) + ". " + attributes[i] + ": " + values[i] + "\n";
         }
         return output;
     }
