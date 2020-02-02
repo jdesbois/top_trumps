@@ -32,22 +32,22 @@ public class Card {
     }
     public String printWin(int index) {
         String output = "";
-        output += "Description: " + description +"\n";
+        output += "\tDescription: " + description +"\n";
         for (int i =0; i < attributes.length; i++) {
             if (index == i) {
-                output += attributes[i] + ": " + values[i] + " <------- \n";
+                output += "\t" + i". " + attributes[i] + ": " + values[i] + " <------- \n";
                 continue;
             }
-            output += attributes[i] + ": " + values[i] + "\n";
+            output += "\t" + i". " + attributes[i] + ": " + values[i] + "\n";
         }
         return output;
     }
     //This is the toString method, puts description then each header/value in a new line and returns the complete string
     public String toString() {
         String output = "";
-        output += "Description: " + description +"\n";
+        output += "\tDescription: " + description +"\n";
         for (int i =0; i < attributes.length; i++) {
-            output += attributes[i] + ": " + values[i] + "\n";
+            output += "\t" + i". " + attributes[i] + ": " + values[i] + "\n";
         }
         return output;
     }
