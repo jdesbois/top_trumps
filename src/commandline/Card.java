@@ -35,10 +35,10 @@ public class Card {
         output += "\tDescription: " + description +"\n";
         for (int i =0; i < attributes.length; i++) {
             if (index == i) {
-                output += "\t" + attributes[i] + ": " + values[i] + " <------- \n";
+                output += "\t" + i". " + attributes[i] + ": " + values[i] + " <------- \n";
                 continue;
             }
-            output += attributes[i] + ": " + values[i] + "\n";
+            output += "\t" + i". " + attributes[i] + ": " + values[i] + "\n";
         }
         return output;
     }
@@ -47,7 +47,7 @@ public class Card {
         String output = "";
         output += "\tDescription: " + description +"\n";
         for (int i =0; i < attributes.length; i++) {
-            output += "\t" + attributes[i] + ": " + values[i] + "\n";
+            output += "\t" + i". " + attributes[i] + ": " + values[i] + "\n";
         }
         return output;
     }
