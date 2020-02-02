@@ -60,6 +60,7 @@ public class CLIView {
 			return 2;
 		}
 		
+		// If no valid choice input, return 0
 		System.out.println();
 		return 0;
 
@@ -69,7 +70,7 @@ public class CLIView {
 	 * Method to indicate game has started
 	 */
 	public void gameStarted() {
-		System.out.println("New game started.\n");
+		System.out.println("New game started. You are Player 1\n");
 	}
 	
 	/**
@@ -77,7 +78,7 @@ public class CLIView {
 	 */
 	public void roundNumber() {
 		
-		System.out.println("Round number: " + model.getRoundNumber());
+		System.out.println("Round number: " + model.getRoundNumber() + "\n");
 	}
 	
 	/**
@@ -86,6 +87,31 @@ public class CLIView {
 	public void displayCard(Card c) {
 		System.out.println(c);
 	}
+	
+	/**
+	 * Method to display user's current card
+	 */
+	public void displayHumanPlayerCard() {
+		
+		// Check human players still in game
+		if(model.getHumanPlayer().getHandSize() > 0) {
+			System.out.println("Your card:\n");
+			this.displayCard(this.model.getHumanPlayer().getCard());
+		}
+	}
+	
+	/**
+	 * Method to display number of cards in user's hand
+	 */
+	public void displayHumanHandSize() {
+		// Check human players still in game
+		if(model.getHumanPlayer().getHandSize() > 0) {
+			System.out.println(this.model.getHumanPlayer().getHandSize() + 
+								" cards left in hand\n");
+		}
+		
+	}
+	
 	
 	/**
 	 * Method to take user input (Integer from 1-5)
@@ -111,7 +137,7 @@ public class CLIView {
 		 */
 		while(!intGiven || category < minVal || category > maxVal) {
 			
-			System.out.println("\nSelect a category (1-5):");
+			System.out.println("Select a category (1-5):");
 			
 			// If integer entered via scanner assign value to category
 			if(s.hasNextInt()) {
@@ -124,7 +150,7 @@ public class CLIView {
 			}
 		}
 		
-		System.out.println("Stored number: " + category + "\n");
+		System.out.println("Selected category: " + category + "\n");
 		
 		return category;
 	}
@@ -135,14 +161,16 @@ public class CLIView {
 	public void displayResult(int r) {
 		int result = r;
 		
-		// replace with boolean representing draw based on model
+		// Result of 2 indicates draw
 		if(result == 2) {
 			System.out.println("Draw. The common pile now has " 
-								+ model.getCommunalPileSize() + " cards.");
+								+ model.getCommunalPileSize() + " cards.\n");
 		}
+		// Else displayer winner info
 		else {
 			
 			// Update to include winning card with selected attribute highlighted
+			System.out.println("Winner: " + model.getWinner().getName() + "\n");
 			System.out.println("Winning card:\n" + model.getWinner().getCard());
 		}
 	}
@@ -153,9 +181,28 @@ public class CLIView {
 	 */
 	public void displayElimination() {
 		ArrayList<Player> usersEliminated = model.userEliminated();
-		for(int i = 0; i < usersEliminated.size(); i++) {
-			System.out.println(model.userEliminated().get(i).getName());
+		
+		// Check if any players have been eliminated
+		if(usersEliminated.size() > 0) {
+			
+			System.out.println("Users Eliminated:");
+			
+			// Print any eliminated players
+			for(int i = 0; i < usersEliminated.size(); i++) {
+				System.out.println(usersEliminated.get(i).getName());
+			}
+			
+			System.out.println();
+			
 		}
+
+	}
+	
+	/**
+	 * Method to insert line to separate blocks of output
+	 */
+	public void breakLine() {
+		System.out.println("------------------------------------\n");
 	}
 	
 	/**
