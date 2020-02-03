@@ -23,9 +23,8 @@
     <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
     	
     	<div class="container">
-
 			<!-- Add your HTML Here -->
-			<ul class="list"> </ul>
+			<ul class="list" style="display: inline; list-style-type: none; padding:5px; margin: 2px"> </ul>
 		
 		</div>
 		
@@ -136,22 +135,24 @@
 				xhr.onload = function(e) {
  					var responseText = xhr.response; // the text of the response
 					var jsonConvert = JSON.parse(responseText);
-					console.log(jsonConvert['deck'][0]);
+						for (var i=0; i<jsonConvert['deck'].length; i++) {
+								var title = jsonConvert['deck'][i]['desc']
+								var size = jsonConvert['deck'][i]['values'][0]
+								var speed = jsonConvert['deck'][i]['values'][1]
+								var range = jsonConvert['deck'][i]['values'][2]
+								var firepower = jsonConvert['deck'][i]['values'][3]
+								var cargo = jsonConvert['deck'][i]['values'][4]
 
-					for (var i=0; i<40; i++) {
-						var stringAppend = "Card: ";
-						stringAppend +="Description: " + jsonConvert['deck'][i]['desc'] + " ";
-						for(var j=0; j < 5; j++) {
-							stringAppend += jsonConvert['deck'][i]['attri'][j] + " : " + jsonConvert['deck'][i]['values'][j] + " "; 
+								$(".list").append(printCard(title, size, speed, range, firepower, cargo));
 						}
-						$(".list").append("<li>" + stringAppend +" </li>");
-					}
-					
-
 				};
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();		
+			}
+
+			function printCard(desc, size, speed, range, firepower, cargo) {
+				return "<li style='float: left'><div class='card' style='width: 18rem;'> <img src='http://dcs.gla.ac.uk/~richardm/TopTrumps/"+desc+".jpg' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>" + desc + "</h5><p class='size'>Size:" + size + "</p><p class='speed'>Speed: "+speed+"</p><p class='range'>Range: </p>"+range+"<p class='firepower'>Firepower: "+firepower+"</p><p class='cargo'>cargo: "+cargo+"</p></div></div></li>";
 			}
 
 		</script>
