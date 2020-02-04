@@ -1,8 +1,12 @@
 package commandline;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+
+import online.configuration.TopTrumpsJSONConfiguration;
+
 import java.io.*;
 
 /*
@@ -81,7 +85,6 @@ public class Deck {
         Scanner myScanner = new Scanner(fr);
         //Creates attributes array to be passed to Card Constructor
         String[] attributes = new String[5];
-
         /*
         These lines strip the first line from the file
         Split the first line into an array

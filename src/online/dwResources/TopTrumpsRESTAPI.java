@@ -16,7 +16,8 @@ import online.configuration.TopTrumpsJSONConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import commandline.Deck;
+import commandline.*;
+
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
@@ -36,7 +37,7 @@ public class TopTrumpsRESTAPI {
 	/** A Jackson Object writer. It allows us to turn Java objects
 	 * into JSON strings easily. */
 	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-	
+	GameState model;
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
 	 * a TopTrumpsJSONConfiguration from which you can get the location of
@@ -47,6 +48,7 @@ public class TopTrumpsRESTAPI {
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
+		model = new GameState();
 	}
 	
 	// ----------------------------------------------------
@@ -88,18 +90,24 @@ public class TopTrumpsRESTAPI {
 	
 	@GET
 	@Path("/getDeck")
-	/**
-	 * Here is an example of how to read parameters provided in an HTML Get request.
-	 * @param Word - A word
-	 * @return - A String
-	 * @throws IOException
+	/*
 	 */
 	public String getDeck() throws IOException {
 		Deck deck = new Deck();
-
 		String convertedDeck = oWriter.writeValueAsString(deck);
-
 		return convertedDeck;
+	}
+
+	@GET
+	@Path("/drawCard")
+
+	public String drawCard() throws IOException {
+
+		model.drawNewCard();
+		String playerOneCardStr = oWriter.writeValueAsString(model.getActivePlayer().getCard());
+
+		return playerOneCardStr;
+
 	}
 
 }
