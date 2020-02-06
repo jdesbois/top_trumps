@@ -16,6 +16,8 @@ import online.configuration.TopTrumpsJSONConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import commandline.GameState;
+
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
 @Consumes(MediaType.APPLICATION_JSON) // This resource can take JSON content as input
@@ -34,6 +36,7 @@ public class TopTrumpsRESTAPI {
 	/** A Jackson Object writer. It allows us to turn Java objects
 	 * into JSON strings easily. */
 	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+	GameState model;
 	
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
@@ -45,6 +48,7 @@ public class TopTrumpsRESTAPI {
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
+		model = new GameState();
 	}
 	
 	// ----------------------------------------------------
@@ -83,5 +87,32 @@ public class TopTrumpsRESTAPI {
 	public String helloWord(@QueryParam("Word") String Word) throws IOException {
 		return "Hello "+Word;
 	}
+	
+	@GET
+	@Path("/showPlayerCard")
+
+	public String showPlayerCard() throws IOException {
+
+		model.drawNewCard();
+
+		String cardStr = oWriter.writeValueAsString(model.getHumanPlayer().getCard());
+
+		System.out.println(cardStr);
+	
+		return cardStr;
+
+	}
+
+	// @GET
+	// @Path("/drawCard")
+
+	// public String drawCard() throws IOException {
+
+	// 	model.drawNewCard();
+	// 	String playerOneCardStr = oWriter.writeValueAsString(model.getActivePlayer().getCard());
+
+	// 	return playerOneCardStr;
+
+	// }
 	
 }

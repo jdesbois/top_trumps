@@ -25,6 +25,7 @@
     	<div class="container">
 
 			<!-- Add your HTML Here -->
+			<a href="/toptrumps/game">Click Here! </a>
 		
 		</div>
 		
@@ -38,8 +39,8 @@
 				// --------------------------------------------------------------------------
 				
 				// For example, lets call our sample methods
-				helloJSONList();
-				helloWord("Student");
+				// helloJSONList();
+				// helloWord("Student");
 				
 			}
 			

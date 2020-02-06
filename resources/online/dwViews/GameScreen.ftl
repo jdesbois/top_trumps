@@ -25,6 +25,7 @@
     	<div class="container">
 
 			<!-- Add your HTML Here -->
+			<ul class="list" style="display: inline; list-style-type: none; padding:5px; margin: 2px"> </ul>
 		
 		</div>
 		
@@ -38,8 +39,9 @@
 				// --------------------------------------------------------------------------
 				
 				// For example, lets call our sample methods
-				helloJSONList();
-				helloWord("Student");
+				// helloJSONList();
+				// helloWord("Student");
+				showPlayerCard();
 				
 			}
 			
@@ -119,6 +121,32 @@
 				
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();		
+			}
+
+			// function to display card with image
+			function printCard(desc, size, speed, range, firepower, cargo) {
+				return "<li class='trumpCard' style='float: left'><div class='card' style='width: 18rem;'><img src='http://dcs.gla.ac.uk/~richardm/TopTrumps/"+desc+".jpg' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>" + desc + "</h5><p class='size'>Size:	" + size + "</p><p class='speed'>Speed:		"+speed+"</p><p class='range'>Range:	 " + range +"</p><p class='firepower'>Firepower: 	"+firepower+"</p><p class='cargo'>Cargo: 	"+cargo+"</p></div></div></li>"
+			}
+
+			// function to show players current card
+			function showPlayerCard(){
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayerCard");
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var responseText = xhr.response;
+					var jsonActiveCard = JSON.parse(responseText);
+					var title = jsonActiveCard.desc
+					var size = jsonActiveCard.values[0]
+					var speed = jsonActiveCard.values[1]
+					var range = jsonActiveCard.values[2]
+					var firepower = jsonActiveCard.values[3]
+					var cargo = jsonActiveCard.values[4]
+					$(".list").append(printCard(title, size, speed, range, firepower, cargo));
+				}
+				xhr.send();
 			}
 
 		</script>
