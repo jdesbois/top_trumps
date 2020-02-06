@@ -23,6 +23,9 @@
     <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
     	
     	<div class="container">
+    		<button onclick="showPlayerCard()" type="button" class="btn btn-primary">Player Card</button>
+    		<button onclick="showAllCards()" type="button" class="btn btn-primary">All Cards</button>
+    		<button onclick="drawShow()" type="button" class="btn btn-primary">Draw Cards</button>
 
 			<!-- Add your HTML Here -->
 			<ul class="list" style="display: inline; list-style-type: none; padding:5px; margin: 2px"> </ul>
@@ -41,7 +44,15 @@
 				// For example, lets call our sample methods
 				// helloJSONList();
 				// helloWord("Student");
+
+				// Draw cards
+				drawCards();
+				// Show current player's card
 				showPlayerCard();
+				// Show all players cards
+				// showAllCards();
+				// check whether player or AI turn
+				checkTurn();
 				
 			}
 			
@@ -148,6 +159,75 @@
 				}
 				xhr.send();
 			}
+
+			// function to check if it is human player's turn
+			function checkTurn(){
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkTurn");
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var playerTurn = xhr.response;
+					if(playerTurn == "1"){
+						$(".list").append("Your turn");
+					}
+					else{
+						$(".list").append("Computer turn");
+					}
+					
+				}
+				xhr.send();
+			}
+
+			// function to show all players' cards
+			function showAllCards() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showAllCards");
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var responseText = xhr.response;
+					// console.log(responseText);
+					var jsonCards = JSON.parse(responseText);
+					// console.log(jsonCards);
+
+					for(var i = 0; i < jsonCards.length; i++){
+						var title = jsonCards[i].desc
+						console.log(title)
+						var size = jsonCards[i].values[0]
+						var speed = jsonCards[i].values[1]
+						var range = jsonCards[i].values[2]
+						var firepower = jsonCards[i].values[3]
+						var cargo = jsonCards[i].values[4]
+						$(".list").append(printCard(title, size, speed, range, firepower, cargo));
+					}
+
+				}
+				xhr.send();
+			}
+
+			// function to draw new cards
+			function drawCards() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/drawCards");
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					
+
+				}
+				xhr.send();
+			}
+
+			// function to call drawCards() then showPlayerCard()
+			function drawShow(){
+				drawCards();
+				showPlayerCard();
+
+			}		
 
 		</script>
 		

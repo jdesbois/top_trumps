@@ -242,4 +242,14 @@ public class GameState {
 		
 		return players.size();
 	}
+	
+	/**
+	 * Gets players array
+	 * @return
+	 */
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+	
+	
 }

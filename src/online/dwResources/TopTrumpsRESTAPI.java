@@ -16,7 +16,9 @@ import online.configuration.TopTrumpsJSONConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
+import commandline.Card;
 import commandline.GameState;
+import commandline.Player;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
@@ -93,7 +95,7 @@ public class TopTrumpsRESTAPI {
 
 	public String showPlayerCard() throws IOException {
 
-		model.drawNewCard();
+		// model.drawNewCard();
 
 		String cardStr = oWriter.writeValueAsString(model.getHumanPlayer().getCard());
 
@@ -103,16 +105,60 @@ public class TopTrumpsRESTAPI {
 
 	}
 
-	// @GET
-	// @Path("/drawCard")
+	@GET
+	@Path("/checkTurn")
 
-	// public String drawCard() throws IOException {
+	public String checkTurn() throws IOException {
+		String result;
+		if(model.getActivePlayer().getName().equals(
+				model.getHumanPlayer().getName())) {
+			result = "1";
+		}
+		// if AI player is active 	
+		else {
+			result = "2";
+		}
+	
+		return result;
 
-	// 	model.drawNewCard();
-	// 	String playerOneCardStr = oWriter.writeValueAsString(model.getActivePlayer().getCard());
+	}
 
-	// 	return playerOneCardStr;
+	@GET
+	@Path("/showAllCards")
 
-	// }
+	public String showAllCards() throws IOException {
+
+		// remove this when in actual game
+		// model.drawNewCard();
+		
+		ArrayList<Card> cards = new ArrayList<Card>();
+		
+		for(Player p : model.getPlayers()) {
+			cards.add(p.getCard());
+		}
+
+		String cardsStr = oWriter.writeValueAsString(cards);
+//		String playerOneCardStr = oWriter.writeValueAsString(cards);
+		
+		System.out.println(cardsStr);
+		
+		return cardsStr;
+
+	}
+
+	@GET
+	@Path("/drawCards")
+
+	public String drawCards() throws IOException {
+
+		// remove this when in actual game
+		model.drawNewCard();
+		
+		return "New cards drawn";
+
+	}
+
+
+
 	
 }
