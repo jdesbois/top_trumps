@@ -49,6 +49,7 @@ public class TopTrumpsRESTAPI {
 		// Add relevant initalization here
 		// ----------------------------------------------------
 		model = new GameState();
+		System.out.println(conf.getDeckFile());
 	}
 	
 	// ----------------------------------------------------
@@ -105,7 +106,6 @@ public class TopTrumpsRESTAPI {
 
 		model.drawNewCard();
 		String playerOneCardStr = oWriter.writeValueAsString(model.getActivePlayer().getCard());
-
 		return playerOneCardStr;
 
 	}

@@ -26,7 +26,7 @@
 
 			<!-- Add your HTML Here -->
 			<ul class="list" style="display: inline; list-style-type: none; padding:5px; margin: 2px"> </ul>
-			<button onclick="drawCard()" type="button" class="btn btn-primary">Draw Card</button>
+			<button onclick="drawCard()" type="button" class="btn btn-outline-primary">Draw Card</button>
 		</div>
 		
 		<script type="text/javascript">
@@ -76,7 +76,7 @@
 		<!-- Here are examples of how to call REST API Methods -->
 		<script type="text/javascript">
 			function printCard(desc, size, speed, range, firepower, cargo) {
-				return "<li class='trumpCard' style='float: left'><div class='card' style='width: 18rem;'><img src='http://dcs.gla.ac.uk/~richardm/TopTrumps/"+desc+".jpg' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>" + desc + "</h5><p class='size'>Size:	" + size + "</p><p class='speed'>Speed:		"+speed+"</p><p class='range'>Range:	 " + range +"</p><p class='firepower'>Firepower: 	"+firepower+"</p><p class='cargo'>Cargo: 	"+cargo+"</p></div></div></li>";
+				return "<li class='trumpCard' style='float: left'><div class='card rounded' style='width: 18rem;'><img src='http://dcs.gla.ac.uk/~richardm/TopTrumps/"+desc+".jpg' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>" + desc + "</h5><p class='size'>" + size + "</p><p class='speed'>"+speed+"</p><p class='range'>" + range +"</p><p class='firepower'>"+firepower+"</p><p class='cargo'>"+cargo+"</p></div></div></li>";
 			}
 			
 			function getDeck() {
@@ -106,6 +106,7 @@
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();		
 			}
+			
 			function drawCard() {
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/drawCard");
 				$(".list").empty();
@@ -116,11 +117,12 @@
 					var responseText = xhr.response;
 					var jsonActiveCard = JSON.parse(responseText);
 					var title = jsonActiveCard.desc
-					var size = jsonActiveCard.values[0]
-					var speed = jsonActiveCard.values[1]
-					var range = jsonActiveCard.values[2]
-					var firepower = jsonActiveCard.values[3]
-					var cargo = jsonActiveCard.values[4]
+					var size = jsonActiveCard.attri[0] + ": \t" + jsonActiveCard.values[0];
+					var speed = jsonActiveCard.attri[1]  + ": \t" + jsonActiveCard.values[1];
+					var range = jsonActiveCard.attri[2]  + ": \t" + jsonActiveCard.values[2];
+					var firepower = jsonActiveCard.attri[3]  + ": \t" +  jsonActiveCard.values[3];
+					var cargo = jsonActiveCard.attri[4]  + ": \t" + jsonActiveCard.values[4];
+					console.log(jsonActiveCard);
 					$(".list").append(printCard(title, size, speed, range, firepower, cargo));
 				}
 				xhr.send();

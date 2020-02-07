@@ -17,6 +17,7 @@ Store them in an array list
 public class Deck {
     ArrayList<Card> deck = new ArrayList<Card>();
     ArrayList<PlayerHand> hands = new ArrayList<PlayerHand>();
+    TopTrumpsJSONConfiguration conf = new TopTrumpsJSONConfiguration();
 
     public Deck() {
         //Creates deck by using the import deck function
