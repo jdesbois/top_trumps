@@ -25,7 +25,7 @@
     	<div class="container">
 
 			<!-- Add your HTML Here -->
-			<a href="/toptrumps/game">Click Here! </a>
+			<a href="/toptrumps/game" class="btn btn-primary stretched-link">Click Here! </a>
 		
 		</div>
 		
