@@ -70,7 +70,7 @@ public class GameState {
 	 */
 	private boolean getWinningPlayer() {
 		
-		int highestVal = 0;
+		int highestVal = -1;
 		int index = 10;
 		
 		for(int i = 0; i < players.size(); i++) {

@@ -170,6 +170,26 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	/**
+	 * Method to set AI player category
+	 * @return Selected category
+	 */
+	@GET
+	@Path("/AISelectCategory")
+	
+	public String selectCategoryAI() {
+		
+		int catInt = model.getActivePlayer().getHighestAttribute();
+
+		System.out.println("integer input to model: " + catInt);
+		
+		this.model.setCurrentAttribute(catInt - 1);
+		
+		String catStr = Integer.toString(catInt);
+		
+		return catStr;
+	}
+	
+	/**
 	 * Method to check result (win or draw)
 	 * @return 1 if win, 2 if draw
 	 */

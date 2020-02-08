@@ -23,17 +23,21 @@
     <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
     	
     	<div class="container">
-    		<button onclick="showPlayerCard()" type="button" class="btn btn-primary">Player Card</button>
+    		<!-- <button onclick="showPlayerCard()" type="button" class="btn btn-primary">Player Card</button>
     		<button onclick="showAllCards()" type="button" class="btn btn-primary">All Cards</button>
-    		<button onclick="drawShow()" type="button" class="btn btn-primary">Draw Cards</button>
+    		<button onclick="drawShow()" type="button" class="btn btn-primary">Draw Cards</button> -->
 
-    		<div class="btn-group mr-2" role="group" aria-label="First group">
-				<button type="button" class="btn btn-secondary">1</button>
-				<button type="button" class="btn btn-secondary">2</button>
-				<button type="button" class="btn btn-secondary">3</button>
-				<button type="button" class="btn btn-secondary">4</button>
-				<button type="button" class="btn btn-secondary">5</button>
+    		<button onclick="AIPlay()" type="button" class="btn btn-primary">Next</button>
+
+    		<div class="categories" role="group" aria-label="First group">
+				<button onclick="humanPlay(1)" type="button" class="btn btn-secondary">1</button>
+				<button onclick="humanPlay(2)" type="button" class="btn btn-secondary">2</button>
+				<button onclick="humanPlay(3)" type="button" class="btn btn-secondary">3</button>
+				<button onclick="humanPlay(4)" type="button" class="btn btn-secondary">4</button>
+				<button onclick="humanPlay(5)" type="button" class="btn btn-secondary">5</button>
 			</div>
+
+			<div class="WinDraw"></div>
 
 			<!-- Add your HTML Here -->
 			<ul class="list" style="display: inline; list-style-type: none; padding:5px; margin: 2px"> </ul>
@@ -54,11 +58,13 @@
 				// helloWord("Student");
 
 				// Draw cards
-				drawCards();
+				// drawCards();
 				// Show current player's card
-				showPlayerCard();
+				// showPlayerCard();
 				// Show all players cards
 				// showAllCards();
+
+
 				// check whether player or AI turn
 				checkTurn();
 				
@@ -178,11 +184,82 @@
 				xhr.onload = function(e) {
 					var playerTurn = xhr.response;
 					if(playerTurn == "1"){
+						showCardWithSelection();
 						$(".list").append("Your turn");
 					}
 					else{
+						showCardNoSelection();
 						$(".list").append("Computer turn");
 					}
+					
+				}
+				xhr.send();
+			}
+
+			// API call to play AI turn
+			function AISelectCategory(){
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/AISelectCategory");
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					console.log("AI selected category: " + xhr.response);
+					// showAllCards();	
+					// winDraw();				
+				}
+				xhr.send();
+			}
+
+			function selectCategory(category){
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/selectCategory?Category="+category);
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					console.log("Player selected category: " + xhr.response);
+					// showAllCards();
+					// winDraw();
+				}
+				xhr.send();
+			}
+
+			// function to check if win or draw
+			function winDraw(){
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getResult");
+				$(".WinDraw").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var result = xhr.response;
+					console.log("Win/draw int: " + result);
+					if(result == "1"){
+						$(".WinDraw").append("Someone Won: ");
+						getActivePlayer();
+					}
+					else{
+
+						console.log("Why does it always draw?");
+						$(".WinDraw").append("Draw");
+					}
+					
+				}
+				xhr.send();
+			}
+
+			// function to check if win or draw
+			function getActivePlayer(){
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getActivePlayer");
+				// $(".WinDraw").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var result = xhr.response;
+					$(".WinDraw").append("" + result);
+					
 					
 				}
 				xhr.send();
@@ -235,7 +312,36 @@
 				drawCards();
 				showPlayerCard();
 
-			}		
+			}
+
+			// function to display screen when player is to select category
+			function showCardWithSelection(){
+				drawCards();
+				showPlayerCard();
+				$(".categories").show();
+			}
+
+			// function to display screen when AI is to select category	
+			function showCardNoSelection(){
+				drawCards();
+				showPlayerCard();
+				$(".categories").hide();
+			}
+
+			// function to update model for human player round
+			function humanPlay(category){
+				selectCategory(category);
+				showAllCards();	
+				winDraw();
+
+			}	
+
+			// 
+			function AIPlay(){
+				AISelectCategory();
+				showAllCards();	
+				winDraw();
+			}
 
 		</script>
 		
