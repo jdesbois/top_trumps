@@ -89,22 +89,13 @@ public class TopTrumpsRESTAPI {
 	public String helloWord(@QueryParam("Word") String Word) throws IOException {
 		return "Hello "+Word;
 	}
+
 	
-	@GET
-	@Path("/showPlayerCard")
-
-	public String showPlayerCard() throws IOException {
-
-		// model.drawNewCard();
-
-		String cardStr = oWriter.writeValueAsString(model.getHumanPlayer().getCard());
-
-		System.out.println(cardStr);
-	
-		return cardStr;
-
-	}
-
+	/**
+	 * Method to check if human player turn or AI turn
+	 * @return int 1 if player turn, two if AI turn
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/checkTurn")
 
@@ -122,14 +113,94 @@ public class TopTrumpsRESTAPI {
 		return result;
 
 	}
+	
+	/**
+	 * Method to make all players draw new cards
+	 * @return Message "New cards drawn"
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/drawCards")
 
+	public String drawCards() {
+
+		// remove this when in actual game
+		model.drawNewCard();
+		
+		return "New cards drawn";
+
+	}
+	
+	/**
+	 * Method to return details of player card as a JSON object
+	 * @return String JSON Object containing player card details
+	 * @throws IOException
+	 */
+	@GET
+	@Path("/showPlayerCard")
+
+	public String showPlayerCard() throws IOException {
+
+		// model.drawNewCard();
+
+		String cardStr = oWriter.writeValueAsString(model.getHumanPlayer().getCard());
+
+		System.out.println(cardStr);
+	
+		return cardStr;
+
+	}
+	
+	/**
+	 * Method to set human player category
+	 * @param Category
+	 * @return Category
+	 */
+	@GET
+	@Path("/selectCategory")
+	
+	public String selectCategory(@QueryParam("Category") String Category) {
+		
+		int catInt = Integer.parseInt(Category);
+		
+		this.model.setCurrentAttribute(catInt - 1);
+		
+		return Category;
+		
+	}
+	
+	/**
+	 * Method to check result (win or draw)
+	 * @return 1 if win, 2 if draw
+	 */
+	@GET
+	@Path("/getResult")
+	
+	public String getResult() {
+		
+		return "" + this.model.getResult();
+	}
+	
+	/**
+	 * Method to get the name of the active player
+	 * @return active player name
+	 */
+	@GET
+	@Path("/getActivePlayer")
+	
+	public String getActivePlayer() {
+		return this.model.getActivePlayer().name;
+	}
+	
+	/**
+	 * Method to return contents of all players cards as  JSON object
+	 * @return String JSON Object containing all active card details
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/showAllCards")
 
 	public String showAllCards() throws IOException {
-
-		// remove this when in actual game
-		// model.drawNewCard();
 		
 		ArrayList<Card> cards = new ArrayList<Card>();
 		
@@ -138,7 +209,6 @@ public class TopTrumpsRESTAPI {
 		}
 
 		String cardsStr = oWriter.writeValueAsString(cards);
-//		String playerOneCardStr = oWriter.writeValueAsString(cards);
 		
 		System.out.println(cardsStr);
 		
@@ -146,19 +216,26 @@ public class TopTrumpsRESTAPI {
 
 	}
 
+	
+	
 	@GET
-	@Path("/drawCards")
-
-	public String drawCards() throws IOException {
-
-		// remove this when in actual game
-		model.drawNewCard();
+	@Path("/communalPileSize")
+	
+	public String communalPileSize() {
 		
-		return "New cards drawn";
-
+		return "" + this.model.getCommunalPileSize();
 	}
-
-
-
+	
+	@GET
+	@Path("/eliminatedPlayers")
+	
+	public String eliminatedPlayers() throws IOException {
+		ArrayList<Player> usersEliminated = model.userEliminated();
+		
+		String elimStr = oWriter.writeValueAsString(usersEliminated);
+		
+		return elimStr;		
+	}
+	
 	
 }

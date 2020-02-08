@@ -27,6 +27,14 @@
     		<button onclick="showAllCards()" type="button" class="btn btn-primary">All Cards</button>
     		<button onclick="drawShow()" type="button" class="btn btn-primary">Draw Cards</button>
 
+    		<div class="btn-group mr-2" role="group" aria-label="First group">
+				<button type="button" class="btn btn-secondary">1</button>
+				<button type="button" class="btn btn-secondary">2</button>
+				<button type="button" class="btn btn-secondary">3</button>
+				<button type="button" class="btn btn-secondary">4</button>
+				<button type="button" class="btn btn-secondary">5</button>
+			</div>
+
 			<!-- Add your HTML Here -->
 			<ul class="list" style="display: inline; list-style-type: none; padding:5px; margin: 2px"> </ul>
 		
