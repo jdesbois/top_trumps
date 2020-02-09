@@ -23,13 +23,16 @@
     <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
     	
     	<div class="container">
-    		<!-- <button onclick="showPlayerCard()" type="button" class="btn btn-primary">Player Card</button>
-    		<button onclick="showAllCards()" type="button" class="btn btn-primary">All Cards</button>
-    		<button onclick="drawShow()" type="button" class="btn btn-primary">Draw Cards</button> -->
-
-    		<button onclick="AIPlay()" id="next" type="button" class="btn btn-primary">Next</button>
+    		
+    		<!-- button to move to next round -->
     		<button onclick="checkTurn()" id="nextRound" type="button" class="btn btn-primary">Next Round</button>
 
+    		<!-- button to move to results when AI selectign category -->
+    		<button onclick="AIPlay()" id="next" type="button" class="btn btn-primary">Next</button>
+
+    		<button onclick="AISoloPlay()" id="AIOnly" type="button" class="btn btn-primary">Next (AI Only)</button>
+    		
+    		<!-- buttons to select category and move to result when humna selecting category -->
     		<div class="categories" role="group" aria-label="First group">
 				<button onclick="humanPlay(1)" type="button" class="btn btn-secondary">1</button>
 				<button onclick="humanPlay(2)" type="button" class="btn btn-secondary">2</button>
@@ -37,11 +40,20 @@
 				<button onclick="humanPlay(4)" type="button" class="btn btn-secondary">4</button>
 				<button onclick="humanPlay(5)" type="button" class="btn btn-secondary">5</button>
 			</div>
+
+			<!-- element to display who's turn it is-->
+			<div id="turn"></div>
+
+			<!-- element to display selected category -->
+			<div id="selectedCat"></div>
+
+			<!-- element to display any players eliminated in a round -->
 			<div id="eliminatedPlayers"></div>
 
+			<!-- element to display round result -->
 			<div class="WinDraw"></div>
 
-			<!-- Add your HTML Here -->
+			<!-- list to hold cards -->
 			<ul class="list" style="display: inline; list-style-type: none; padding:5px; margin: 2px"> </ul>
 
 		
@@ -49,25 +61,14 @@
 		
 			// Method that is called on page load
 			function initalize() {
-			
-				// --------------------------------------------------------------------------
-				// You can call other methods you want to run when the page first loads here
-				// --------------------------------------------------------------------------
-				
-				// For example, lets call our sample methods
-				// helloJSONList();
-				// helloWord("Student");
-
-				// Draw cards
-				// drawCards();
-				// Show current player's card
-				// showPlayerCard();
-				// Show all players cards
-				// showAllCards();
-
+		
+				// hide buttons to start
+				$(".categories").hide();
+				$("#nextRound").hide();
+				$("#next").hide();
+				$("#AIOnly").hide();
 
 				// check whether player or AI turn
-				$(".categories").hide();
 				checkTurn();
 				
 			}
@@ -105,49 +106,67 @@
 		
 		<!-- Here are examples of how to call REST API Methods -->
 		<script type="text/javascript">
-		
-			// This calls the helloJSONList REST method from TopTrumpsRESTAPI
-			function helloJSONList() {
 			
-				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloJSONList"); // Request type and URL
-				
-				// Message is not sent yet, but we can check that the browser supports CORS
-				if (!xhr) {
-  					alert("CORS not supported");
-				}
-
-				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
-				// to do when the response arrives 
-				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					alert(responseText); // lets produce an alert
-				};
-				
-				// We have done everything we need to prepare the CORS request, so send it
-				xhr.send();		
+			// function to display screen when player is to select category
+			function showCardWithSelection(){
+				drawCards();
+				showPlayer();
+				$(".categories").show();
 			}
-			
-			// This calls the helloJSONList REST method from TopTrumpsRESTAPI
-			function helloWord(word) {
-			
-				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloWord?Word="+word); // Request type and URL+parameters
-				
-				// Message is not sent yet, but we can check that the browser supports CORS
-				if (!xhr) {
-  					alert("CORS not supported");
-				}
 
-				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
-				// to do when the response arrives 
-				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					alert(responseText); // lets produce an alert
-				};
+			// function to display screen when AI is to select category	
+			function showCardNoSelection(){
+				drawCards();
+				showPlayer();
+				// $(".categories").hide();
+				$("#next").show();
+			}
+
+			// function to update model for human player round
+			function humanPlay(category){
+				$(".categories").hide();
+				$("#turn").empty();
+				selectCategory(category);
+				showPlayers();	
+				winDraw();
+				checkEliminations();
+				// $("#nextRound").show();
+
+			}	
+
+			// function to update model for AI player round
+			function AIPlay(){
+				$("#next").hide();
+				$("#turn").empty();
+				AISelectCategory();
+				showPlayers();	
+				winDraw();
+				// $("#nextRound").show();
+				checkEliminations();
+				// $("#nextRound").show();
+			}
+
+			// function to update model for AI player round
+			function AISoloPlay(){
+				$("#next").hide();
+				$("#turn").empty();
+
+				/* 	Additional changes that were previously handled 
+					by checkTurn when human player active 
+				*/
+				$("#selectedCat").empty();
+				$("#eliminatedPlayers").empty();
+
+				// required as 'checkTurn' no longer called
+				drawCards();
 				
-				// We have done everything we need to prepare the CORS request, so send it
-				xhr.send();		
+				AISelectCategory();
+				showPlayers();	
+				winDraw();
+				// $("#nextRound").show();
+				checkEliminationsAIOnly();
+				// $("#AIOnly").show();
+				// $("#nextRound").show();
 			}
 
 			// function to display card with image
@@ -155,30 +174,11 @@
 				return "<li class='trumpCard' style='float: left'><div class='card' style='width: 18rem;'><img src='http://dcs.gla.ac.uk/~richardm/TopTrumps/"+desc+".jpg' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>" + playerNo + "</h5><h5 class='card-title'>" + desc + "</h5><br /><p class='size'>Size:	" + size + "</p><p class='speed'>Speed:		"+speed+"</p><p class='range'>Range:	 " + range +"</p><p class='firepower'>Firepower: 	"+firepower+"</p><p class='cargo'>Cargo: 	"+cargo+"</p><br /><h6>Cards Left: " + cardsLeft + "</div></div></li>"
 			}
 
-			// function to show players current card
-			function showPlayerCard(){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayerCard");
-				$(".list").empty();
-				if(!xhr) {
-					alert("CORS not supported");
-				}
-				xhr.onload = function(e) {
-					var responseText = xhr.response;
-					var jsonActiveCard = JSON.parse(responseText);
-					var title = jsonActiveCard.desc
-					var size = jsonActiveCard.values[0]
-					var speed = jsonActiveCard.values[1]
-					var range = jsonActiveCard.values[2]
-					var firepower = jsonActiveCard.values[3]
-					var cargo = jsonActiveCard.values[4]
-					$(".list").append(printCard("1", title, size, speed, range, firepower, cargo));
-				}
-				xhr.send();
-			}
-
 			// function to check if it is human player's turn
 			function checkTurn(){
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkTurn");
+				$(".WinDraw").empty();
+				$("#selectedCat").empty();
 				$(".list").empty();
 				if(!xhr) {
 					alert("CORS not supported");
@@ -189,11 +189,11 @@
 					$("#nextRound").hide();
 					if(playerTurn == "1"){
 						showCardWithSelection();
-						$(".list").append("Your turn");
+						$("#turn").append("Your turn");
 					}
 					else{
 						showCardNoSelection();
-						$(".list").append("Computer turn");
+						$("#turn").append("Computer turn");
 					}
 					
 				}
@@ -209,8 +209,8 @@
 				}
 				xhr.onload = function(e) {
 					console.log("AI selected category: " + xhr.response);
-					// showAllCards();	
-					// winDraw();				
+					$("#selectedCat").append("Selected category: " + xhr.response);
+
 				}
 				xhr.send();
 			}
@@ -223,8 +223,7 @@
 				}
 				xhr.onload = function(e) {
 					console.log("Player selected category: " + xhr.response);
-					// showAllCards();
-					// winDraw();
+					$("#selectedCat").append("Selected category: " + xhr.response);
 				}
 				xhr.send();
 			}
@@ -267,35 +266,6 @@
 				xhr.send();
 			}
 
-			// function to show all players' cards
-			function showAllCards() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showAllCards");
-				$(".list").empty();
-				if(!xhr) {
-					alert("CORS not supported");
-				}
-				xhr.onload = function(e) {
-					var responseText = xhr.response;
-					// console.log(responseText);
-					var jsonCards = JSON.parse(responseText);
-					// console.log(jsonCards);
-
-					for(var i = 0; i < jsonCards.length; i++){
-						var playerNo = i + 1;
-						var title = jsonCards[i].desc
-						console.log(title)
-						var size = jsonCards[i].values[0]
-						var speed = jsonCards[i].values[1]
-						var range = jsonCards[i].values[2]
-						var firepower = jsonCards[i].values[3]
-						var cargo = jsonCards[i].values[4]
-						$(".list").append(printCard(playerNo, title, size, speed, range, firepower, cargo));
-					}
-
-				}
-				xhr.send();
-			}
-
 			// function to show human player details
 			function showPlayer(){
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayer");
@@ -319,7 +289,7 @@
 				xhr.send();
 			}
 
-			// function to show all players' cards
+			// function to show all players' details
 			function showPlayers() {
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers");
 				$(".list").empty();
@@ -349,28 +319,8 @@
 				xhr.send();
 			}
 
-			// function to show players current card
-			function showPlayerCard(){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayerCard");
-				$(".list").empty();
-				if(!xhr) {
-					alert("CORS not supported");
-				}
-				xhr.onload = function(e) {
-					var responseText = xhr.response;
-					var jsonActiveCard = JSON.parse(responseText);
-					var title = jsonActiveCard.desc
-					var size = jsonActiveCard.values[0]
-					var speed = jsonActiveCard.values[1]
-					var range = jsonActiveCard.values[2]
-					var firepower = jsonActiveCard.values[3]
-					var cargo = jsonActiveCard.values[4]
-					$(".list").append(printCard("1", title, size, speed, range, firepower, cargo));
-				}
-				xhr.send();
-			}
 
-			// function to show all players' cards
+			// function to show which (if any) players have been eliminated in a round
 			function checkEliminations() {
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkEliminations");
 				if(!xhr) {
@@ -381,14 +331,55 @@
 					// console.log(responseText);
 					var jsonPlayers = JSON.parse(responseText);
 					// console.log(jsonCards);
+					var humanEliminated = false;
+
 					if(responseText != "0"){
 						$("#eliminatedPlayers").append("Eliminated Players: <br />");
 						for(var i = 0; i < jsonPlayers.length; i++){
+
+							if(jsonPlayers[i].name == "Player1"){
+								humanEliminated = true;
+							}
+							
 							$("#eliminatedPlayers").append(jsonPlayers[i].name);
+
 						}
 					}
-					
 
+					if(humanEliminated){
+						$("#nextRound").hide();
+						$("#AIOnly").show();
+					}
+					else{
+						$("#nextRound").show();
+					}
+
+				}
+				xhr.send();
+			}
+
+			// function to show which (if any) players have been eliminated in a round
+			function checkEliminationsAIOnly() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkEliminations");
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var responseText = xhr.response;
+					// console.log(responseText);
+					var jsonPlayers = JSON.parse(responseText);
+					// console.log(jsonCards);
+
+					if(responseText != "0"){
+						$("#eliminatedPlayers").append("Eliminated Players: <br />");
+						for(var i = 0; i < jsonPlayers.length; i++){
+							
+							$("#eliminatedPlayers").append(jsonPlayers[i].name);
+
+						}
+					}
+
+					$("#AIOnly").show();
 				}
 				xhr.send();
 			}
@@ -401,54 +392,13 @@
 					alert("CORS not supported");
 				}
 				xhr.onload = function(e) {
-					
-
+	
 				}
 				xhr.send();
 			}
 
-			// function to call drawCards() then showPlayerCard()
-			function drawShow(){
-				drawCards();
-				showPlayer();
 
-			}
 
-			// function to display screen when player is to select category
-			function showCardWithSelection(){
-				drawCards();
-				showPlayer();
-				$(".categories").show();
-			}
-
-			// function to display screen when AI is to select category	
-			function showCardNoSelection(){
-				drawCards();
-				showPlayer();
-				// $(".categories").hide();
-				$("#next").show();
-			}
-
-			// function to update model for human player round
-			function humanPlay(category){
-				$(".categories").hide();
-				selectCategory(category);
-				showPlayers();	
-				winDraw();
-				checkEliminations();
-				$("#nextRound").show();
-
-			}	
-
-			// 
-			function AIPlay(){
-				$("#next").hide();
-				AISelectCategory();
-				showPlayers();	
-				winDraw();
-				checkEliminations();
-				$("#nextRound").show();
-			}
 
 		</script>
 		
