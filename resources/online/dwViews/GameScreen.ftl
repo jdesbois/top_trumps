@@ -27,7 +27,8 @@
     		<button onclick="showAllCards()" type="button" class="btn btn-primary">All Cards</button>
     		<button onclick="drawShow()" type="button" class="btn btn-primary">Draw Cards</button> -->
 
-    		<button onclick="AIPlay()" type="button" class="btn btn-primary">Next</button>
+    		<button onclick="AIPlay()" id="next" type="button" class="btn btn-primary">Next</button>
+    		<button onclick="checkTurn()" id="nextRound" type="button" class="btn btn-primary">Next Round</button>
 
     		<div class="categories" role="group" aria-label="First group">
 				<button onclick="humanPlay(1)" type="button" class="btn btn-secondary">1</button>
@@ -36,13 +37,13 @@
 				<button onclick="humanPlay(4)" type="button" class="btn btn-secondary">4</button>
 				<button onclick="humanPlay(5)" type="button" class="btn btn-secondary">5</button>
 			</div>
+			<div id="eliminatedPlayers"></div>
 
 			<div class="WinDraw"></div>
 
 			<!-- Add your HTML Here -->
 			<ul class="list" style="display: inline; list-style-type: none; padding:5px; margin: 2px"> </ul>
-		
-		</div>
+
 		
 		<script type="text/javascript">
 		
@@ -66,6 +67,7 @@
 
 
 				// check whether player or AI turn
+				$(".categories").hide();
 				checkTurn();
 				
 			}
@@ -149,8 +151,8 @@
 			}
 
 			// function to display card with image
-			function printCard(desc, size, speed, range, firepower, cargo) {
-				return "<li class='trumpCard' style='float: left'><div class='card' style='width: 18rem;'><img src='http://dcs.gla.ac.uk/~richardm/TopTrumps/"+desc+".jpg' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>" + desc + "</h5><p class='size'>Size:	" + size + "</p><p class='speed'>Speed:		"+speed+"</p><p class='range'>Range:	 " + range +"</p><p class='firepower'>Firepower: 	"+firepower+"</p><p class='cargo'>Cargo: 	"+cargo+"</p></div></div></li>"
+			function printCard(playerNo, desc, size, speed, range, firepower, cargo, cardsLeft) {
+				return "<li class='trumpCard' style='float: left'><div class='card' style='width: 18rem;'><img src='http://dcs.gla.ac.uk/~richardm/TopTrumps/"+desc+".jpg' class='card-img-top' alt='...'><div class='card-body'><h5 class='card-title'>" + playerNo + "</h5><h5 class='card-title'>" + desc + "</h5><br /><p class='size'>Size:	" + size + "</p><p class='speed'>Speed:		"+speed+"</p><p class='range'>Range:	 " + range +"</p><p class='firepower'>Firepower: 	"+firepower+"</p><p class='cargo'>Cargo: 	"+cargo+"</p><br /><h6>Cards Left: " + cardsLeft + "</div></div></li>"
 			}
 
 			// function to show players current card
@@ -169,7 +171,7 @@
 					var range = jsonActiveCard.values[2]
 					var firepower = jsonActiveCard.values[3]
 					var cargo = jsonActiveCard.values[4]
-					$(".list").append(printCard(title, size, speed, range, firepower, cargo));
+					$(".list").append(printCard("1", title, size, speed, range, firepower, cargo));
 				}
 				xhr.send();
 			}
@@ -182,7 +184,9 @@
 					alert("CORS not supported");
 				}
 				xhr.onload = function(e) {
+					$("#eliminatedPlayers").empty();
 					var playerTurn = xhr.response;
+					$("#nextRound").hide();
 					if(playerTurn == "1"){
 						showCardWithSelection();
 						$(".list").append("Your turn");
@@ -236,12 +240,10 @@
 					var result = xhr.response;
 					console.log("Win/draw int: " + result);
 					if(result == "1"){
-						$(".WinDraw").append("Someone Won: ");
+						$(".WinDraw").append("Winner: ");
 						getActivePlayer();
 					}
 					else{
-
-						console.log("Why does it always draw?");
 						$(".WinDraw").append("Draw");
 					}
 					
@@ -279,6 +281,7 @@
 					// console.log(jsonCards);
 
 					for(var i = 0; i < jsonCards.length; i++){
+						var playerNo = i + 1;
 						var title = jsonCards[i].desc
 						console.log(title)
 						var size = jsonCards[i].values[0]
@@ -286,8 +289,105 @@
 						var range = jsonCards[i].values[2]
 						var firepower = jsonCards[i].values[3]
 						var cargo = jsonCards[i].values[4]
-						$(".list").append(printCard(title, size, speed, range, firepower, cargo));
+						$(".list").append(printCard(playerNo, title, size, speed, range, firepower, cargo));
 					}
+
+				}
+				xhr.send();
+			}
+
+			// function to show human player details
+			function showPlayer(){
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayer");
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var responseText = xhr.response;
+					var jsonHumanPlayer = JSON.parse(responseText);
+					var playerNo = jsonHumanPlayer.name
+					var title = jsonHumanPlayer.card.desc
+					var size = jsonHumanPlayer.card.values[0]
+					var speed = jsonHumanPlayer.card.values[1]
+					var range = jsonHumanPlayer.card.values[2]
+					var firepower = jsonHumanPlayer.card.values[3]
+					var cargo = jsonHumanPlayer.card.values[4]
+					var cardsLeft = jsonHumanPlayer.handSize
+					$(".list").append(printCard(playerNo, title, size, speed, range, firepower, cargo, cardsLeft));
+				}
+				xhr.send();
+			}
+
+			// function to show all players' cards
+			function showPlayers() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers");
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var responseText = xhr.response;
+					// console.log(responseText);
+					var jsonPlayers = JSON.parse(responseText);
+					// console.log(jsonCards);
+
+					for(var i = 0; i < jsonPlayers.length; i++){
+						var playerNo = jsonPlayers[i].name
+						var title = jsonPlayers[i].card.desc
+						console.log(title)
+						var size = jsonPlayers[i].card.values[0]
+						var speed = jsonPlayers[i].card.values[1]
+						var range = jsonPlayers[i].card.values[2]
+						var firepower = jsonPlayers[i].card.values[3]
+						var cargo = jsonPlayers[i].card.values[4]
+						var cardsLeft = jsonPlayers[i].handSize
+						$(".list").append(printCard(playerNo, title, size, speed, range, firepower, cargo, cardsLeft));
+					}
+
+				}
+				xhr.send();
+			}
+
+			// function to show players current card
+			function showPlayerCard(){
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayerCard");
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var responseText = xhr.response;
+					var jsonActiveCard = JSON.parse(responseText);
+					var title = jsonActiveCard.desc
+					var size = jsonActiveCard.values[0]
+					var speed = jsonActiveCard.values[1]
+					var range = jsonActiveCard.values[2]
+					var firepower = jsonActiveCard.values[3]
+					var cargo = jsonActiveCard.values[4]
+					$(".list").append(printCard("1", title, size, speed, range, firepower, cargo));
+				}
+				xhr.send();
+			}
+
+			// function to show all players' cards
+			function checkEliminations() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkEliminations");
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var responseText = xhr.response;
+					// console.log(responseText);
+					var jsonPlayers = JSON.parse(responseText);
+					// console.log(jsonCards);
+					if(responseText != "0"){
+						$("#eliminatedPlayers").append("Eliminated Players: <br />");
+						for(var i = 0; i < jsonPlayers.length; i++){
+							$("#eliminatedPlayers").append(jsonPlayers[i].name);
+						}
+					}
+					
 
 				}
 				xhr.send();
@@ -310,37 +410,44 @@
 			// function to call drawCards() then showPlayerCard()
 			function drawShow(){
 				drawCards();
-				showPlayerCard();
+				showPlayer();
 
 			}
 
 			// function to display screen when player is to select category
 			function showCardWithSelection(){
 				drawCards();
-				showPlayerCard();
+				showPlayer();
 				$(".categories").show();
 			}
 
 			// function to display screen when AI is to select category	
 			function showCardNoSelection(){
 				drawCards();
-				showPlayerCard();
-				$(".categories").hide();
+				showPlayer();
+				// $(".categories").hide();
+				$("#next").show();
 			}
 
 			// function to update model for human player round
 			function humanPlay(category){
+				$(".categories").hide();
 				selectCategory(category);
-				showAllCards();	
+				showPlayers();	
 				winDraw();
+				checkEliminations();
+				$("#nextRound").show();
 
 			}	
 
 			// 
 			function AIPlay(){
+				$("#next").hide();
 				AISelectCategory();
-				showAllCards();	
+				showPlayers();	
 				winDraw();
+				checkEliminations();
+				$("#nextRound").show();
 			}
 
 		</script>

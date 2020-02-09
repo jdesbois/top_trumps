@@ -122,7 +122,7 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/drawCards")
 
-	public String drawCards() {
+	public String drawCards() throws IOException{
 
 		// remove this when in actual game
 		model.drawNewCard();
@@ -235,9 +235,51 @@ public class TopTrumpsRESTAPI {
 		return cardsStr;
 
 	}
+	
+	@GET
+	@Path("/showPlayer")
 
+	public String showPlayer() throws IOException {
+
+		String playerStr = oWriter.writeValueAsString(model.getHumanPlayer());
 	
+		return playerStr;
+
+	}
 	
+	@GET
+	@Path("/showPlayers")
+	
+	public String showPlayers() throws IOException {
+		
+		ArrayList<Player> players = this.model.getPlayers();
+		
+		String playersStr = oWriter.writeValueAsString(players);
+		System.out.println(playersStr);
+		
+		return playersStr;
+	}
+	
+	@GET
+	@Path("/checkEliminations")
+	
+	public String checkEliminations() throws IOException{
+		ArrayList<Player> usersEliminated = model.userEliminated();
+		
+			if(usersEliminated.size() > 0) {
+			
+				String elimStr = oWriter.writeValueAsString(usersEliminated);
+				System.out.println(elimStr);
+				return elimStr;
+			
+			}
+			
+			return "0";
+	}
+	
+	/*
+	 * To delete?
+	 */
 	@GET
 	@Path("/communalPileSize")
 	

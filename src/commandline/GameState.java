@@ -70,26 +70,78 @@ public class GameState {
 	 */
 	private boolean getWinningPlayer() {
 		
-		int highestVal = -1;
-		int index = 10;
+		//Original
+
+		// int highestVal = 0;
+		// int index = 10;
 		
+		// for(int i = 0; i < players.size(); i++) {
+			
+		// 	int n = players.get(i).getCard().getValue(chosenAttribute);
+			
+		// 	if(n == highestVal) {
+				
+		// 		return false;
+		// 	}
+
+		// 	if(n > highestVal) {
+				
+		// 		index = i;
+		// 	}
+			
+		// 	highestVal = Math.max(highestVal, n);
+		// }
+		
+		/*
+		 * Updates to fix bugs
+		 */
+		// Int to store greatest value
+		int highestVal = -1;
+		
+		// Int to store number of attributes equal to greatest value
+		int highCount = 0;
+		
+		// Index of the attribute with greater value (only if no draw)
+		int index = -1;
+				
 		for(int i = 0; i < players.size(); i++) {
 			
+			// Get selected attribute
 			int n = players.get(i).getCard().getValue(chosenAttribute);
 			
-			if(n == highestVal) {
-				
-				return false;
-			}
-
+			// if this is the greatest value encountered so far
 			if(n > highestVal) {
-				
+				// new highest value
+				highestVal = n;
+				// start counting if any others are equal
+				highCount = 1;
+				// update 
 				index = i;
 			}
 			
-			highestVal = Math.max(highestVal, n);
+			// otherwise, if this is equal to current greatest value
+			else if(n == highestVal) {
+				// increment counter
+				highCount++;				
+			}
+
+			
 		}
 		
+		/*
+		 * If highest value has been counted more than once
+		 * this indicated a draw (return false)
+		 */
+		if(highCount > 1) {
+			return false;
+		}
+		
+		/*
+		 * Otherwise set player with greatest value to active 
+		 * player and assign them the cards they have won
+		 * (return true)
+		 */
+		System.out.println("Winner index: " + index);
 		winner = players.get(index);
 		changeActivePlayer(winner);
 		dealCommunalPile();
