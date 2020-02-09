@@ -25,12 +25,12 @@
     	<div class="container">
     		
     		<!-- button to move to next round -->
-    		<button onclick="checkTurn()" id="nextRound" type="button" class="btn btn-primary">Next Round</button>
+    		<button onclick="checkGameWinner()" id="nextRound" type="button" class="btn btn-primary">Next Round</button>
 
     		<!-- button to move to results when AI selectign category -->
     		<button onclick="AIPlay()" id="next" type="button" class="btn btn-primary">Next</button>
 
-    		<button onclick="AISoloPlay()" id="AIOnly" type="button" class="btn btn-primary">Next (AI Only)</button>
+    		<button onclick="checkGameWinnerAISolo()" id="AIOnly" type="button" class="btn btn-primary">Next (AI Only)</button>
     		
     		<!-- buttons to select category and move to result when humna selecting category -->
     		<div class="categories" role="group" aria-label="First group">
@@ -52,6 +52,9 @@
 
 			<!-- element to display round result -->
 			<div class="WinDraw"></div>
+
+			<!-- element to display game winner -->
+			<div id="gameWinner"></div>
 
 			<!-- list to hold cards -->
 			<ul class="list" style="display: inline; list-style-type: none; padding:5px; margin: 2px"> </ul>
@@ -107,6 +110,14 @@
 		<!-- Here are examples of how to call REST API Methods -->
 		<script type="text/javascript">
 			
+			// function to start a new round
+			function startRound(){
+				
+				// var to check if game has been won
+				checkGameWinner();
+				
+			}
+
 			// function to display screen when player is to select category
 			function showCardWithSelection(){
 				drawCards();
@@ -159,7 +170,7 @@
 
 				// required as 'checkTurn' no longer called
 				drawCards();
-				
+
 				AISelectCategory();
 				showPlayers();	
 				winDraw();
@@ -397,6 +408,55 @@
 				xhr.send();
 			}
 
+			// function to check if a player has won
+			function checkGameWinner() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers");
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var responseText = xhr.response;
+					// console.log(responseText);
+					var jsonPlayers = JSON.parse(responseText);
+					// console.log(jsonCards);
+					console.log("Players length: " + jsonPlayers.length);
+					if(jsonPlayers.length == 1){
+						console.log("test in checkGameWinner()");
+						$("#gameWinner").append("<h2>" + jsonPlayers[0].name + " wins the game!</h2>");
+					}
+					else{
+						checkTurn();
+					}
+
+				}
+				xhr.send();
+			}
+
+			// function to check if a player has won
+			function checkGameWinnerAISolo() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers");
+				$(".list").empty();
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var responseText = xhr.response;
+					// console.log(responseText);
+					var jsonPlayers = JSON.parse(responseText);
+					// console.log(jsonCards);
+					console.log("Players length: " + jsonPlayers.length);
+					if(jsonPlayers.length == 1){
+						console.log("test in checkGameWinner()");
+						$("#gameWinner").append("<h2>" + jsonPlayers[0].name + " wins the game!</h2>");
+					}
+					else{
+						AISoloPlay();
+					}
+
+				}
+				xhr.send();
+			}
 
 
 
