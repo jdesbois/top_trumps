@@ -542,6 +542,8 @@
 						$("#nextRound").show();
 					}
 
+					checkHumanPlayer();
+
 				}
 				xhr.send();
 			}
@@ -574,9 +576,31 @@
 					}
 					// show AIOnly button
 					$("#AIOnly").show();
+					checkHumanPlayer();
 				}
 				xhr.send();
 			}
+
+			/*
+			 *	Check if human player still active
+			 */
+
+			 function checkHumanPlayer(){
+			 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkHumanPlayer");
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+
+					// get list of any eliminated players and convert to JSON
+					var responseText = xhr.response;
+			
+					// show AIOnly button
+					console.log("Check player API response: " + responseText);
+				}
+				xhr.send();
+			 }
+
 
 			
 

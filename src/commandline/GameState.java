@@ -170,6 +170,11 @@ public class GameState {
 			while(i < players.size() && 
 					players.get(i).getHandSize() == 0) {
 				
+				// remove human player if eliminated
+				if(players.get(i) == this.humanPlayer){
+					this.humanPlayer = null;
+				}
+
 				eliminatedPlayer.add(players.remove(i));
 			}
 		}

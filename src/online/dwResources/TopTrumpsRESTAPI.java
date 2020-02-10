@@ -299,5 +299,21 @@ public class TopTrumpsRESTAPI {
 		return elimStr;		
 	}
 	
+	@GET
+	@Path("/checkHumanPlayer")
+	
+	public String checkHumanPlayer() throws IOException {
+		
+		Player humanPlayer = model.getHumanPlayer();
+		
+		if(humanPlayer != null) {
+			return "1";
+		}
+		else {
+			return "0";
+		}
+			
+	}
+	
 	
 }
