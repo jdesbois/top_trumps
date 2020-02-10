@@ -2,12 +2,17 @@ package tests;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import commandline.*;
 
 public class PlayerTest {
     Deck deck = new Deck();
-    PlayerHand hand = deck.deal().get(0);
+    ArrayList<PlayerHand> hands = deck.deal();
+    PlayerHand hand = hands.get(0);
     Player player = new Player("John", hand);
+
 
 
     @Test
@@ -35,4 +40,19 @@ public class PlayerTest {
         System.out.println("Testing get name method");
         assertEquals("John", player.getName());
     }
+    
+    @Test 
+    public void testGetHighestAttri() {
+        System.out.println("Testing get highest attribute method");
+        player.drawNewCard();
+        assertEquals(2, player.getHighestAttribute());
+    }
+
+    @Test 
+    public void testAddCardAtBottom() {
+        System.out.println("Testing add card to bottom method");
+        player.addCardAtBottom(hands.get(1).getHand());
+        assertEquals(16, player.getHandSize());
+    }
+
 }

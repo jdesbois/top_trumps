@@ -38,7 +38,7 @@
     	<artifactId>mysql-connector-java</artifactId>
     	<version>5.1.38</version>
 	</dependency>
-
+<!-- Junit to run the unit test runner classes -->
     <dependency>
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
