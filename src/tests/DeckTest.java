@@ -36,6 +36,7 @@ public class DeckTest {
     @Test 
     public void testDeal() {
         System.out.println("Testing deal method");
+        assertNotEquals(deck.deal(), deck2.deal());
     }
 
 }

@@ -40,6 +40,7 @@
 				
 				// For example, lets call our sample methods
 				drawCard();
+				getDeck();
 			}
 			
 			// -----------------------------------------
@@ -93,7 +94,7 @@
  					var responseText = xhr.response; // the text of the response
 					var jsonConvert = JSON.parse(responseText);
 					console.log(jsonConvert);
-						for (var i=0; i<jsonConvert['deck'].length; i++) {
+						/*for (var i=0; i<jsonConvert['deck'].length; i++) {
 								var title = jsonConvert['deck'][i]['desc']
 								var size = jsonConvert['deck'][i]['values'][0]
 								var speed = jsonConvert['deck'][i]['values'][1]
@@ -101,7 +102,7 @@
 								var firepower = jsonConvert['deck'][i]['values'][3]
 								var cargo = jsonConvert['deck'][i]['values'][4]
 								$(".list").append(printCard(title, size, speed, range, firepower, cargo));
-						}
+						}*/
 				};
 				// We have done everything we need to prepare the CORS request, so send it
 				xhr.send();		

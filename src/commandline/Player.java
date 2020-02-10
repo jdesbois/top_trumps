@@ -4,7 +4,7 @@ import java.util.*;
 public class Player {
 	public String name;
 	private PlayerHand gameHand;
-	private Card currentCard;
+	public Card currentCard;
 	
 	
 	// Human players would have there names set
