@@ -8,7 +8,6 @@ package commandline;
 
 public class ComputerPlayer extends Player {
 	
-	private Card currentCard;
 
 	public ComputerPlayer(String name, PlayerHand gameHand) {
 		super(name, gameHand);
