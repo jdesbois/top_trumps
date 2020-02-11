@@ -18,6 +18,7 @@
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
+		<!-- additional styles -->
 		 <style>
         .jumbotron {
             padding-top: 10px !important;
@@ -68,6 +69,7 @@
     	
     	<div class="container">
     		
+    		<!-- main heading -->
     		<div class="jumbotron">
 		        <h3 class="display-4">Top Trumps game </h3>
 		        <p class="lead"></p>
@@ -83,6 +85,7 @@
 		        </div>
 
 
+		        <!-- container for buttons and text descriptions -->
 		        <div class="row justify-content-around row2">
 		            <div class="col-2 col2_1">
 		                <div class="row justify-content-around verticalSeparation">
@@ -90,24 +93,38 @@
 		                </div>
 		                <div class="card bg-secondary user_choice">
 		                    <div class="card-body body1">
-		                        <h6 class="card-title get_activeP" id="turn"> The active player is getActivePlayer</h6>
-		                        <p class="card-text atri_select" id="selectedCat">They selected getAtributeSelection</p>
-		                        <h6 id="win/draw" id="winDraw"> Win/Draw</h6>
-		                        <h6 id="roundWinner"> "+" is the winner</h6>
-		                        <h6 id="eliminatedPlayers">" x" is eliminated</h6>
-		                        <a href="#" class="btn bg-secondary.text-body nextRound"> Next Round</a> <br>
-		                        <a href="http://127.0.0.1:5500/Results.html" class="btn bg-secondary.text-body winzies">Show winner</a>
-		                        <div class="btn-group-vertical bg-secondary my_buttons">
+		                        
+
+		                    	<!-- buttons -->
+		                        <button onclick="startRound()" type="button" class="btn btn-light" id="nextRound">Next Round</button>
+		                        <button onclick="AISelectCategory()" type="button" class="btn btn-light" id="next">Next</button>
+		                        <button onclick="AISelectCategory()" type="button" class="btn btn-light" id="AIOnly">Next (AI Only)</button>
+		                        <button type="button" class="btn btn-light" id="newGame">New Game</button>
+
+
+		                        <div class="btn-group-vertical bg-secondary my_buttons" id="categories">
 		                            <h5> Please select a category</h5>
-		                            <button type="button" class="btn btn-default card_Value_0"> Select Size </button>
-		                            <button type="button" class="btn btn-default card_Value_1"> Select Speed </button>
-		                            <button type="button" class="btn btn-default card_Value_2"> Select Range </button>
-		                            <button type="button" class="btn btn-default card_Value_3"> Select Firepower </button>
-		                            <button type="button" class="btn btn-default card_Value_4"> Select Cargo </button>
+		                            <button onclick="selectCategory(1)" type="button" class="btn btn-default card_Value_0"> Select Size </button>
+		                            <button onclick="selectCategory(2)" type="button" class="btn btn-default card_Value_1"> Select Speed </button>
+		                            <button onclick="selectCategory(3)" type="button" class="btn btn-default card_Value_2"> Select Range </button>
+		                            <button onclick="selectCategory(4)" type="button" class="btn btn-default card_Value_3"> Select Firepower </button>
+		                            <button onclick="selectCategory(5)" type="button" class="btn btn-default card_Value_4"> Select Cargo </button>
 		                        </div>
+
+		                        <!-- text description fields -->
+		                        <h6 class="card-title get_activeP" id="turn"></h6>
+		                        <p class="card-text atri_select" id="selectedCat"></p>
+		                        <h6 id="winDraw"></h6>
+		                        <h6 id="eliminatedPlayers"></h6>
+		                        <h6 id="gameWinner"></h6>
+
 		                    </div>
 		                </div>
 		            </div>
+
+		            <!-- cards -->
+
+
 		            <div class="col-8">
 
 		                <div class="container card_Container">
@@ -116,9 +133,9 @@
 		                            <div class="col-12 invisible"> " Vertical separation" </div>
 		                        </div>
 		                        <div class="row justify-content-around cardRow1">
-		                            <div class="col-md-4 col-sm-6 Hplayer">
+		                            <div class="col-md-4 col-sm-6 Hplayer" id="card1">
 		                                <div class="card myCards">
-		                                    <div class="card-header getHp_Name">
+		                                    <div class="card-header getHp_Name" id="nameAndDeckSize1">
 		                                        Hp name + deckSize
 		                                    </div>
 		                                    <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid">
@@ -126,7 +143,7 @@
 		                                        <div class="card-title">
 		                                            <div class="row justify-content-around Title_row">
 		                                                <div class="col-6 title_col">
-		                                                    <div class="Hp_cardName">
+		                                                    <div class="Hp_cardName" id="cName1">
 		                                                        san francisco
 		                                                    </div>
 		                                                </div>
@@ -138,7 +155,7 @@
 		                                                    Size
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Hp_val0">
+		                                                    <div class="Hp_val0" id="size1">
 		                                                        10
 		                                                    </div>
 		                                                </div>
@@ -148,7 +165,7 @@
 		                                                    Speed
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Hp_val1">
+		                                                    <div class="Hp_val1" id="speed1">
 		                                                        5
 		                                                    </div>
 		                                                </div>
@@ -158,7 +175,7 @@
 		                                                    Range
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Hp_val2">
+		                                                    <div class="Hp_val2" id="range1">
 		                                                        6
 		                                                    </div>
 		                                                </div>
@@ -167,7 +184,7 @@
 		                                                <div class="col-6 card_col1">
 		                                                    Firepower
 		                                                </div>
-		                                                <div class="col-4 card_col2">
+		                                                <div class="col-4 card_col2" id="firepower1">
 		                                                    <div class="Hp_val3">
 		                                                        10
 		                                                    </div>
@@ -177,7 +194,7 @@
 		                                                <div class="col-6 card_col1">
 		                                                    Cargo
 		                                                </div>
-		                                                <div class="col-4 card_col2">
+		                                                <div class="col-4 card_col2" id="cargo1">
 		                                                    <div class="Hp_val4">
 		                                                        1
 		                                                    </div>
@@ -188,9 +205,9 @@
 		                                </div>
 		                            </div>
 
-		                            <div class="col-md-4 col-sm-6 Player_a">
+		                            <div class="col-md-4 col-sm-6 Player_a" id="card2">
 		                                <div class="card myCards">
-		                                    <div class="card-header getPlayer_a">
+		                                    <div class="card-header getPlayer_a" id="nameAndDeckSize2">
 		                                        pName pdecksize
 		                                    </div>
 		                                    <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid">
@@ -198,7 +215,7 @@
 		                                        <div class="card-title">
 		                                            <div class="row justify-content-around Title_row">
 		                                                <div class="col-6 title_col">
-		                                                    <div class="Pa_cardName">
+		                                                    <div class="Pa_cardName" id="cName2">
 		                                                        san francisco
 		                                                    </div>
 		                                                </div>
@@ -209,7 +226,7 @@
 		                                                <div class="col-6 card_col1">
 		                                                    Size
 		                                                </div>
-		                                                <div class="col-4 card_col2">
+		                                                <div class="col-4 card_col2" id="size2">
 		                                                    <div class="Pa_val0">
 		                                                        10
 		                                                    </div>
@@ -220,7 +237,7 @@
 		                                                    Speed
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Pa_val1">
+		                                                    <div class="Pa_val1" id="speed2">
 		                                                        5
 		                                                    </div>
 		                                                </div>
@@ -230,7 +247,7 @@
 		                                                    Range
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Pa_val2">
+		                                                    <div class="Pa_val2" id="range2">
 		                                                        6
 		                                                    </div>
 		                                                </div>
@@ -240,7 +257,7 @@
 		                                                    Firepower
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Pa_val3">
+		                                                    <div class="Pa_val3" id="firepower2">
 		                                                        10
 		                                                    </div>
 		                                                </div>
@@ -250,7 +267,7 @@
 		                                                    Cargo
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Pa_val4">
+		                                                    <div class="Pa_val4" id="cargo2">
 		                                                        1
 		                                                    </div>
 		                                                </div>
@@ -260,9 +277,9 @@
 		                                </div>
 		                            </div>
 
-		                            <div class="col-md-4 col-sm-6 Player_b">
+		                            <div class="col-md-4 col-sm-6 Player_b" id="card3">
 		                                <div class="card myCards">
-		                                    <div class="card-header bPlayer">
+		                                    <div class="card-header bPlayer" id="nameAndDeckSize3">
 		                                        bName bdeck
 		                                    </div>
 		                                    <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid">
@@ -270,7 +287,7 @@
 		                                        <div class="card-title">
 		                                            <div class="row justify-content-around Title_row">
 		                                                <div class="col-6 title_col">
-		                                                    <div class="Pb_cardName">
+		                                                    <div class="Pb_cardName" id="cName3">
 		                                                        san francisco
 		                                                    </div>
 		                                                </div>
@@ -282,7 +299,7 @@
 		                                                    Size
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Pb_val0">
+		                                                    <div class="Pb_val0" id="size3">
 		                                                        10
 		                                                    </div>
 		                                                </div>
@@ -292,7 +309,7 @@
 		                                                    Speed
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Pb_val1">
+		                                                    <div class="Pb_val1" id="speed3">
 		                                                        5
 		                                                    </div>
 		                                                </div>
@@ -302,7 +319,7 @@
 		                                                    Range
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Pb_val2">
+		                                                    <div class="Pb_val2" id="range3">
 		                                                        6
 		                                                    </div>
 		                                                </div>
@@ -312,7 +329,7 @@
 		                                                    Firepower
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Pb_val3">
+		                                                    <div class="Pb_val3" id="firepower3">
 		                                                        10
 		                                                    </div>
 		                                                </div>
@@ -322,7 +339,7 @@
 		                                                    Cargo
 		                                                </div>
 		                                                <div class="col-4 card_col2">
-		                                                    <div class="Pb_val4">
+		                                                    <div class="Pb_val4" id="cargo3">
 		                                                        1
 		                                                    </div>
 		                                                </div>
@@ -336,9 +353,9 @@
 		                        <div class="col-12 invisible"> " Vertical separation" </div>
 		                    </div>
 		                    <div class="row justify-content-around secondRound">
-		                        <div class="col-md-4 col-sm-6 Player_c">
+		                        <div class="col-md-4 col-sm-6 Player_c" id="card4">
 		                            <div class="card myCards">
-		                                <div class="card-header cPlayer">
+		                                <div class="card-header cPlayer" id="nameAndDeckSize4">
 		                                    cName cDeck
 		                                </div>
 		                                <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid">
@@ -346,7 +363,7 @@
 		                                    <div class="card-title">
 		                                        <div class="row justify-content-around Title_row">
 		                                            <div class="col-6 title_col">
-		                                                <div class="Pc_cardName">
+		                                                <div class="Pc_cardName" id="cName4">
 		                                                    san francisco
 		                                                </div>
 		                                            </div>
@@ -358,7 +375,7 @@
 		                                                Size
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pc_val0">
+		                                                <div class="Pc_val0" id="size4">
 		                                                    10
 		                                                </div>
 		                                            </div>
@@ -368,7 +385,7 @@
 		                                                Speed
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pc_val1">
+		                                                <div class="Pc_val1" id="speed4">
 		                                                    5
 		                                                </div>
 		                                            </div>
@@ -378,7 +395,7 @@
 		                                                Range
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pc_val2">
+		                                                <div class="Pc_val2" id="range4">
 		                                                    6
 		                                                </div>
 		                                            </div>
@@ -388,7 +405,7 @@
 		                                                Firepower
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pc_val3">
+		                                                <div class="Pc_val3" id="firepoer4">
 		                                                    10
 		                                                </div>
 		                                            </div>
@@ -398,7 +415,7 @@
 		                                                Cargo
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pc_val4">
+		                                                <div class="Pc_val4" id="cargo4">
 		                                                    1
 		                                                </div>
 		                                            </div>
@@ -407,9 +424,9 @@
 		                                </div>
 		                            </div>
 		                        </div>
-		                        <div class="col-md-4 col-sm-6 Player_d">
+		                        <div class="col-md-4 col-sm-6 Player_d" id="card5">
 		                            <div class="card myCards">
-		                                <div class="card-header dPlayer">
+		                                <div class="card-header dPlayer" id="nameAndDeckSize5">
 		                                    dName dDeck
 		                                </div>
 		                                <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid">
@@ -417,7 +434,7 @@
 		                                    <div class="card-title">
 		                                        <div class="row justify-content-around Title_row">
 		                                            <div class="col-6 title_col">
-		                                                <div class="Pd_cardName">
+		                                                <div class="Pd_cardName" id="cName5">
 		                                                    san francisco
 		                                                </div>
 		                                            </div>
@@ -429,7 +446,7 @@
 		                                                Size
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pd_val0">
+		                                                <div class="Pd_val0" id="size5">
 		                                                    10
 		                                                </div>
 		                                            </div>
@@ -439,7 +456,7 @@
 		                                                Speed
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pd_val1">
+		                                                <div class="Pd_val1" id="speed5">
 		                                                    5
 		                                                </div>
 		                                            </div>
@@ -449,7 +466,7 @@
 		                                                Range
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pd_val2">
+		                                                <div class="Pd_val2" id="range5">
 		                                                    6
 		                                                </div>
 		                                            </div>
@@ -459,7 +476,7 @@
 		                                                Firepower
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pd_val3">
+		                                                <div class="Pd_val3" id="firepower5">
 		                                                    10
 		                                                </div>
 		                                            </div>
@@ -469,7 +486,7 @@
 		                                                Cargo
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pd_val4">
+		                                                <div class="Pd_val4" id="cargo5">
 		                                                    1
 		                                                </div>
 		                                            </div>
@@ -491,14 +508,22 @@
 		
 			// Method that is called on page load
 			function initalize() {
-		
-				// hide buttons to start
-				$(".categories").hide();
-				$("#nextRound").hide();
+				
+				// hide buttons and text
 				$("#next").hide();
+				$("#nextRound").hide();
+				$("#newGame").hide();
+				$("#categories").hide();
+				$("#turn").hide();
+				$("#selectedCat").hide();
+				$("#winDraw").hide();
+				$("#eliminatedPlayers").hide();
+				$("#gameWinner").hide();
+
+				// redundant?
 				$("#AIOnly").hide();
 
-				// check whether player or AI turn and start round
+				// start round
 				drawCards();
 				
 			}
@@ -560,6 +585,8 @@
 					// if only 1 player left, game over and announce winner
 					if(jsonPlayers.length == 1){
 						$("#gameWinner").append("<h2>" + jsonPlayers[0].name + " wins the game!</h2>");
+						$("#newGame").show();
+						$("#nextRound").hide();
 					}
 
 					// else check whose turn it is and start game
@@ -655,7 +682,11 @@
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayer");
 
 				// empty list of cards
-				$(".list").empty();
+				// $(".list").empty();
+				$("#card2").hide();
+				$("#card3").hide();
+				$("#card4").hide();
+				$("#card5").hide();
 
 				if(!xhr) {
 					alert("CORS not supported");
@@ -671,18 +702,30 @@
 					// card title
 					var title = jsonHumanPlayer.card.desc
 
-					// attribute values
-					var size = jsonHumanPlayer.card.values[0]
-					var speed = jsonHumanPlayer.card.values[1]
-					var range = jsonHumanPlayer.card.values[2]
-					var firepower = jsonHumanPlayer.card.values[3]
-					var cargo = jsonHumanPlayer.card.values[4]
-
 					// cards left in hand
 					var cardsLeft = jsonHumanPlayer.handSize
 
-					// append card details to list of cards
-					$(".list").append(printCard(playerNo, title, size, speed, range, firepower, cargo, cardsLeft));
+					$("#nameAndDeckSize1").text(playerNo + "	Cards:" + cardsLeft);
+
+					$("#cName1").text(title);
+
+					$("#size1").text(jsonHumanPlayer.card.values[0]);
+					$("#speed1").text(jsonHumanPlayer.card.values[1]);
+					$("#range1").text(jsonHumanPlayer.card.values[2]);
+					$("#firepower1").text(jsonHumanPlayer.card.values[3]);
+					$("#cargo1").text(jsonHumanPlayer.card.values[4]);
+
+					// // attribute values
+					// var size = jsonHumanPlayer.card.values[0]
+					// var speed = jsonHumanPlayer.card.values[1]
+					// var range = jsonHumanPlayer.card.values[2]
+					// var firepower = jsonHumanPlayer.card.values[3]
+					// var cargo = jsonHumanPlayer.card.values[4]
+
+					
+
+					// // append card details to list of cards
+					// $(".list").append(printCard(playerNo, title, size, speed, range, firepower, cargo, cardsLeft));
 
 					checkTurn();
 				}
@@ -694,12 +737,24 @@
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkTurn");
 
 				// empty text fields, cards and hide next round button
-				$(".WinDraw").empty();
-				$("#selectedCat").empty();
-				// $(".list").empty();
+				// $(".WinDraw").empty();
+				// $("#selectedCat").empty();
+				// // $(".list").empty();
+				// $("#eliminatedPlayers").empty();
+				// $("#nextRound").hide();	
+				// $("#turn").empty();
+
+				$("#selectedCat").hide();
+				$("#roundWinner").hide();
+				$("#next").hide();
+				$("#categories").hide();
+				$("#winDraw").hide();
+				$("#nextRound").hide();
+				$("#AIOnly").hide();
 				$("#eliminatedPlayers").empty();
-				$("#nextRound").hide();	
-				$("#turn").empty();
+				$("#eliminatedPlayers").hide();
+
+
 
 				if(!xhr) {
 					alert("CORS not supported");
@@ -713,10 +768,11 @@
 					// if it is the human player's turn
 					if(playerTurn == "1"){
 						// show buttons to select category
-						$(".categories").show();
+						// $(".categories").show();
+						$("#categories").show();
 
 						// show text to indicate player turn
-						$("#turn").append("Your turn");
+						// $("#turn").text("Your turn");
 					}
 					// else it is an AI turn
 					else{
@@ -724,7 +780,7 @@
 						$("#next").show();
 
 						// show text to indicate AI turn
-						$("#turn").append("AI turn");
+						$("#turn").text("AI turn");
 					}
 					
 				}
@@ -826,8 +882,16 @@
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/selectCategory?Category="+category);
 
 				// empty list of cards
-				$(".list").empty();
-				$(".categories").hide();
+				// $(".list").empty();
+				// $(".categories").hide();
+
+				$("#categories").hide();
+				$("#turn").hide();
+
+				$("#selectedCat").show();
+				$("#eliminatedPlayers").show();
+				$("#winDraw").show();
+				$("#roundWinner").show();
 				
 				if(!xhr) {
 					alert("CORS not supported");
@@ -838,7 +902,7 @@
 					console.log("Player selected category: " + xhr.response);
 
 					// display selected category
-					$("#selectedCat").append("Selected category: " + xhr.response);
+					$("#selectedCat").text("Selected category: " + xhr.response);
 
 					showPlayers();
 				}
@@ -850,9 +914,18 @@
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/AISelectCategory");
 
 				// empty list of cards
-				$(".list").empty();
+				// $(".list").empty();
+				// $("#next").hide();
+				// $("#AIOnly").hide();
+
 				$("#next").hide();
 				$("#AIOnly").hide();
+				$("#turn").hide();
+
+				$("#selectedCat").show();
+				$("#eliminatedPlayers").show();
+				$("#winDraw").show();
+				$("#roundWinner").show();
 				
 				
 				if(!xhr) {
@@ -864,7 +937,7 @@
 					console.log("AI selected category: " + xhr.response);
 
 					// display selected category
-					$("#selectedCat").append("Selected category: " + xhr.response);
+					$("#selectedCat").text("Selected category: " + xhr.response);
 					showPlayers();
 
 				}
@@ -876,7 +949,15 @@
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers");
 
 				// empty list of cards
-				$(".list").empty();
+				// $(".list").empty();
+
+				// may be redundant?
+				$("#card1").hide();
+				$("#card2").hide();
+				$("#card3").hide();
+				$("#card4").hide();
+				$("#card5").hide();
+
 				if(!xhr) {
 					alert("CORS not supported");
 				}
@@ -895,18 +976,34 @@
 						// card title
 						var title = jsonPlayers[i].card.desc
 
-						// attribute values
-						var size = jsonPlayers[i].card.values[0]
-						var speed = jsonPlayers[i].card.values[1]
-						var range = jsonPlayers[i].card.values[2]
-						var firepower = jsonPlayers[i].card.values[3]
-						var cargo = jsonPlayers[i].card.values[4]
-
 						// cards left in hand
 						var cardsLeft = jsonPlayers[i].handSize
 
 						// append card details to list of cards
-						$(".list").append(printCard(playerNo, title, size, speed, range, firepower, cargo, cardsLeft));
+						$("#card" + (i+1)).show();
+
+						// attribute values
+						$("#nameAndDeckSize" + (i+1)).text(playerNo + "	Cards:" + cardsLeft);
+						console.log(playerNo + "	Cards:" + cardsLeft);
+
+						$("#cName" + (i+1)).text(title);
+
+						$("#size" + (i + 1)).text(jsonPlayers[i].card.values[0]);
+						$("#speed" + (i + 1)).text(jsonPlayers[i].card.values[1]);
+						$("#range" + (i + 1)).text(jsonPlayers[i].card.values[2]);
+						$("#firepower" + (i + 1)).text(jsonPlayers[i].card.values[3]);
+						$("#cargo" + (i + 1)).text(jsonPlayers[i].card.values[4]);
+
+						// // attribute values
+						// var size = jsonPlayers[i].card.values[0]
+						// var speed = jsonPlayers[i].card.values[1]
+						// var range = jsonPlayers[i].card.values[2]
+						// var firepower = jsonPlayers[i].card.values[3]
+						// var cargo = jsonPlayers[i].card.values[4]
+
+						
+						// // append card details to list of cards
+						// $(".list").append(printCard(playerNo, title, size, speed, range, firepower, cargo, cardsLeft));
 
 						
 					}
@@ -924,7 +1021,10 @@
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getResult");
 
 				// empty text fields
-				$(".WinDraw").empty();
+				// $(".WinDraw").empty();
+
+
+				$("#WinDraw").empty();
 				if(!xhr) {
 					alert("CORS not supported");
 				}
@@ -938,13 +1038,15 @@
 
 					// if a player has won, displayer winner
 					if(result == "1"){
-						$(".WinDraw").append("Winner: ");
+						// $(".WinDraw").append("Winner: ");
+						$("#winDraw").text("Winner: ");
 						// if a player has won, the active player will have been updated to the winner
 						getActivePlayer();
 					}
 					// otherwise indicate draw
 					else{
-						$(".WinDraw").append("Draw");
+						// $(".WinDraw").append("Draw");
+						$("#winDraw").text("Draw");
 					}
 
 					checkEliminations();
@@ -962,7 +1064,8 @@
 				}
 				xhr.onload = function(e) {
 					var result = xhr.response;
-					$(".WinDraw").append("" + result);
+					// $(".WinDraw").append("" + result);
+					$("#winDraw").append("" + result);
 					
 					
 				}
@@ -1047,7 +1150,7 @@
 						for(var i = 0; i < jsonPlayers.length; i++){
 							
 							// list eliminated players
-							$("#eliminatedPlayers").append(jsonPlayers[i].name);
+							$("#eliminatedPlayers").append("<br />" + jsonPlayers[i].name);
 
 						}
 					}
