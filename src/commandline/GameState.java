@@ -6,9 +6,7 @@ import java.util.HashMap;
 public class GameState {
 
 	// Stores all active Player objects
-	private ArrayList<ComputerPlayer> aiPlayers = new ArrayList<ComputerPlayer>();
-	// Stores Cards currently in play
-	private ArrayList<Card> activeCards = new ArrayList<Card>();
+	private ArrayList<Player> players = new ArrayList<Player>();
 	// Current Player object responsible for choosing attribute
 	private Player activePlayer;
 	// Stores which Player Object is controlled by the player
@@ -36,6 +34,7 @@ public class GameState {
 		ArrayList<PlayerHand> h = gameDeck.deal();
 		
 		humanPlayer = new Player("You", h.remove(0));
+		players.add(humanPlayer);
 		scores.put(humanPlayer, 0);
 		
 		for(int i = 1; i < 5; i++) {
@@ -43,7 +42,7 @@ public class GameState {
 			ComputerPlayer p = new ComputerPlayer("AIPlayer" + (i + 1), h.remove(0));
 			
 			scores.put(p, 0);
-			aiPlayers.add(p);
+			players.add(p);
 		}
 		
 		int rand = (int)(Math.floor(Math.random() * 5));
@@ -53,7 +52,7 @@ public class GameState {
 			activePlayer = humanPlayer;
 		} else {
 			
-			activePlayer = aiPlayers.get(rand);
+			activePlayer = players.get(rand);
 		}
 		
 	}
@@ -63,10 +62,10 @@ public class GameState {
 	 */
 	public int getResult() {
 		
-		addCommunalPile();
-		
+			
 		if(!getWinningPlayer()) {
 			
+			addCommunalPile();
 			return 2;
 		}
 		
@@ -89,10 +88,10 @@ public class GameState {
 		/*
 		 * checks all aiPlayer cards
 		 */
-		for(int i = 0; i < aiPlayers.size(); i++) {
+		for(int i = 0; i < players.size(); i++) {
 			
 			// Stores value of chosen attribute for this player
-			int n = aiPlayers.get(i).getCard().getValue(chosenAttribute);
+			int n = players.get(i).getCard().getValue(chosenAttribute);
 			
 			// Checks if value matches a previous value
 			if(n == highestVal) {
@@ -104,7 +103,7 @@ public class GameState {
 			// If new highest value is found: set round winner and set highCount to 1
 			if(n > highestVal) {
 				
-				roundWinner = aiPlayers.get(i);
+				roundWinner = players.get(i);
 				highCount = 1;
 			}
 			
@@ -112,41 +111,12 @@ public class GameState {
 			highestVal = Math.max(highestVal, n);
 		}
 		
-		/*
-		 * Checks humanPlayer card
-		 */
-		if(humanPlayer != null) {
-			
-			// Stores value of chosen attribute for this player
-			int n = humanPlayer.getCard().getValue(chosenAttribute);
-			
-			// Checks if value matches a previous value
-			if(n == highestVal) {
-				
-				// If matching, increments highCount
-				highCount++;
-			}
-	
-			// If new highest value is found: set round winner and set highCount to 1
-			if(n > highestVal) {
-				
-				roundWinner = humanPlayer;
-				highCount = 1;
-			}
-			
-			// Highest value is the biggest value (out of current player value and stored highest value)
-			highestVal = Math.max(highestVal, n);
-		}
-		
-		// If the roundWinner variable is initialised and highCount is 1, set winner
-		if(roundWinner != null &&
-				highCount == 1) {
-			
-			winner = roundWinner;
-			// Otherwise return false
-		} else {
+		if(highCount > 1) {
 			
 			return false;
+		} else {
+			
+			winner = roundWinner;
 		}
 		
 		// Updates active player
@@ -179,6 +149,14 @@ public class GameState {
 	 */
 	private void dealActiveCards() {
 		
+		ArrayList<Card> activeCards = new ArrayList<Card>();
+		
+		// Loops through all players and adds their current card to an array
+		for(int i = 0; i < players.size(); i++) {
+			
+			activeCards.add(players.get(i).getCard());
+		}
+		
 		winner.addCardAtBottom(activeCards);
 		activeCards.clear();
 	}
@@ -191,19 +169,18 @@ public class GameState {
 		
 		ArrayList<Player> eliminatedPlayer = new ArrayList<Player>();
 		
-		for(int i = 0; i < aiPlayers.size(); i++) {
+		for(int i = 0; i < players.size(); i++) {
 			
-			while(i < aiPlayers.size() && 
-					aiPlayers.get(i).getHandSize() == 0) {
+			while(i < players.size() && 
+					players.get(i).getHandSize() == 0) {
 				
-				eliminatedPlayer.add(aiPlayers.remove(i));
+				eliminatedPlayer.add(players.remove(i));
 			}
 		}
 		
 		if(humanPlayer != null &&
 				humanPlayer.getHandSize() == 0) {
 			
-			eliminatedPlayer.add(humanPlayer);
 			humanPlayer = null;
 		}
 		
@@ -227,9 +204,9 @@ public class GameState {
 		
 		ArrayList<PlayerHand> playerHands = new ArrayList<PlayerHand>();
 		
-		for(int i = 0; i < aiPlayers.size(); i++) {
+		for(int i = 0; i < players.size(); i++) {
 			
-			playerHands.add(aiPlayers.get(i).getPlayerHand());
+			playerHands.add(players.get(i).getPlayerHand());
 		}
 		
 		if(humanPlayer != null) {
@@ -265,14 +242,9 @@ public class GameState {
 	 */
 	public void drawNewCard() {
 		
-		for(int i = 0; i < aiPlayers.size(); i++) {
+		for(int i = 0; i < players.size(); i++) {
 			
-			aiPlayers.get(i).drawNewCard();
-		}
-		
-		if(humanPlayer != null) {
-			
-			humanPlayer.drawNewCard();
+			players.get(i).drawNewCard();
 		}
 		
 		roundNumber++;
@@ -291,14 +263,16 @@ public class GameState {
 	 * Get currentAttribute values
 	 * @return int[] Card attributes
 	 */
-	public void getAttributeValues(int n) {
+	public int[] getAttributeValues() {
 		
 		int[] no = new int[5];
 		
-		for(int i = 0; i < activeCards.size(); i++) {
+		for(int i = 0; i < players.size(); i++) {
 			
-			no[i] = activeCards.get(i).getValue(n);
+			no[i] = players.get(i).getCard().getValue(chosenAttribute);
 		}
+		
+		return no;
 	}
 	
 	/**
@@ -315,9 +289,9 @@ public class GameState {
 	 */
 	private void addCommunalPile() {
 		
-		for(int i = 0; i < aiPlayers.size(); i++) {
+		for(int i = 0; i < players.size(); i++) {
 			
-			Card c = aiPlayers.get(i).getCard();
+			Card c = players.get(i).getCard();
 			
 			communalPile.add(c);
 		}
@@ -360,11 +334,20 @@ public class GameState {
 	}
 	
 	/**
+	 * Returns players ArrayList
+	 * @return ArrayList<Player> players
+	 */
+	public ArrayList<Player> getPlayers(){
+		
+		return players;
+	}
+	
+	/**
 	 * Returns players
 	 * @return ArrayList<Player> 
 	 */
 	public int getPlayersSize(){
 		
-		return aiPlayers.size();
+		return players.size();
 	}
 }

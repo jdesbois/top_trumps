@@ -70,7 +70,7 @@ public class TestLog {
 	
 	/**
 	 * Logs the Player hands at the start of the game
-	 * Note: Expects HumanPlayer as the last entry
+	 * Note: Expects HumanPlayer as the first entry as it's initialised before AI players
 	 * @param String toString of playerHands
 	 * @return Boolean if write was successful
 	 */
@@ -79,14 +79,14 @@ public class TestLog {
 		BufferedWriter w = new BufferedWriter(log);
 		StringBuffer sb = new StringBuffer();
 		
+		// Should not be passed null (as this is game start)
+		sb.append("HumanPlayer: " + sH.remove(0).toString());
+				
 		// Loops through all AiPlayers and prints their hand
-		for(int i = 0; i < sH.size() - 1; i++) {
+		for(int i = 0; i < sH.size(); i++) {
 			
 			sb.append("AIPlayer" + (i + 1) + ": " + sH.remove(0).toString());
 		}
-		
-		// Should not be passed null (as this is game start)
-		sb.append("HumaPlayer: " + sH.remove(0).toString());
 		
 		// Formats log
 		String st = new String("======================\n" + "Starting Player Hands: " + sb);
@@ -139,7 +139,7 @@ public class TestLog {
 	 */
 	public void logCurrentCards(ArrayList<Card> c) {
 		
-		BufferedWriter w = new BufferedWriter(log);
+		BufferedWriter w = new //BufferedWriter(log);
 		StringBuffer sb = new StringBuffer();
 		
 		// Loops through all active cards and prints them
@@ -170,7 +170,7 @@ public class TestLog {
 	 */
 	public void logCategoryandValues(String s, int[] n) {
 		
-		BufferedWriter w = new BufferedWriter(log);
+		BufferedWriter w = new //BufferedWriter(log);
 		// Formats log
 		String st = new String("======================\n" + "Shuffled Deck: "  + s);
 		
@@ -187,6 +187,7 @@ public class TestLog {
 	
 	/**
 	 * Logs the hands after every round
+	 * Note: Expects HumanPlayer as the first entry as it's initialised before AI players
 	 * @param String each player's hand contents
 	 * @param Boolean is humanPlayer active
 	 * @return Boolean if write was successful
@@ -196,16 +197,16 @@ public class TestLog {
 		BufferedWriter w = new BufferedWriter(log);
 		StringBuffer sb = new StringBuffer();
 		
-		// Loops through all AiPlayers and prints their hand
-		for(int i = 0; i < cH.size() - 1; i++) {
-			
-			sb.append("AIPlayer" + (i + 1) + ": " + cH.remove(0).toString());
-		}
-		
 		// Checks if humanPlayer is null and if not, appends hand
 		if(b) {
-		
-			sb.append("HumaPlayer: " + cH.remove(0).toString());
+			
+			sb.append("HumanPlayer: " + cH.remove(0).toString());
+		}
+				
+		// Loops through all AiPlayers and prints their hand
+		for(int i = 0; i < cH.size(); i++) {
+			
+			sb.append("AIPlayer" + (i + 1) + ": " + cH.remove(0).toString());
 		}
 		
 		// Formats log
