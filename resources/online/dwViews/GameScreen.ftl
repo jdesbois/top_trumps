@@ -18,47 +18,474 @@
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
+		 <style>
+        .jumbotron {
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+            background: lightgray;
+        }
+
+        .winzies:hover {
+            background: lightgray;
+        }
+
+        .card_Value_0:hover {
+            background: lightgray;
+        }
+
+        .card_Value_1:hover {
+            background: lightgray;
+        }
+
+        .card_Value_2:hover {
+            background: lightgray;
+        }
+
+        .card_Value_3:hover {
+            background: lightgray;
+        }
+
+        .card_Value_4:hover {
+            background: lightgray;
+        }
+
+        .myCards {
+            border: 2px solid black;
+            background: lightgray;
+        }
+
+        .nextRound:hover {
+            background: lightgray;
+        }
+        .body1 {
+            border: 2px solid black;
+        }
+    </style>
+
 	</head>
 
     <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
     	
     	<div class="container">
     		
-    		<!-- button to move to next round -->
-    		<button onclick="startRound()" id="nextRound" type="button" class="btn btn-primary">Next Round</button>
+    		<div class="jumbotron">
+		        <h3 class="display-4">Top Trumps game </h3>
+		        <p class="lead"></p>
+		    </div>
 
-    		<!-- button to move to results when AI selectign category -->
-    		<button onclick="AISelectCategory()" id="next" type="button" class="btn btn-primary">Next</button>
+		    <div class="container_atri_chosen">
 
-    		<button onclick="AISelectCategory()" id="AIOnly" type="button" class="btn btn-primary">Next (AI Only)</button>
-    		
-    		<!-- buttons to select category and move to result when humna selecting category -->
-    		<div class="categories" role="group" aria-label="First group">
-				<button onclick="selectCategory(1)" type="button" class="btn btn-secondary">1</button>
-				<button onclick="selectCategory(2)" type="button" class="btn btn-secondary">2</button>
-				<button onclick="selectCategory(3)" type="button" class="btn btn-secondary">3</button>
-				<button onclick="selectCategory(4)" type="button" class="btn btn-secondary">4</button>
-				<button onclick="selectCategory(5)" type="button" class="btn btn-secondary">5</button>
-			</div>
+		        <div class="row justify-content-centre row_1">
+		            <div class="col col_1.1">
+		                <h2> <var class="getRoundCount_getPlayerName, getAtribute"> my_round_count </var> : playerName has
+		                    selected atributeName </h2>
+		            </div>
+		        </div>
 
-			<!-- element to display who's turn it is-->
-			<div id="turn"></div>
 
-			<!-- element to display selected category -->
-			<div id="selectedCat"></div>
+		        <div class="row justify-content-around row2">
+		            <div class="col-2 col2_1">
+		                <div class="row justify-content-around verticalSeparation">
+		                    <div class="col-12 invisible"> " Vertical separation" </div>
+		                </div>
+		                <div class="card bg-secondary user_choice">
+		                    <div class="card-body body1">
+		                        <h6 class="card-title get_activeP" id="turn"> The active player is getActivePlayer</h6>
+		                        <p class="card-text atri_select" id="selectedCat">They selected getAtributeSelection</p>
+		                        <h6 id="win/draw" id="winDraw"> Win/Draw</h6>
+		                        <h6 id="roundWinner"> "+" is the winner</h6>
+		                        <h6 id="eliminatedPlayers">" x" is eliminated</h6>
+		                        <a href="#" class="btn bg-secondary.text-body nextRound"> Next Round</a> <br>
+		                        <a href="http://127.0.0.1:5500/Results.html" class="btn bg-secondary.text-body winzies">Show winner</a>
+		                        <div class="btn-group-vertical bg-secondary my_buttons">
+		                            <h5> Please select a category</h5>
+		                            <button type="button" class="btn btn-default card_Value_0"> Select Size </button>
+		                            <button type="button" class="btn btn-default card_Value_1"> Select Speed </button>
+		                            <button type="button" class="btn btn-default card_Value_2"> Select Range </button>
+		                            <button type="button" class="btn btn-default card_Value_3"> Select Firepower </button>
+		                            <button type="button" class="btn btn-default card_Value_4"> Select Cargo </button>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="col-8">
 
-			<!-- element to display any players eliminated in a round -->
-			<div id="eliminatedPlayers"></div>
+		                <div class="container card_Container">
+		                    <div class="row justify-content-around playersRow1">
+		                        <div class="row justify-content-around verticalSeparation">
+		                            <div class="col-12 invisible"> " Vertical separation" </div>
+		                        </div>
+		                        <div class="row justify-content-around cardRow1">
+		                            <div class="col-md-4 col-sm-6 Hplayer">
+		                                <div class="card myCards">
+		                                    <div class="card-header getHp_Name">
+		                                        Hp name + deckSize
+		                                    </div>
+		                                    <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid">
+		                                    <div class="card-block">
+		                                        <div class="card-title">
+		                                            <div class="row justify-content-around Title_row">
+		                                                <div class="col-6 title_col">
+		                                                    <div class="Hp_cardName">
+		                                                        san francisco
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="card-text">
+		                                            <div class="row justify-content-around card_row0">
+		                                                <div class="col-6 card_col1">
+		                                                    Size
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Hp_val0">
+		                                                        10
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row1">
+		                                                <div class="col-6 card_col1">
+		                                                    Speed
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Hp_val1">
+		                                                        5
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row2">
+		                                                <div class="col-6 card_col1">
+		                                                    Range
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Hp_val2">
+		                                                        6
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row3">
+		                                                <div class="col-6 card_col1">
+		                                                    Firepower
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Hp_val3">
+		                                                        10
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row_4">
+		                                                <div class="col-6 card_col1">
+		                                                    Cargo
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Hp_val4">
+		                                                        1
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
 
-			<!-- element to display round result -->
-			<div class="WinDraw"></div>
+		                            <div class="col-md-4 col-sm-6 Player_a">
+		                                <div class="card myCards">
+		                                    <div class="card-header getPlayer_a">
+		                                        pName pdecksize
+		                                    </div>
+		                                    <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid">
+		                                    <div class="card-block">
+		                                        <div class="card-title">
+		                                            <div class="row justify-content-around Title_row">
+		                                                <div class="col-6 title_col">
+		                                                    <div class="Pa_cardName">
+		                                                        san francisco
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="card-text">
+		                                            <div class="row justify-content-around card_row0">
+		                                                <div class="col-6 card_col1">
+		                                                    Size
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Pa_val0">
+		                                                        10
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row1">
+		                                                <div class="col-6 card_col1">
+		                                                    Speed
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Pa_val1">
+		                                                        5
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row2">
+		                                                <div class="col-6 card_col1">
+		                                                    Range
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Pa_val2">
+		                                                        6
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row3">
+		                                                <div class="col-6 card_col1">
+		                                                    Firepower
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Pa_val3">
+		                                                        10
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row_4">
+		                                                <div class="col-6 card_col1">
+		                                                    Cargo
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Pa_val4">
+		                                                        1
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
 
-			<!-- element to display game winner -->
-			<div id="gameWinner"></div>
+		                            <div class="col-md-4 col-sm-6 Player_b">
+		                                <div class="card myCards">
+		                                    <div class="card-header bPlayer">
+		                                        bName bdeck
+		                                    </div>
+		                                    <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid">
+		                                    <div class="card-block">
+		                                        <div class="card-title">
+		                                            <div class="row justify-content-around Title_row">
+		                                                <div class="col-6 title_col">
+		                                                    <div class="Pb_cardName">
+		                                                        san francisco
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="card-text">
+		                                            <div class="row justify-content-around card_row0">
+		                                                <div class="col-6 card_col1">
+		                                                    Size
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Pb_val0">
+		                                                        10
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row1">
+		                                                <div class="col-6 card_col1">
+		                                                    Speed
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Pb_val1">
+		                                                        5
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row2">
+		                                                <div class="col-6 card_col1">
+		                                                    Range
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Pb_val2">
+		                                                        6
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row3">
+		                                                <div class="col-6 card_col1">
+		                                                    Firepower
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Pb_val3">
+		                                                        10
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                            <div class="row justify-content-around card_row_4">
+		                                                <div class="col-6 card_col1">
+		                                                    Cargo
+		                                                </div>
+		                                                <div class="col-4 card_col2">
+		                                                    <div class="Pb_val4">
+		                                                        1
+		                                                    </div>
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                    </div>
+		                    <div class="row justify-content-around verticalSeparation">
+		                        <div class="col-12 invisible"> " Vertical separation" </div>
+		                    </div>
+		                    <div class="row justify-content-around secondRound">
+		                        <div class="col-md-4 col-sm-6 Player_c">
+		                            <div class="card myCards">
+		                                <div class="card-header cPlayer">
+		                                    cName cDeck
+		                                </div>
+		                                <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid">
+		                                <div class="card-block">
+		                                    <div class="card-title">
+		                                        <div class="row justify-content-around Title_row">
+		                                            <div class="col-6 title_col">
+		                                                <div class="Pc_cardName">
+		                                                    san francisco
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                    <div class="card-text">
+		                                        <div class="row justify-content-around card_row0">
+		                                            <div class="col-6 card_col1">
+		                                                Size
+		                                            </div>
+		                                            <div class="col-4 card_col2">
+		                                                <div class="Pc_val0">
+		                                                    10
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row justify-content-around card_row1">
+		                                            <div class="col-6 card_col1">
+		                                                Speed
+		                                            </div>
+		                                            <div class="col-4 card_col2">
+		                                                <div class="Pc_val1">
+		                                                    5
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row justify-content-around card_row2">
+		                                            <div class="col-6 card_col1">
+		                                                Range
+		                                            </div>
+		                                            <div class="col-4 card_col2">
+		                                                <div class="Pc_val2">
+		                                                    6
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row justify-content-around card_row3">
+		                                            <div class="col-6 card_col1">
+		                                                Firepower
+		                                            </div>
+		                                            <div class="col-4 card_col2">
+		                                                <div class="Pc_val3">
+		                                                    10
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row justify-content-around card_row_4">
+		                                            <div class="col-6 card_col1">
+		                                                Cargo
+		                                            </div>
+		                                            <div class="col-4 card_col2">
+		                                                <div class="Pc_val4">
+		                                                    1
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                        <div class="col-md-4 col-sm-6 Player_d">
+		                            <div class="card myCards">
+		                                <div class="card-header dPlayer">
+		                                    dName dDeck
+		                                </div>
+		                                <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid">
+		                                <div class="card-block">
+		                                    <div class="card-title">
+		                                        <div class="row justify-content-around Title_row">
+		                                            <div class="col-6 title_col">
+		                                                <div class="Pd_cardName">
+		                                                    san francisco
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                    <div class="card-text">
+		                                        <div class="row justify-content-around card_row0">
+		                                            <div class="col-6 card_col1">
+		                                                Size
+		                                            </div>
+		                                            <div class="col-4 card_col2">
+		                                                <div class="Pd_val0">
+		                                                    10
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row justify-content-around card_row1">
+		                                            <div class="col-6 card_col1">
+		                                                Speed
+		                                            </div>
+		                                            <div class="col-4 card_col2">
+		                                                <div class="Pd_val1">
+		                                                    5
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row justify-content-around card_row2">
+		                                            <div class="col-6 card_col1">
+		                                                Range
+		                                            </div>
+		                                            <div class="col-4 card_col2">
+		                                                <div class="Pd_val2">
+		                                                    6
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row justify-content-around card_row3">
+		                                            <div class="col-6 card_col1">
+		                                                Firepower
+		                                            </div>
+		                                            <div class="col-4 card_col2">
+		                                                <div class="Pd_val3">
+		                                                    10
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                        <div class="row justify-content-around card_row_4">
+		                                            <div class="col-6 card_col1">
+		                                                Cargo
+		                                            </div>
+		                                            <div class="col-4 card_col2">
+		                                                <div class="Pd_val4">
+		                                                    1
+		                                                </div>
+		                                            </div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
 
-			<!-- list to hold cards -->
-			<ul class="list" style="display: inline; list-style-type: none; padding:5px; margin: 2px"> </ul>
-
+		</div>
 		
 		<script type="text/javascript">
 		
