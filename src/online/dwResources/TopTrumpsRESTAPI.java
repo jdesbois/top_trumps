@@ -50,12 +50,25 @@ public class TopTrumpsRESTAPI {
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
-		model = new GameState();
+//		model = new GameState();
 	}
 	
 	// ----------------------------------------------------
 	// Add relevant API methods here
 	// ----------------------------------------------------
+	
+	// create a new game
+	@GET
+	@Path("/newGame")
+
+	public String newGame() throws IOException {
+		
+		this.model = new GameState();
+
+		return "1";
+
+	}
+	
 	
 	/**
 	 * Method to return round number
@@ -218,7 +231,7 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	/*
-	 * To delete?
+	 * Get communal pile size
 	 */
 	@GET
 	@Path("/communalPileSize")

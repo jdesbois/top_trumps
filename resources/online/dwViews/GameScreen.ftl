@@ -80,7 +80,8 @@
 		        <div class="row justify-content-centre row_1">
 		            <div class="col col_1.1">
 		                <h2 id="roundNo"><h2>
-		                <h2 id="activePlayer"></h2>
+		                <h4 id="activePlayer"></h4>
+		                <h4 id="communalPileSize"></h4>
 		                <!-- <h2>playerName has selected atributeName </h2> -->
 		            </div>
 		        </div>
@@ -99,7 +100,7 @@
 		                    	<!-- buttons -->
 		                        <button onclick="startRound()" type="button" class="btn btn-light" id="nextRound">Next Round</button>
 		                        <button onclick="AISelectCategory()" type="button" class="btn btn-light" id="next">Next</button>
-		                        <button type="button" class="btn btn-light" id="newGame">New Game</button>
+		                        <button onclick="newGame()" type="button" class="btn btn-light" id="newGame">New Game</button>
 
 		                        <div class="btn-group-vertical bg-secondary my_buttons" id="categories">
 		                            <h5> Please select a category</h5>
@@ -523,7 +524,7 @@
 				$("#AIOnly").hide();
 
 				// start round
-				drawCards();
+				newGame();
 				
 			}
 			
@@ -562,6 +563,29 @@
 			 *	Functions to start game and display player card
 			 */
 
+			 // function to initialize a new game
+			 function newGame(){
+			 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/newGame");
+
+
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					
+					// hide buttons
+					$("#newGame").hide();
+					$("#gameWinner").empty();
+					$("#gameWinner").hide();
+
+
+					// check active player
+					getActivePlayer();
+
+				}
+				xhr.send();
+			 }
+
 			// function to check if a player has won
 			function startRound() {
 				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers");
@@ -595,9 +619,27 @@
 
 					// else check whose turn it is and start game
 					else{
-						getActivePlayer();
+						getCommunalPileSize();
 					}
 
+				}
+				xhr.send();
+			}
+
+			// get communal pile size
+			function getCommunalPileSize(){
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/communalPileSize");
+
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var result = xhr.response;
+
+					$("#communalPileSize").text("Communal pile size: " + result);
+
+					getActivePlayer();					
+					
 				}
 				xhr.send();
 			}
@@ -611,7 +653,9 @@
 				}
 				xhr.onload = function(e) {
 					var result = xhr.response;
-					$("#activePlayer").text("Active player:" + result);
+
+					console.log("/getActivePlayer response: " + result);
+					$("#activePlayer").text("Active player: " + result);
 
 					drawCards();					
 					
