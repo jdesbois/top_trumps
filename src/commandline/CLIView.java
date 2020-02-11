@@ -94,7 +94,7 @@ public class CLIView {
 	public void displayHumanPlayerCard() {
 		
 		// Check human players still in game
-		if(model.getHumanPlayer().getHandSize() > 0) {
+		if(model.getHumanPlayer() != null) {
 			System.out.println("Your card:\n");
 			this.displayCard(this.model.getHumanPlayer().getCard());
 		}
@@ -105,7 +105,7 @@ public class CLIView {
 	 */
 	public void displayHumanHandSize() {
 		// Check human players still in game
-		if(model.getHumanPlayer().getHandSize() > 0) {
+		if(model.getHumanPlayer() != null) {
 			System.out.println(this.model.getHumanPlayer().getHandSize() + 
 								" cards left in hand\n");
 		}
