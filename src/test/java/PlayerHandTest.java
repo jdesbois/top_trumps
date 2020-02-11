@@ -1,11 +1,18 @@
-package tests;
+package test.java;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
 import commandline.*;
+
+import org.junit.jupiter.api.Test;
 
 public class PlayerHandTest {
     //Creationg of objects/variables used to assert methods inside are working
@@ -17,7 +24,7 @@ public class PlayerHandTest {
 
     @Test 
     public void testAdd() {
-        System.out.println("Testing add method");
+
         player.drawNewCard(); 
         hand.add(card);
         assertEquals(8, hand.getHand().size()); //testing for total of 8 as initial draw card removes top card from hand
@@ -25,20 +32,20 @@ public class PlayerHandTest {
 
     @Test
     public void testAddMultipleCards() {
-        System.out.println("Testing add multiple cards method");
+
         hand.addMultipleCards(hands.get(1).getHand());
         assertEquals(16, hand.getHand().size()); //testing size of hand after adding another hand to it, each hand contains 8 cards
     }
 
     @Test 
     public void testGetHand() {
-        System.out.println("Testing get hand method");
+
         assertNotNull(hand.getHand()); //testing to make sure that the returned object is nut null
     }
 
     @Test
     public void testGetTopCard() {
-        System.out.println("Testing get top card method");
+
         assertNotNull(hand.getTopCard()); //testing to make sure the method doesn't not return a null object
     }
 

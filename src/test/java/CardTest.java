@@ -1,8 +1,18 @@
-package tests;
+package test.java;
 
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+
 import commandline.*;
+
+import org.junit.jupiter.api.Test;
 
 public class CardTest {
     
@@ -14,43 +24,43 @@ public class CardTest {
 
     @Test
     public void testGetDesc() {
-        System.out.println("Testing getDesc method");
+
         assertEquals("350r", card.getDesc());
     }
 
     @Test
     public void testGetPair() {
-        System.out.println("Testing getPair method"); 
+
         assertEquals("Size : 1", card.getPair(0)); 
     }
 
     @Test
     public void testGetAttri() {
-        System.out.println("Testing getAttri method");
-        assertEquals(attri, card.getAttri());
+
+        assertNotNull(card.getAttri());
     }
 
     @Test
     public void testGetValues() {
-        System.out.println("Testing getValues method");
+
         assertEquals(values, card.getValues());
     }
 
     @Test
     public void testGetValue() {
-        System.out.println("Testing getValue method");
+
         assertEquals(9, card.getValue(1));
     }
 
     @Test
     public void testPrintWin() {
-        System.out.println("Testing printWin method");
+
         assertEquals("Description: "+desc+"\n" + "Size: 1\nSpeed: 9 <------- \nRange: 2\nFirepower: 3\nCargo: 0\n", card.printWin(1));
     }
 
     @Test
     public void testToString() {
-        System.out.println("Testing toString method");
+
         assertEquals("Description: "+desc+"\n" + "Size: 1\nSpeed: 9\nRange: 2\nFirepower: 3\nCargo: 0\n", card.toString());
     }
 }
