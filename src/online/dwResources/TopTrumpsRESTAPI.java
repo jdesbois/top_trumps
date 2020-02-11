@@ -57,39 +57,21 @@ public class TopTrumpsRESTAPI {
 	// Add relevant API methods here
 	// ----------------------------------------------------
 	
-	@GET
-	@Path("/helloJSONList")
 	/**
-	 * Here is an example of a simple REST get request that returns a String.
-	 * We also illustrate here how we can convert Java objects to JSON strings.
-	 * @return - List of words as JSON
+	 * Method to return round number
+	 * @return round number as string
 	 * @throws IOException
 	 */
-	public String helloJSONList() throws IOException {
-		
-		List<String> listOfWords = new ArrayList<String>();
-		listOfWords.add("Hello");
-		listOfWords.add("World!");
-		
-		// We can turn arbatory Java objects directly into JSON strings using
-		// Jackson seralization, assuming that the Java objects are not too complex.
-		String listAsJSONString = oWriter.writeValueAsString(listOfWords);
-		
-		return listAsJSONString;
-	}
-	
 	@GET
-	@Path("/helloWord")
-	/**
-	 * Here is an example of how to read parameters provided in an HTML Get request.
-	 * @param Word - A word
-	 * @return - A String
-	 * @throws IOException
-	 */
-	public String helloWord(@QueryParam("Word") String Word) throws IOException {
-		return "Hello "+Word;
-	}
+	@Path("/getRoundNo")
 
+	public String getRoundNo() throws IOException {
+		
+		String result = "" + this.model.getRoundNumber();
+
+		return result;
+
+	}
 	
 	/**
 	 * Method to check if human player turn or AI turn
@@ -131,25 +113,6 @@ public class TopTrumpsRESTAPI {
 
 	}
 	
-	/**
-	 * Method to return details of player card as a JSON object
-	 * @return String JSON Object containing player card details
-	 * @throws IOException
-	 */
-	@GET
-	@Path("/showPlayerCard")
-
-	public String showPlayerCard() throws IOException {
-
-		// model.drawNewCard();
-
-		String cardStr = oWriter.writeValueAsString(model.getHumanPlayer().getCard());
-
-		System.out.println(cardStr);
-	
-		return cardStr;
-
-	}
 	
 	/**
 	 * Method to set human player category
@@ -212,29 +175,6 @@ public class TopTrumpsRESTAPI {
 		return this.model.getActivePlayer().name;
 	}
 	
-	/**
-	 * Method to return contents of all players cards as  JSON object
-	 * @return String JSON Object containing all active card details
-	 * @throws IOException
-	 */
-	@GET
-	@Path("/showAllCards")
-
-	public String showAllCards() throws IOException {
-		
-		ArrayList<Card> cards = new ArrayList<Card>();
-		
-		for(Player p : model.getPlayers()) {
-			cards.add(p.getCard());
-		}
-
-		String cardsStr = oWriter.writeValueAsString(cards);
-		
-		System.out.println(cardsStr);
-		
-		return cardsStr;
-
-	}
 	
 	@GET
 	@Path("/showPlayer")
@@ -288,16 +228,6 @@ public class TopTrumpsRESTAPI {
 		return "" + this.model.getCommunalPileSize();
 	}
 	
-	@GET
-	@Path("/eliminatedPlayers")
-	
-	public String eliminatedPlayers() throws IOException {
-		ArrayList<Player> usersEliminated = model.userEliminated();
-		
-		String elimStr = oWriter.writeValueAsString(usersEliminated);
-		
-		return elimStr;		
-	}
 	
 	@GET
 	@Path("/checkHumanPlayer")
