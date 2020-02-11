@@ -28,7 +28,7 @@ public class TopTrumpsCLIApplication {
 			//MVC initialisation (draft)
 			
 			Deck d = new Deck();
-			GameState model = new GameState(d);
+			GameState model = new GameState(d, 5);
 			CLIView view = new CLIView(model);
 			CLIController controller = new CLIController(model, view);
 			

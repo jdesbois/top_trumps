@@ -74,18 +74,18 @@ public class TestLog {
 	 * @param String toString of playerHands
 	 * @return Boolean if write was successful
 	 */
-	public void logStartingHands(ArrayList<Card> sH) {
+	public void logStartingHands(ArrayList<Player> p) {
 		
 		BufferedWriter w = new BufferedWriter(log);
 		StringBuffer sb = new StringBuffer();
 		
 		// Should not be passed null (as this is game start)
-		sb.append("HumanPlayer: " + sH.remove(0).toString());
+		sb.append("HumanPlayer:\n" + p.remove(0).toString());
 				
 		// Loops through all AiPlayers and prints their hand
-		for(int i = 0; i < sH.size(); i++) {
+		for(int i = 0; i < p.size(); i++) {
 			
-			sb.append("AIPlayer" + (i + 1) + ": " + sH.remove(0).toString());
+			sb.append("AIPlayer" + (i + 1) + ":\n" + p.remove(0).toString());
 		}
 		
 		// Formats log
@@ -137,19 +137,19 @@ public class TestLog {
 	 * @param String each players top card 
 	 * @return Boolean if write was successful
 	 */
-	public void logCurrentCards(ArrayList<Card> c) {
+	public void logCurrentCards(ArrayList<Player> p) {
 		
-		BufferedWriter w = new //BufferedWriter(log);
+		BufferedWriter w = new BufferedWriter(log);
 		StringBuffer sb = new StringBuffer();
 		
 		// Loops through all active cards and prints them
-		for(int i = 0; i < c.size(); i++) {
+		for(int i = 0; i < p.size(); i++) {
 			
-			sb.append(c.remove(0).toString());
+			sb.append(p.remove(0).getCard().toString() + "\n");
 		}
 		
 		// Formats log
-		String st = new String("======================\n" + "Shuffled Deck: "  + sb);
+		String st = new String("======================\n" + "Current Cards:\n"  + sb);
 	
 		// Writes to file
 		try {
@@ -192,7 +192,7 @@ public class TestLog {
 	 * @param Boolean is humanPlayer active
 	 * @return Boolean if write was successful
 	 */
-	public void logHands(ArrayList<Card> cH, boolean b) {
+	public void logHands(ArrayList<Player> p, boolean b) {
 		
 		BufferedWriter w = new BufferedWriter(log);
 		StringBuffer sb = new StringBuffer();
@@ -200,13 +200,13 @@ public class TestLog {
 		// Checks if humanPlayer is null and if not, appends hand
 		if(b) {
 			
-			sb.append("HumanPlayer: " + cH.remove(0).toString());
+			sb.append("HumanPlayer:\n" + p.remove(0).getCard().toString());
 		}
 				
 		// Loops through all AiPlayers and prints their hand
-		for(int i = 0; i < cH.size(); i++) {
+		for(int i = 0; i < p.size(); i++) {
 			
-			sb.append("AIPlayer" + (i + 1) + ": " + cH.remove(0).toString());
+			sb.append("AIPlayer" + (i + 1) + ":\n" + p.remove(0).getCard().toString());
 		}
 		
 		// Formats log

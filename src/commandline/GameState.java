@@ -27,7 +27,7 @@ public class GameState {
 	/**
 	 * Constructor
 	 */
-	public GameState(Deck d) {
+	public GameState(Deck d, int n) {
 		
 		gameDeck = d;
 		
@@ -37,9 +37,9 @@ public class GameState {
 		players.add(humanPlayer);
 		scores.put(humanPlayer, 0);
 		
-		for(int i = 1; i < 5; i++) {
+		for(int i = 1; i < n; i++) {
 			
-			ComputerPlayer p = new ComputerPlayer("AIPlayer" + (i + 1), h.remove(0));
+			ComputerPlayer p = new ComputerPlayer("AIPlayer" + i, h.remove(0));
 			
 			scores.put(p, 0);
 			players.add(p);
@@ -56,21 +56,11 @@ public class GameState {
 		}
 		
 	}
-	
-	/**
-	 * Returns an int representing the round result: 1 - win, 2 - draw
+	/*
+	 * 
+	 * Logic
+	 * 
 	 */
-	public int getResult() {
-		
-			
-		if(!getWinningPlayer()) {
-			
-			addCommunalPile();
-			return 2;
-		}
-		
-		return 1;
-	}
 	
 	/**
 	 * Calculates and returns the player with the highest attribute value
@@ -188,55 +178,6 @@ public class GameState {
 	}
 	
 	/**
-	 * Updates Player scores
-	 * @param Player p
-	 */
-	private void updateScores() {
-		
-		int n = scores.get(winner);
-		scores.put(winner, ++n);
-	}
-	
-	/**
-	 * Returns all active player hands
-	 */
-	public ArrayList<PlayerHand> getHands() {
-		
-		ArrayList<PlayerHand> playerHands = new ArrayList<PlayerHand>();
-		
-		for(int i = 0; i < players.size(); i++) {
-			
-			playerHands.add(players.get(i).getPlayerHand());
-		}
-		
-		if(humanPlayer != null) {
-			
-			playerHands.add(humanPlayer.getPlayerHand());
-		}
-		
-		return playerHands;
-	}
-	
-	/**
-	 * Returns a random Player to start the game
-	 * @return Player firstPlayer
-	 */
-	public Player getActivePlayer() {
-		
-		// Returns player stored at index rand
-		return activePlayer;
-	}
-	
-	/**
-	 * Updates the active Player object
-	 * @param Player p
-	 */
-	private void changeActivePlayer(Player p) {
-		
-		activePlayer = p;
-	}
-	
-	/**
 	 * Calls all Player objects in players to draw a new Card
 	 * Updates roundNumber
 	 */
@@ -248,6 +189,48 @@ public class GameState {
 		}
 		
 		roundNumber++;
+	}
+	
+	/**
+	 * Updates Player scores
+	 * @param Player p
+	 */
+	private void updateScores() {
+		
+		int n = scores.get(winner);
+		scores.put(winner, ++n);
+	}
+	
+	
+	/*
+	 * 
+	 * Getters and Setters
+	 * 
+	 */
+	
+	/**
+	 * Returns an int representing the round result: 1 - win, 2 - draw
+	 */
+	public int getResult() {
+		
+			
+		if(!getWinningPlayer()) {
+			
+			addCommunalPile();
+			return 2;
+		}
+		
+		return 1;
+	}
+	
+	/**
+	 * Returns a random Player to start the game
+	 * @return Player firstPlayer
+	 */
+	public Player getActivePlayer() {
+		
+		// Returns player stored at index rand
+		return activePlayer;
 	}
 	
 	/**
@@ -265,7 +248,7 @@ public class GameState {
 	 */
 	public int[] getAttributeValues() {
 		
-		int[] no = new int[5];
+		int[] no = new int[players.size()];
 		
 		for(int i = 0; i < players.size(); i++) {
 			
@@ -273,28 +256,6 @@ public class GameState {
 		}
 		
 		return no;
-	}
-	
-	/**
-	 * Sets the chosenAttribute after one has been selected
-	 */
-	public void setCurrentAttribute(int n) {
-		
-		chosenAttribute = n;
-	}
-	
-	/**
-	 * Adds an ArrayList of Cards to the communalPile
-	 * @param ArrayList<Card> c 
-	 */
-	private void addCommunalPile() {
-		
-		for(int i = 0; i < players.size(); i++) {
-			
-			Card c = players.get(i).getCard();
-			
-			communalPile.add(c);
-		}
 	}
 	
 	/**
@@ -339,7 +300,9 @@ public class GameState {
 	 */
 	public ArrayList<Player> getPlayers(){
 		
-		return players;
+		ArrayList<Player> p = players;
+		
+		return p;
 	}
 	
 	/**
@@ -349,5 +312,37 @@ public class GameState {
 	public int getPlayersSize(){
 		
 		return players.size();
+	}
+	
+	/**
+	 * Sets the chosenAttribute after one has been selected
+	 */
+	public void setCurrentAttribute(int n) {
+		
+		chosenAttribute = n;
+	}
+	
+	/**
+	 * Updates the active Player object
+	 * @param Player p
+	 */
+	private void changeActivePlayer(Player p) {
+		
+		activePlayer = p;
+	}
+	
+	
+	/**
+	 * Adds an ArrayList of Cards to the communalPile
+	 * @param ArrayList<Card> c 
+	 */
+	private void addCommunalPile() {
+		
+		for(int i = 0; i < players.size(); i++) {
+			
+			Card c = players.get(i).getCard();
+			
+			communalPile.add(c);
+		}
 	}
 }
