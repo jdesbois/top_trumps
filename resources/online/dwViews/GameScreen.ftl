@@ -75,7 +75,7 @@
 		        <p class="lead"></p>
 		    </div>
 
-		    <div class="container_atri_chosen">
+		    <div class="container_atri_chosen bg-secondary">
 
 		        <div class="row justify-content-centre row_1">
 		            <div class="col col_1.1">

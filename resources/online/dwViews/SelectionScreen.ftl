@@ -57,8 +57,8 @@
 
 	</head>
 
-    <body onload="initalize()"> <!-- Call the initalize method when the page loads -->
-    	
+    <body onload="initalize()" class="bg-secondary"> <!-- Call the initalize method when the page loads -->
+
     	<div class="container">
 
 
