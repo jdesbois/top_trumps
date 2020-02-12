@@ -4,7 +4,7 @@ import java.util.*;
 public class Player {
 	public String name;
 	private PlayerHand gameHand;
-	protected Card currentCard;
+	private Card currentCard;
 	
 	
 	// Human players would have there names set
@@ -17,15 +17,6 @@ public class Player {
 	{
 		int handSize = gameHand.getHand().size();
 		return handSize;
-	}
-	
-	/**
-	 * Returns Player hand
-	 * @return PlayerHand gameHand
-	 */
-	public PlayerHand getPlayerHand() {
-		
-		return gameHand;
 	}
 	
 	public void drawNewCard() 
