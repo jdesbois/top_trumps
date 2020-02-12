@@ -27,8 +27,7 @@ public class TopTrumpsCLIApplication {
 			
 			//MVC initialisation (draft)
 			
-			Deck d = new Deck();
-			GameState model = new GameState(d, 5);
+			GameState model = new GameState();
 			CLIView view = new CLIView(model);
 			CLIController controller = new CLIController(model, view);
 			
@@ -76,8 +75,8 @@ public class TopTrumpsCLIApplication {
 				int result;
 				
 				// if human player is active
-				if(model.getActivePlayer().equals(
-						model.getHumanPlayer())) {
+				if(model.getActivePlayer().getName().equals(
+						model.getHumanPlayer().getName())) {
 					result = controller.humanRound();
 				}
 				// if AI player is active 	
