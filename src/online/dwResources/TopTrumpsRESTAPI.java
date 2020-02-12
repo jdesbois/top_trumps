@@ -250,11 +250,11 @@ public class TopTrumpsRESTAPI {
 		Player humanPlayer = model.getHumanPlayer();
 		
 		if(humanPlayer.getHandSize() != 0) {
-			System.out.println("check human player gives 1");
+			// System.out.println("check human player gives 1");
 			return "1";
 		}
 		else {
-			System.out.println("check human player gives 0");
+			// System.out.println("check human player gives 0");
 			return "0";
 		}
 			
