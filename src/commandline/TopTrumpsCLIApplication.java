@@ -25,9 +25,14 @@ public class TopTrumpsCLIApplication {
 			// Add your game logic here based on the requirements
 			// ----------------------------------------------------
 			
-			//MVC initialisation (draft)
+			// Initialises new deck
+			Deck deck = new Deck();
 			
-			GameState model = new GameState();
+			// Shuffles Deck
+			deck.shuffleDeck();
+			
+			//MVC initialisation
+			GameState model = new GameState(deck, 5); // In CLI, number of players defaults to 5
 			CLIView view = new CLIView(model);
 			CLIController controller = new CLIController(model, view);
 			
