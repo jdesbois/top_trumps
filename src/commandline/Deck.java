@@ -46,6 +46,7 @@ public class Deck {
     public void shuffleDeck() {
         Collections.shuffle(this.deck);
     }
+
     /*
     Method to take call card objects in deck and deal them to 5 players (can be modified for specific number of players later)
     Instaniates 5 player hand objects, adds these playerhand objects to a Hands arraylist
@@ -64,6 +65,32 @@ public class Deck {
         while (deck.size() != 0) {
             //iterates over the hands arraylist adding top card from deck to each hand, until deck is empty
             for (int i=0; i<hands.size(); i++) {
+                hands.get(i).add(deck.remove(0));
+            }
+        }
+        return hands;
+    }
+    
+    /*
+    Method to take all card objects in deck and deal them to n players.
+    Instaniates n player hand objects, adds these playerhand objects to a Hands arraylist
+    While the deck is not equal to 0, method iterates over player hands, taking 0th index item, removing it from deck and placing it into a player hand. 
+    */
+    public ArrayList<PlayerHand> deal(int n) {
+        //Creates n amount of PlayerHand object and adds them to hands ArrayList
+        for (int i=0; i<n; i++) {
+            PlayerHand hand = new PlayerHand();
+            hands.add(hand);
+        }
+
+        //Will perform until deck reaches 0
+        while (deck.size() != 0) {
+            //iterates over the hands arraylist adding top card from deck to each hand, until deck is empty
+            for (int i=0; i<hands.size(); i++) {
+                //Checks if the deck has reached 0 during the num players loop
+                if(deck.size() == 0) {
+                    continue;
+                }
                 hands.get(i).add(deck.remove(0));
             }
         }
