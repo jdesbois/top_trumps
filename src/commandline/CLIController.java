@@ -1,6 +1,17 @@
 package commandline;
 
-
+/**
+ * 
+ * @author Aaron Callaghan
+ * <br><br>
+ * 
+ * Constructor:<br>
+ * 	CLIController(GameState model, CLIView view)<br><br>
+ * 
+ * Public methods:<br>
+ * 	public int humanRound()<br>
+ *	public in AIRound()
+ */
 public class CLIController {
 	
 	// Stores GameState(Model)
@@ -24,9 +35,6 @@ public class CLIController {
 	 */
 	public int humanRound() {
 		
-		// All Player Objects draw new Card
-		model.drawNewCard();
-		
 		// Display player's drawn card
 		view.displayHumanPlayerCard();
 		
@@ -44,9 +52,6 @@ public class CLIController {
 	 * Handles logic for AI round
 	 */
 	public int AIRound() {
-		
-		// All Player Objects draw new Card
-		model.drawNewCard();
 		
 		// Display player's drawn card
 		view.displayHumanPlayerCard();

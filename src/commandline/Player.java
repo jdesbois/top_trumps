@@ -62,6 +62,16 @@ public class Player {
 			System.out.print(c.toString());
 		}
 	}
+	
+	/**
+	 * Returns playerhand
+	 * @return PlayerHand
+	 */
+	public PlayerHand getPlayerHand() {
+		
+		return gameHand;
+	}
+	
 	/**
 	 * Returns name
 	 * @return String
