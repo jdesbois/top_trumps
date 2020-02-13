@@ -67,7 +67,7 @@ public class TestLog {
 		}
 		
 		// Formats log
-		String st = new String("======================\n" + "Loaded Deck: " + s);
+		String st = new String("========================================================\n" + "Loaded Deck: \n" + s);
 		
 		// Writes to file
 		try {
@@ -93,7 +93,7 @@ public class TestLog {
 		}
 				
 		// Formats log
-		String st = new String("======================\n" + "Shuffled Deck: "  + s);
+		String st = new String("========================================================\n" + "Shuffled Deck: \n"  + s);
 		
 		// Writes to file
 		try {
@@ -131,7 +131,7 @@ public class TestLog {
 		}
 		
 		// Formats log
-		String st = new String("======================\n" + "Starting Player Hands: " + sb);
+		String st = new String("========================================================\n" + "Starting Player Hands: \n" + sb);
 	
 		// Writes to file
 		try {
@@ -165,7 +165,7 @@ public class TestLog {
 		}
 		
 		// Formats log
-		String st = new String("======================\n" + "Communal Pile Contents: "  + sb);
+		String st = new String("========================================================\n" + "Communal Pile Contents: \n"  + sb);
 		
 		// Writes to file
 		try {
@@ -202,7 +202,7 @@ public class TestLog {
 		}
 		
 		// Formats log
-		String st = new String("======================\n" + "Current Cards:\n"  + sb);
+		String st = new String("========================================================\n" + "Current Cards:\n"  + sb);
 	
 		// Writes to file
 		try {
@@ -236,16 +236,16 @@ public class TestLog {
 				
 			if(i == 0 && b) {
 					
-				sb.append("Human Player value is: " + n[i]);
+				sb.append("Human Player value is: " + n[i] + "\n");
 			} else {
 					
-				sb.append("\nAI Player values is: " + n[i]);
+				sb.append("AI Player values is: " + n[i] + "\n");
 			}
 		}
 		
 		
 		// Formats log
-		String st = new String("======================\n" + "Chosen Category Is: "  + s + "\n" + sb);
+		String st = new String("========================================================\n" + "Chosen Category Is: "  + s + "\n" + sb);
 		
 		// Writes to file
 		try {
@@ -287,7 +287,7 @@ public class TestLog {
 		}
 		
 		// Formats log
-		String st = new String("======================\n" + "Starting Player Hands: " + sb);
+		String st = new String("========================================================\n" + "Player Hands: \n" + sb);
 	
 		// Writes to file
 		try {
@@ -313,7 +313,7 @@ public class TestLog {
 		}
 		
 		// Formats log
-		String st = new String("======================\n" + "Game Winner: " + s);
+		String st = new String("========================================================\n" + "Game Winner: " + s);
 		
 		// Writes to file
 		try {
