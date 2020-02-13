@@ -28,6 +28,9 @@ public class TestLog {
 
 	// File Writer associated with log file
 	FileWriter log;
+	// BufferedWriter using log
+	BufferedWriter w;
+	
 	// Boolean representing whether logs are written
 	boolean shouldWrite;
 	
@@ -42,6 +45,8 @@ public class TestLog {
 			
 			// Initialises FileWriter
 			log = new FileWriter(f);
+			// Initialises BufferedWriter
+			w = new BufferedWriter(log);
 		} catch(IOException e) {
 			
 			System.err.print("FileWriter initialisation error");
@@ -61,7 +66,6 @@ public class TestLog {
 			return;
 		}
 		
-		BufferedWriter w = new BufferedWriter(log);
 		// Formats log
 		String st = new String("======================\n" + "Loaded Deck: " + s);
 		
@@ -69,7 +73,6 @@ public class TestLog {
 		try {
 			
 			w.write(st);
-			w.close();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -89,7 +92,6 @@ public class TestLog {
 			return;
 		}
 				
-		BufferedWriter w = new BufferedWriter(log);
 		// Formats log
 		String st = new String("======================\n" + "Shuffled Deck: "  + s);
 		
@@ -97,7 +99,6 @@ public class TestLog {
 		try {
 			
 			w.write(st);
-			w.close();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -118,16 +119,15 @@ public class TestLog {
 			return;
 		}
 		
-		BufferedWriter w = new BufferedWriter(log);
 		StringBuffer sb = new StringBuffer();
 		
 		// Should not be passed null (as this is game start)
-		sb.append("HumanPlayer:\n" + p.remove(0).getPlayerHand().toString());
+		sb.append("HumanPlayer:\n" + p.get(0).getPlayerHand().toString());
 				
 		// Loops through all AiPlayers and prints their hand
-		for(int i = 0; i < p.size(); i++) {
+		for(int i = 1; i < p.size(); i++) {
 			
-			sb.append("AIPlayer" + (i + 1) + ":\n" + p.remove(0).getPlayerHand().toString());
+			sb.append("AIPlayer" + (i + 1) + ":\n" + p.get(i).getPlayerHand().toString());
 		}
 		
 		// Formats log
@@ -137,7 +137,6 @@ public class TestLog {
 		try {
 			
 			w.write(st);
-			w.close();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -157,13 +156,12 @@ public class TestLog {
 			return;
 		}
 		
-		BufferedWriter w = new BufferedWriter(log);
 		StringBuffer sb = new StringBuffer();
 		
 		// Loops through the communal pile and prints each card
 		for(int i = 0; i < cP.size(); i++) {
 			
-			sb.append(cP.remove(0).toString());
+			sb.append(cP.get(i).toString());
 		}
 		
 		// Formats log
@@ -173,7 +171,6 @@ public class TestLog {
 		try {
 			
 			w.write(st);
-			w.close();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -187,19 +184,21 @@ public class TestLog {
 	 */
 	public void logCurrentCards(ArrayList<Player> p) {
 		
+		// Stores an ArrayList to be manipulated
+		ArrayList<Player> list = p;
+		
 		// If the user doesn't want to write to log return
 		if(!shouldWrite) {
 					
 			return;
 		}
 		
-		BufferedWriter w = new BufferedWriter(log);
 		StringBuffer sb = new StringBuffer();
 		
 		// Loops through all active cards and prints them
 		for(int i = 0; i < p.size(); i++) {
 			
-			sb.append(p.remove(0).getCard().toString() + "\n");
+			sb.append(list.get(i).getCard().toString() + "\n");
 		}
 		
 		// Formats log
@@ -209,7 +208,6 @@ public class TestLog {
 		try {
 			
 			w.write(st);
-			w.close();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -231,7 +229,6 @@ public class TestLog {
 			return;
 		}
 		
-		BufferedWriter w = new BufferedWriter(log);
 		StringBuffer sb = new StringBuffer("Player card values for the chosen attribute are:\n");
 			
 		// Loops through all values and separates human player from ai players
@@ -242,7 +239,7 @@ public class TestLog {
 				sb.append("Human Player value is: " + n[i]);
 			} else {
 					
-				sb.append("AI Player values is: " + n[i]);
+				sb.append("\nAI Player values is: " + n[i]);
 			}
 		}
 		
@@ -254,7 +251,6 @@ public class TestLog {
 		try {
 			
 			w.write(st);
-			w.close();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -276,19 +272,18 @@ public class TestLog {
 			return;
 		}
 		
-		BufferedWriter w = new BufferedWriter(log);
 		StringBuffer sb = new StringBuffer();
 		
 		// Checks if humanPlayer is null and if not, appends hand
 		if(b) {
 			
-			sb.append("HumanPlayer:\n" + p.remove(0).getCard().toString());
+			sb.append("HumanPlayer:\n" + p.get(0).getCard().toString());
 		}
 				
 		// Loops through all AiPlayers and prints their hand
-		for(int i = 0; i < p.size(); i++) {
+		for(int i = 1; i < p.size(); i++) {
 			
-			sb.append("AIPlayer" + (i + 1) + ":\n" + p.remove(0).getCard().toString());
+			sb.append("AIPlayer" + (i + 1) + ":\n" + p.get(i).getCard().toString());
 		}
 		
 		// Formats log
@@ -298,7 +293,6 @@ public class TestLog {
 		try {
 			
 			w.write(st);
-			w.close();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -318,7 +312,6 @@ public class TestLog {
 			return;
 		}
 		
-		BufferedWriter w = new BufferedWriter(log);
 		// Formats log
 		String st = new String("======================\n" + "Game Winner: " + s);
 		
@@ -326,6 +319,7 @@ public class TestLog {
 		try {
 			
 			w.write(st);
+			// Closes BufferedWriter
 			w.close();
 		} catch (IOException e) {
 			

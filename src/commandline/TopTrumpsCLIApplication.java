@@ -18,6 +18,7 @@ public class TopTrumpsCLIApplication {
 		boolean writeGameLogsToFile = false; // Should we write game logs to file?
 		if (args[0].equalsIgnoreCase("true")) writeGameLogsToFile=true; // Command line selection
 		
+		writeGameLogsToFile = true;
 		// State
 		boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
 		
@@ -89,11 +90,11 @@ public class TopTrumpsCLIApplication {
 				// All Player Objects draw new Card
 				model.drawNewCard();
 				
-				// Checks if log has been chosen - otherwise will nto erpform logic
+				// Checks if log has been chosen - otherwise will not perfom logic
 				if(writeGameLogsToFile) {
 					
 					// Converts chosen attribute to string
-					String att = model.getWinner().getCard().getAttri()[model.getCurrentAttribute()];
+					String att = model.getActivePlayer().getCard().getAttri()[model.getCurrentAttribute()];
 					// Initialises an Array to store card attribute values
 					int[] vals = new int[model.getPlayersSize()];
 					
@@ -113,7 +114,7 @@ public class TopTrumpsCLIApplication {
 				// Logs current cards
 				log.logCurrentCards(model.getPlayers());
 				// Logs player hands
-				log.logHands(model.getPlayers(), (model.getWinner().getHandSize() != 0));
+				log.logHands(model.getPlayers(), (model.getHumanPlayer().getHandSize() != 0));
 				
 				// if human player is active
 				if(model.getActivePlayer().getName().equals(
