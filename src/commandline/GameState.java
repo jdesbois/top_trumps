@@ -2,6 +2,9 @@ package commandline;
 
 import java.util.ArrayList;
 //import java.util.HashMap;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class GameState {
 
@@ -13,10 +16,12 @@ public class GameState {
 	private Player humanPlayer;
 	// The current round number
 	private int roundNumber = 1;
+	// The current number of draws
+	int draws = 0;
 	// Stores Round winner
 	private Player winner;
 	// Stores the amount of round each player wins
-	//private HashMap<Player, Integer> scores = new HashMap<Player, Integer>(); // Might change
+	private HashMap<Player, Integer> scores = new HashMap<Player, Integer>();
 	// The attribute Chosen by activePlayer
 	private int chosenAttribute;
 	// Stores the communal pile in the result of a draw
@@ -56,8 +61,9 @@ public class GameState {
 		
 		addCommunalPile();
 		
-		if(!getWinningPlayer()) {
+		if(!isWinningPlayer()) {
 			
+			draws++;
 			return 2;
 		}
 		
@@ -68,33 +74,8 @@ public class GameState {
 	 * Calculates and returns the player with the highest attribute value
 	 * @return Player round winner
 	 */
-	private boolean getWinningPlayer() {
+	private boolean isWinningPlayer() {
 		
-		//Original
-
-		// int highestVal = 0;
-		// int index = 10;
-		
-		// for(int i = 0; i < players.size(); i++) {
-			
-		// 	int n = players.get(i).getCard().getValue(chosenAttribute);
-			
-		// 	if(n == highestVal) {
-				
-		// 		return false;
-		// 	}
-
-		// 	if(n > highestVal) {
-				
-		// 		index = i;
-		// 	}
-			
-		// 	highestVal = Math.max(highestVal, n);
-		// }
-		
-		/*
-		 * Updates to fix bugs
-		 */
 		// Int to store greatest value
 		int highestVal = -1;
 		
@@ -181,10 +162,11 @@ public class GameState {
 	 * Updates Player scores
 	 * @param Player p
 	 */
-//	private void updateScores(Player p) {
-//		
-//		
-//	}
+	private void updateScores() {
+		
+		int n = scores.get(winner);
+		scores.put(winner, ++n);
+	}
 	
 	/**
 	 * Returns a random Player to start the game
@@ -301,5 +283,60 @@ public class GameState {
 	 */
 	public ArrayList<Player> getPlayers() {
 		return players;
+	}
+	
+	/**
+	 * Get currentAttribute values
+	 * @return int[] Card attributes
+	 */
+	public int[] getAttributeValues() {
+		
+		int[] no = new int[players.size()];
+		
+		for(int i = 0; i < players.size(); i++) {
+			
+			no[i] = players.get(i).getCard().getValue(chosenAttribute);
+		}
+		
+		return no;
+	}
+	
+	/**
+	 * Returns an ArrayList of PlayerStats Objects for game statistics
+	 * @return ArrayList<PlayerStats> 
+	 */
+	public ArrayList<PlayerStats> getPlayerStats(){
+		
+		// ArrayList to be returned
+		ArrayList<PlayerStats> playerList = new ArrayList<PlayerStats>();
+		// Temporary storage for new PlayerStats objects
+		PlayerStats playerStats;
+		// Temporary storage for Player objects returned by playerstats iterator
+		Player player;
+		// Stores all player HashMap keys
+		Set<Player> playerSet = scores.keySet();
+		// Iterator to iterate through all playerstats entries
+		Iterator<Player> it = playerSet.iterator();
+		
+		while(it.hasNext()) {
+			
+			// Stores next iterator value
+			player = it.next();
+			// Creates new PlayerStats object to store
+			playerStats = new PlayerStats(player, scores.get(player));
+			// Adds PlayerStats object to list
+			playerList.add(playerStats);
+		}
+		
+		return playerList;
+	}
+	
+	/**
+	 * Returns a GameStats Object for game statistics
+	 * @return GameStats
+	 */
+	public GameStats getGameStats() {
+		
+		return new GameStats(this.winner, this.roundNumber, this.draws);
 	}
 }
