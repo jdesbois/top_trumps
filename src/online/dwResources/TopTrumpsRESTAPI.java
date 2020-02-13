@@ -2,6 +2,7 @@ package online.dwResources;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -39,7 +40,11 @@ public class TopTrumpsRESTAPI {
 	/** A Jackson Object writer. It allows us to turn Java objects
 	 * into JSON strings easily. */
 	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-	GameState model;
+	
+	private HashMap<Integer, GameState> modelMap;
+	private int modelIndex;
+	
+//	GameState model;
 	
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
@@ -52,21 +57,42 @@ public class TopTrumpsRESTAPI {
 		// Add relevant initalization here
 		// ----------------------------------------------------
 //		model = new GameState();
+		modelMap = new HashMap<Integer, GameState>();
+		modelIndex = 0;
 	}
 	
 	// ----------------------------------------------------
 	// Add relevant API methods here
 	// ----------------------------------------------------
 	
+	@GET
+	@Path("/newModelIndex")
+
+	public String newModelIndex() throws IOException {
+		
+		int viewIndex = this.modelIndex;
+		this.modelIndex++;
+//		modelIndex ++;
+//		this.model = new GameState(deck, 5);
+
+		return "" + viewIndex;
+
+	}
+	
 	// create a new game
 	@GET
 	@Path("/newGame")
 
-	public String newGame() throws IOException {
+	public String newGame(@QueryParam("sid") String sid) throws IOException {
 		
 		Deck deck = new Deck();
 		
-		this.model = new GameState(deck, 5);
+		int sidInt = Integer.parseInt(sid);
+		 
+		
+		this.modelMap.put(sidInt, new GameState(deck,5));
+//		modelIndex ++;
+//		this.model = new GameState(deck, 5);
 
 		return "1";
 
@@ -81,9 +107,11 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/getRoundNo")
 
-	public String getRoundNo() throws IOException {
+	public String getRoundNo(@QueryParam("sid") String sid) throws IOException {
 		
-		String result = "" + this.model.getRoundNumber();
+		int sidInt = Integer.parseInt(sid);
+		
+		String result = "" + this.modelMap.get(sidInt).getRoundNumber();
 
 		return result;
 
@@ -97,10 +125,13 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/checkTurn")
 
-	public String checkTurn() throws IOException {
+	public String checkTurn(@QueryParam("sid") String sid) throws IOException {
+		
+		int sidInt = Integer.parseInt(sid);
+		
 		String result;
-		if(model.getActivePlayer().getName().equals(
-				model.getHumanPlayer().getName())) {
+		if(this.modelMap.get(sidInt).getActivePlayer().getName().equals(
+				this.modelMap.get(sidInt).getHumanPlayer().getName())) {
 			result = "1";
 		}
 		// if AI player is active 	
@@ -120,10 +151,12 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/drawCards")
 
-	public String drawCards() throws IOException{
-
-		// remove this when in actual game
-		model.drawNewCard();
+	public String drawCards(@QueryParam("sid") String sid) throws IOException{
+		
+		int sidInt = Integer.parseInt(sid);
+		
+		
+		this.modelMap.get(sidInt).drawNewCard();
 		
 		return "New cards drawn";
 
@@ -138,11 +171,12 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/selectCategory")
 	
-	public String selectCategory(@QueryParam("Category") String Category) {
+	public String selectCategory(@QueryParam("Category") String Category, @QueryParam("sid") String sid) {
 		
 		int catInt = Integer.parseInt(Category);
+		int sidInt = Integer.parseInt(sid);
 		
-		this.model.setCurrentAttribute(catInt - 1);
+		this.modelMap.get(sidInt).setCurrentAttribute(catInt - 1);
 		
 		return Category;
 		
@@ -155,13 +189,15 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/AISelectCategory")
 	
-	public String selectCategoryAI() {
+	public String selectCategoryAI(@QueryParam("sid") String sid) {
 		
-		int catInt = model.getActivePlayer().getHighestAttribute();
+		int sidInt = Integer.parseInt(sid);
+		
+		int catInt = this.modelMap.get(sidInt).getActivePlayer().getHighestAttribute();
 
 		// System.out.println("integer input to model: " + catInt);
 		
-		this.model.setCurrentAttribute(catInt - 1);
+		this.modelMap.get(sidInt).setCurrentAttribute(catInt - 1);
 		
 		String catStr = Integer.toString(catInt);
 		
@@ -175,9 +211,11 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/getResult")
 	
-	public String getResult() {
+	public String getResult(@QueryParam("sid") String sid) {
 		
-		return "" + this.model.getResult();
+		int sidInt = Integer.parseInt(sid);
+		
+		return "" + this.modelMap.get(sidInt).getResult();
 	}
 	
 	/**
@@ -187,17 +225,22 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/getActivePlayer")
 	
-	public String getActivePlayer() {
-		return this.model.getActivePlayer().name;
+	public String getActivePlayer(@QueryParam("sid") String sid) {
+		
+		int sidInt = Integer.parseInt(sid);
+		
+		return this.modelMap.get(sidInt).getActivePlayer().name;
 	}
 	
 	
 	@GET
 	@Path("/showPlayer")
 
-	public String showPlayer() throws IOException {
+	public String showPlayer(@QueryParam("sid") String sid) throws IOException {
+		
+		int sidInt = Integer.parseInt(sid);
 
-		String playerStr = oWriter.writeValueAsString(model.getHumanPlayer());
+		String playerStr = oWriter.writeValueAsString(this.modelMap.get(sidInt).getHumanPlayer());
 	
 		return playerStr;
 
@@ -206,9 +249,11 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/showPlayers")
 	
-	public String showPlayers() throws IOException {
+	public String showPlayers(@QueryParam("sid") String sid) throws IOException {
 		
-		ArrayList<Player> players = this.model.getPlayers();
+		int sidInt = Integer.parseInt(sid);
+		
+		ArrayList<Player> players = this.modelMap.get(sidInt).getPlayers();
 		
 		String playersStr = oWriter.writeValueAsString(players);
 		// System.out.println(playersStr);
@@ -219,8 +264,11 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/checkEliminations")
 	
-	public String checkEliminations() throws IOException{
-		ArrayList<Player> usersEliminated = model.userEliminated();
+	public String checkEliminations(@QueryParam("sid") String sid) throws IOException{
+		
+		int sidInt = Integer.parseInt(sid);
+		
+		ArrayList<Player> usersEliminated = this.modelMap.get(sidInt).userEliminated();
 		
 			if(usersEliminated.size() > 0) {
 			
@@ -239,18 +287,22 @@ public class TopTrumpsRESTAPI {
 	@GET
 	@Path("/communalPileSize")
 	
-	public String communalPileSize() {
+	public String communalPileSize(@QueryParam("sid") String sid) {
 		
-		return "" + this.model.getCommunalPileSize();
+		int sidInt = Integer.parseInt(sid);
+		
+		return "" + this.modelMap.get(sidInt).getCommunalPileSize();
 	}
 	
 	
 	@GET
 	@Path("/checkHumanPlayer")
 	
-	public String checkHumanPlayer() throws IOException {
+	public String checkHumanPlayer(@QueryParam("sid") String sid) throws IOException {
 		
-		Player humanPlayer = model.getHumanPlayer();
+		int sidInt = Integer.parseInt(sid);
+		
+		Player humanPlayer = this.modelMap.get(sidInt).getHumanPlayer();
 		
 		if(humanPlayer.getHandSize() != 0) {
 			// System.out.println("check human player gives 1");

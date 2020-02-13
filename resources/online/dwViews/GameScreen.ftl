@@ -531,7 +531,7 @@
 				$("#AIOnly").hide();
 
 				// start round
-				newGame();
+				newModelIndex();
 				
 			}
 			
@@ -570,9 +570,31 @@
 			 *	Functions to start game and display player card
 			 */
 
+			 
+			  function newModelIndex(){
+			 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/newModelIndex");
+
+
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					
+					var responseText = xhr.response;
+
+					sessionStorage.setItem('sid', responseText);
+
+
+					// check active player
+					newGame();
+
+				}
+				xhr.send();
+			 }
+
 			 // function to initialize a new game
 			 function newGame(){
-			 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/newGame");
+			 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/newGame?sid=" + sessionStorage.getItem('sid'));
 
 
 				if(!xhr) {
@@ -585,7 +607,7 @@
 					$("#gameWinner").empty();
 					$("#gameWinner").hide();
 
-
+					console.log("SID:" + sessionStorage.getItem('sid'));
 					// check active player
 					getActivePlayer();
 
@@ -595,7 +617,7 @@
 
 			// function to check if a player has won
 			function startRound() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers?sid=" + sessionStorage.getItem('sid'));
 
 				// empty list of cards
 				$(".list").empty();
@@ -635,7 +657,7 @@
 
 			// get communal pile size
 			function getCommunalPileSize(){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/communalPileSize");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/communalPileSize?sid=" + sessionStorage.getItem('sid'));
 
 				if(!xhr) {
 					alert("CORS not supported");
@@ -653,7 +675,7 @@
 
 			// function to get active player
 			function getActivePlayer(){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getActivePlayer");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getActivePlayer?sid=" + sessionStorage.getItem('sid'));
 
 				if(!xhr) {
 					alert("CORS not supported");
@@ -673,7 +695,7 @@
 
 			// function to draw new cards
 			function drawCards() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/drawCards");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/drawCards?sid=" + sessionStorage.getItem('sid'));
 
 				if(!xhr) {
 					alert("CORS not supported");
@@ -688,7 +710,7 @@
 
 			// function to draw new cards
 			function getRoundNumber() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getRoundNo");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getRoundNo?sid=" + sessionStorage.getItem('sid'));
 
 				if(!xhr) {
 					alert("CORS not supported");
@@ -708,7 +730,7 @@
 			 *	Check if human player still active
 			 */
 			 function checkHumanPlayer(){
-			 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkHumanPlayer");
+			 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkHumanPlayer?sid=" + sessionStorage.getItem('sid'));
 				if(!xhr) {
 					alert("CORS not supported");
 				}
@@ -738,7 +760,7 @@
 
 			 // function to show human player details
 			function showPlayer(){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayer");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayer?sid=" + sessionStorage.getItem('sid'));
 
 				// hide non-human cards
 				$("#card2").hide();
@@ -784,7 +806,7 @@
 
 			// function to check if it is human player's turn and start round
 			function checkTurn(){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkTurn");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkTurn?sid=" + sessionStorage.getItem('sid'));
 
 				// hide text and buttons
 				$("#selectedCat").hide();
@@ -828,7 +850,7 @@
 
 			 // function to update model to select the provided category 
 			function selectCategory(category){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/selectCategory?Category="+category);
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/selectCategory?Category="+category+"&sid=" + sessionStorage.getItem('sid'));
 
 				// hide category buttons and turn field
 				$("#categories").hide();
@@ -858,7 +880,7 @@
 
 			// API call to play AI turn
 			function AISelectCategory(){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/AISelectCategory");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/AISelectCategory?sid=" + sessionStorage.getItem('sid'));
 
 				// hide next button
 				$("#next").hide();
@@ -888,7 +910,7 @@
 
 			// function to show all players' details
 			function showPlayers() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers?sid=" + sessionStorage.getItem('sid'));
 
 				// hide all card positions to start
 				$("#card1").hide();
@@ -949,7 +971,7 @@
 
 			// function to check if win or draw
 			function winDraw(){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getResult");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getResult?sid=" + sessionStorage.getItem('sid'));
 
 
 				$("#WinDraw").empty();
@@ -983,7 +1005,7 @@
 
 			// function to get active player to display as winner
 			function getWinningPlayer(){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getActivePlayer");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getActivePlayer?sid=" + sessionStorage.getItem('sid'));
 
 				if(!xhr) {
 					alert("CORS not supported");
@@ -1004,7 +1026,7 @@
 
 			// function to show which (if any) players have been eliminated in a round
 			function checkEliminations() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkEliminations");
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/checkEliminations?sid=" + sessionStorage.getItem('sid'));
 				if(!xhr) {
 					alert("CORS not supported");
 				}
