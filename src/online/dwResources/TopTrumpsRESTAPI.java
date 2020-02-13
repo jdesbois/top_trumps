@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import commandline.Card;
+import commandline.Deck;
 import commandline.GameState;
 import commandline.Player;
 
@@ -63,7 +64,9 @@ public class TopTrumpsRESTAPI {
 
 	public String newGame() throws IOException {
 		
-		this.model = new GameState();
+		Deck deck = new Deck();
+		
+		this.model = new GameState(deck, 5);
 
 		return "1";
 
