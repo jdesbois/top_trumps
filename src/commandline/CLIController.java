@@ -35,9 +35,6 @@ public class CLIController {
 	 */
 	public int humanRound() {
 		
-		// All Player Objects draw new Card
-		model.drawNewCard();
-		
 		// Display player's drawn card
 		view.displayHumanPlayerCard();
 		
@@ -55,9 +52,6 @@ public class CLIController {
 	 * Handles logic for AI round
 	 */
 	public int AIRound() {
-		
-		// All Player Objects draw new Card
-		model.drawNewCard();
 		
 		// Display player's drawn card
 		view.displayHumanPlayerCard();
