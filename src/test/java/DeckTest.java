@@ -39,10 +39,17 @@ public class DeckTest {
 
     @Test
     public void testShuffleDeck() {
-
-        Card firstCard = deck.getCard(0);
         deck.shuffleDeck();
-        assertNotEquals(firstCard, deck.getCard(0));
+        int index = 0;
+        int count = 0;
+        for (Card card : deck2.getDeck()) {
+            if (count == 5) {
+                return;
+            }
+            assertNotEquals(card, deck.getDeck().get(index));
+            index++;
+            count++;
+        }        
     }
 
     @Test 

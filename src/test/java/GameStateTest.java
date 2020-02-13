@@ -2,6 +2,7 @@ package test.java;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTimeout;
@@ -17,9 +18,14 @@ import org.junit.jupiter.api.Test;
 
 class GameStateTest {
     //Test GameState Object
-    GameState g = new GameState();
-    
+    Deck deck = new Deck();
+    GameState g = new GameState(deck, 5);
 
+    @Test
+    public void testGameStateConstructor() {
+        GameState model = new GameState(deck, 5);
+        assertNotNull(model);
+    }
     //Tests active player by asserting current active player after game state creation is not null
     @Test
     public void testGetActivePlayer() {
@@ -37,8 +43,6 @@ class GameStateTest {
     @Test
     public void testGetRoundNumber() {
         assertEquals(1, g.getRoundNumber());
-        g.drawNewCard();
-        assertEquals(2, g.getRoundNumber());
     }
 
     @Test
@@ -49,5 +53,12 @@ class GameStateTest {
     @Test 
     public void testGetCommunalPileSize() {
         assertEquals(0, g.getCommunalPileSize());
+    }
+
+    @Test
+    public void testDrawNewCard() {
+        Card topCard = g.getHumanPlayer().getPlayerHand().getTopCard();
+        g.drawNewCard();
+        assertNotEquals(topCard, g.getHumanPlayer().getPlayerHand().getTopCard());
     }
 }
