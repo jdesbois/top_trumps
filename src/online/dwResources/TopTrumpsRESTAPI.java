@@ -40,6 +40,7 @@ public class TopTrumpsRESTAPI {
 	 * into JSON strings easily. */
 	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 	GameState model;
+	String deckFileName;
 	
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
@@ -52,6 +53,7 @@ public class TopTrumpsRESTAPI {
 		// Add relevant initalization here
 		// ----------------------------------------------------
 //		model = new GameState();
+		deckFileName = conf.getDeckFile();
 	}
 	
 	// ----------------------------------------------------
@@ -64,7 +66,7 @@ public class TopTrumpsRESTAPI {
 
 	public String newGame() throws IOException {
 		
-		Deck deck = new Deck();
+		Deck deck = new Deck(deckFileName);
 		
 		this.model = new GameState(deck, 5);
 
