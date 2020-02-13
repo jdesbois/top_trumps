@@ -209,6 +209,6 @@ public class CLIView {
 	 * Method to display overall game winner
 	 */
 	public void displayWinner() {
-		System.out.println(model.getWinner().getName() + " has won the game!");
+		System.out.println(model.getWinner().getName() + " has won the game!\n");
 	}
 }
