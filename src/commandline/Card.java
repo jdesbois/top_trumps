@@ -1,3 +1,5 @@
+package commandline;
+
 /*
 This class defines the card, its attribues and values
 Arrays are used for Attributes and Values 
