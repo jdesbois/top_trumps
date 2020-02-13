@@ -67,9 +67,9 @@ public class Player {
 	 * Returns playerhand
 	 * @return PlayerHand
 	 */
-	public PlayerHand getPlayerHand() {
+	public ArrayList<Card> getPlayerHand() {
 		
-		return gameHand;
+		return gameHand.getHand();
 	}
 	
 	/**
