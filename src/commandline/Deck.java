@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.io.*;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 /*
 The deck class will read in the cards from a .txt file
 Create the card objects
@@ -98,8 +102,19 @@ public class Deck {
     }
 
     public void importDeck() throws Exception {
+        JSONParser parser = new JSONParser();
+        String deckFileName = "";
+
+        try {
+            Object object = parser.parse(new FileReader("TopTrumps.json"));
+            JSONObject jsonObject = (JSONObject)object;
+            deckFileName = (String) jsonObject.get("deckFile");
+        } catch (FileNotFoundException fe) {
+            fe.printStackTrace();
+        }
+
         //Creates file object
-        File file = new File("StarCitizenDeck.txt");
+        File file = new File(deckFileName);
         //Retrieves file absolute path
         String path = file.getAbsolutePath();
         //Creates file reader and loads in file
