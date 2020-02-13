@@ -1,6 +1,17 @@
 package commandline;
 
-
+/**
+ * 
+ * @author Aaron Callaghan
+ * <br><br>
+ * 
+ * Constructor:<br>
+ * 	CLIController(GameState model, CLIView view)<br><br>
+ * 
+ * Public methods:<br>
+ * 	public int humanRound()<br>
+ *	public in AIRound()
+ */
 public class CLIController {
 	
 	// Stores GameState(Model)
