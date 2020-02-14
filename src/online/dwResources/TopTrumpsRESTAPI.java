@@ -40,6 +40,7 @@ public class TopTrumpsRESTAPI {
 	/** A Jackson Object writer. It allows us to turn Java objects
 	 * into JSON strings easily. */
 	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+
 	
 	/**
 	 * HashMap to store model instances different ID's
@@ -57,6 +58,7 @@ public class TopTrumpsRESTAPI {
 	private TopTrumpsJSONConfiguration jsonConfig;
 	
 
+
 	
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
@@ -68,6 +70,7 @@ public class TopTrumpsRESTAPI {
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
+
 		
 		/**
 		 * Model hashmap
@@ -83,6 +86,7 @@ public class TopTrumpsRESTAPI {
 		 *  Set config file
 		 */
 		this.jsonConfig = conf;
+
 	}
 	
 	// ----------------------------------------------------

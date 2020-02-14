@@ -115,6 +115,11 @@ public class TopTrumpsCLIApplication {
 				// Logs player hands
 				log.logHands(model.getPlayers(), (model.getHumanPlayer().getHandSize() != 0));
 				
+				// Temporarily stores communal pile
+				// This is due to get result automatically dealing communal Pile to a winner
+				ArrayList<Card> communalPile = model.getCommunalPile();
+				
+				
 				// if human player is active
 				if(model.getActivePlayer().getName().equals(
 						model.getHumanPlayer().getName())) {
@@ -126,6 +131,17 @@ public class TopTrumpsCLIApplication {
 				}
 				
 				// Result
+				
+				// Logs communal pile after new cards are added
+				if(result == 2) {
+					
+					log.logCommunalPile(model.getCommunalPile());
+					
+					// If someone won this round log the previously stored communalPile if it is not empty
+				} else if(communalPile.size() != 0) {
+					
+					log.logCommunalPile(communalPile);
+				}
 				
 				// Display winner name and winner card
 				view.displayResult(result);

@@ -21,7 +21,7 @@ public class Player {
 	
 	public void drawNewCard() 
 	{ //done
-		currentCard = gameHand.getTopCard();
+		currentCard = gameHand.newTopCard();
 	}
 	
 	public Card getCard()
@@ -67,9 +67,9 @@ public class Player {
 	 * Returns playerhand
 	 * @return PlayerHand
 	 */
-	public ArrayList<Card> getPlayerHand() {
+	public PlayerHand getPlayerHand() {
 		
-		return gameHand.getHand();
+		return gameHand;
 	}
 	
 	/**
