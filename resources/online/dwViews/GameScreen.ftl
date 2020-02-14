@@ -530,8 +530,8 @@
 				// redundant?
 				$("#AIOnly").hide();
 
-				// start round
-				newModelIndex();
+				// get a new session ID
+				newSessionID();
 				
 			}
 			
@@ -570,9 +570,9 @@
 			 *	Functions to start game and display player card
 			 */
 
-			 
-			  function newModelIndex(){
-			 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/newModelIndex");
+			 // generate new sesion ID to identify this session
+			  function newSessionID(){
+			 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/newSessionID");
 
 
 				if(!xhr) {
@@ -585,14 +585,14 @@
 					sessionStorage.setItem('sid', responseText);
 
 
-					// check active player
+					// start new game
 					newGame();
 
 				}
 				xhr.send();
 			 }
 
-			 // function to initialize a new game
+			 // function to initialize a new game for this session
 			 function newGame(){
 			 	var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/newGame?sid=" + sessionStorage.getItem('sid'));
 

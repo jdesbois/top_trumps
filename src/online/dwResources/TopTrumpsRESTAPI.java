@@ -41,10 +41,22 @@ public class TopTrumpsRESTAPI {
 	 * into JSON strings easily. */
 	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 	
+	/**
+	 * HashMap to store model instances different ID's
+	 */
 	private HashMap<Integer, GameState> modelMap;
-	private int modelIndex;
 	
-//	GameState model;
+	/**
+	 * Variable to store sessionID
+	 */
+	private int sessionID;
+	
+	/**
+	 * Configuration file
+	 */
+	private TopTrumpsJSONConfiguration jsonConfig;
+	
+
 	
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
@@ -56,44 +68,69 @@ public class TopTrumpsRESTAPI {
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
-//		model = new GameState();
+		
+		/**
+		 * Model hashmap
+		 */
 		modelMap = new HashMap<Integer, GameState>();
-		modelIndex = 0;
+		
+		/**
+		 * First key
+		 */
+		sessionID = 0;
+		
+		/**
+		 *  Set config file
+		 */
+		this.jsonConfig = conf;
 	}
 	
 	// ----------------------------------------------------
 	// Add relevant API methods here
 	// ----------------------------------------------------
 	
+	/**
+	 * Method to request a new session id
+	 * @return viewID New session ID
+	 * @throws IOException
+	 */
 	@GET
-	@Path("/newModelIndex")
+	@Path("/newSessionID")
 
-	public String newModelIndex() throws IOException {
+	public String newSessionID() throws IOException {
 		
-		int viewIndex = this.modelIndex;
-		this.modelIndex++;
-//		modelIndex ++;
-//		this.model = new GameState(deck, 5);
+		// local variable for sessionID to be returned
+		int viewID = this.sessionID;
+		
+		// increment sessionID
+		this.sessionID++;
 
-		return "" + viewIndex;
+		// return local sessionID
+		return "" + viewID;
 
 	}
 	
-	// create a new game
+	/**
+	 * Start a new game but reseting the model and deck
+	 * @param sid sessionID associated client request
+	 * @return "1"
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/newGame")
 
 	public String newGame(@QueryParam("sid") String sid) throws IOException {
 		
+		// Create a new deck
 		Deck deck = new Deck();
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		 
-		
-		this.modelMap.put(sidInt, new GameState(deck,5));
-//		modelIndex ++;
-//		this.model = new GameState(deck, 5);
+		// Create a new model and store it in modelMap under key of sidInt
+		this.modelMap.put(sidInt, new GameState(deck, this.jsonConfig.getNumAIPlayers()));
 
+		// Return 1 to indicate API call complete
 		return "1";
 
 	}
@@ -109,10 +146,13 @@ public class TopTrumpsRESTAPI {
 
 	public String getRoundNo(@QueryParam("sid") String sid) throws IOException {
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
+		// get round number for the model associated with given sid
 		String result = "" + this.modelMap.get(sidInt).getRoundNumber();
-
+		
+		// return round number
 		return result;
 
 	}
@@ -127,9 +167,12 @@ public class TopTrumpsRESTAPI {
 
 	public String checkTurn(@QueryParam("sid") String sid) throws IOException {
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
 		String result;
+		
+		// if human player is active
 		if(this.modelMap.get(sidInt).getActivePlayer().getName().equals(
 				this.modelMap.get(sidInt).getHumanPlayer().getName())) {
 			result = "1";
@@ -153,9 +196,10 @@ public class TopTrumpsRESTAPI {
 
 	public String drawCards(@QueryParam("sid") String sid) throws IOException{
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
-		
+		// draw new cards for all players
 		this.modelMap.get(sidInt).drawNewCard();
 		
 		return "New cards drawn";
@@ -173,9 +217,13 @@ public class TopTrumpsRESTAPI {
 	
 	public String selectCategory(@QueryParam("Category") String Category, @QueryParam("sid") String sid) {
 		
+		// Parse query category and convert to int
 		int catInt = Integer.parseInt(Category);
+		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
+		// set attribute
 		this.modelMap.get(sidInt).setCurrentAttribute(catInt - 1);
 		
 		return Category;
@@ -183,7 +231,7 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	/**
-	 * Method to set AI player category
+	 * Method to set category when AI player active
 	 * @return Selected category
 	 */
 	@GET
@@ -191,12 +239,16 @@ public class TopTrumpsRESTAPI {
 	
 	public String selectCategoryAI(@QueryParam("sid") String sid) {
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
+		// Get AI player category
 		int catInt = this.modelMap.get(sidInt).getActivePlayer().getHighestAttribute();
-
+		
+		// For testing
 		// System.out.println("integer input to model: " + catInt);
 		
+		// set attribute
 		this.modelMap.get(sidInt).setCurrentAttribute(catInt - 1);
 		
 		String catStr = Integer.toString(catInt);
@@ -213,8 +265,10 @@ public class TopTrumpsRESTAPI {
 	
 	public String getResult(@QueryParam("sid") String sid) {
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
+		// get result from model
 		return "" + this.modelMap.get(sidInt).getResult();
 	}
 	
@@ -227,53 +281,86 @@ public class TopTrumpsRESTAPI {
 	
 	public String getActivePlayer(@QueryParam("sid") String sid) {
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
+		// Get active player from model
 		return this.modelMap.get(sidInt).getActivePlayer().name;
 	}
 	
-	
+	/**
+	 * Method to return JSON string representing human player information
+	 * @param sid
+	 * @return human player as JSON object
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/showPlayer")
 
 	public String showPlayer(@QueryParam("sid") String sid) throws IOException {
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
-
+		
+		// get human player object from model and convert to JSON
 		String playerStr = oWriter.writeValueAsString(this.modelMap.get(sidInt).getHumanPlayer());
 	
 		return playerStr;
 
 	}
 	
+	/**
+	 * Method to return JSON string representing all players and their information
+	 * @param sid
+	 * @return players array as JSON string
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/showPlayers")
 	
 	public String showPlayers(@QueryParam("sid") String sid) throws IOException {
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
+		// get list of players from model
 		ArrayList<Player> players = this.modelMap.get(sidInt).getPlayers();
 		
+		// convert list of players to JSON
 		String playersStr = oWriter.writeValueAsString(players);
+		
+		// for testing
 		// System.out.println(playersStr);
 		
 		return playersStr;
 	}
 	
+	/**
+	 * Method to return a list of any eliminated players
+	 * @param sid
+	 * @return list of eliminated players, otherwise '0'
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/checkEliminations")
 	
 	public String checkEliminations(@QueryParam("sid") String sid) throws IOException{
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
+		// Get eliminated users from model
 		ArrayList<Player> usersEliminated = this.modelMap.get(sidInt).userEliminated();
-		
-			if(usersEliminated.size() > 0) {
 			
+			// if at least 1 user eliminated
+			if(usersEliminated.size() > 0) {
+				
+				// convert eliminated player list to string
 				String elimStr = oWriter.writeValueAsString(usersEliminated);
+				
+				// for testings
 				// System.out.println(elimStr);
+				
 				return elimStr;
 			
 			}
@@ -281,35 +368,51 @@ public class TopTrumpsRESTAPI {
 			return "0";
 	}
 	
-	/*
-	 * Get communal pile size
+	/**
+	 * Method to get communal pile size
+	 * @param sid
+	 * @return communal pile size
 	 */
 	@GET
 	@Path("/communalPileSize")
 	
 	public String communalPileSize(@QueryParam("sid") String sid) {
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
 		return "" + this.modelMap.get(sidInt).getCommunalPileSize();
 	}
 	
-	
+	/**
+	 *  Method to check if human player still in game
+	 * @param sid
+	 * @return 1 if player still in game, 0 if not
+	 * @throws IOException
+	 */
 	@GET
 	@Path("/checkHumanPlayer")
 	
 	public String checkHumanPlayer(@QueryParam("sid") String sid) throws IOException {
 		
+		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
 		
+		// get human player from model
 		Player humanPlayer = this.modelMap.get(sidInt).getHumanPlayer();
 		
+		// if human player still in game
 		if(humanPlayer.getHandSize() != 0) {
+			
+			// for testing
 			// System.out.println("check human player gives 1");
+			
 			return "1";
 		}
 		else {
+			// for testing
 			// System.out.println("check human player gives 0");
+			
 			return "0";
 		}
 			
