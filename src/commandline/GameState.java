@@ -325,7 +325,10 @@ public class GameState {
 	 * @return
 	 */
 	public ArrayList<Player> getPlayers() {
-		return players;
+		
+		ArrayList<Player> p = players;
+		
+		return p;
 	}
 	
 	/**

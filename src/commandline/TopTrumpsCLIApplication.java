@@ -1,5 +1,8 @@
 package commandline;
 
+import java.io.File;
+import java.util.ArrayList;
+
 /**
  * Top Trumps command line application
  */
@@ -25,11 +28,15 @@ public class TopTrumpsCLIApplication {
 			// Add your game logic here based on the requirements
 			// ----------------------------------------------------
 			
+			// Creates a TestLog file which will only activate if the log option is chosen
+			TestLog log = new TestLog(new File("TestLog.txt"), writeGameLogsToFile);
+						
 			// Initialises new deck
 			Deck deck = new Deck();
 			
-			// Shuffles Deck
+			log.logDeck(deck.toString());
 			deck.shuffleDeck();
+			log.logShuffledDeck(deck.toString());
 			
 			//MVC initialisation
 			GameState model = new GameState(deck, 5); // In CLI, number of players defaults to 5
@@ -79,6 +86,35 @@ public class TopTrumpsCLIApplication {
 				// Attribute selection
 				int result;
 				
+				// All Player Objects draw new Card
+				model.drawNewCard();
+				
+				// Checks if log has been chosen - otherwise will not perfom logic
+				if(writeGameLogsToFile) {
+					
+					// Converts chosen attribute to string
+					String att = model.getActivePlayer().getCard().getAttri()[model.getCurrentAttribute()];
+					// Initialises an Array to store card attribute values
+					int[] vals = new int[model.getPlayersSize()];
+					
+					// Stores current players
+					ArrayList<Player> p = model.getPlayers();
+					
+					// Loops through every player and gets chosen value
+					for(int i = 0; i < model.getPlayersSize(); i++) {
+						
+						vals[i] = p.get(i).getCard().getValue(model.getCurrentAttribute());
+					}
+					
+					// Logs category and values
+					log.logCategoryandValues(att, vals, (model.getHumanPlayer().getHandSize() != 0));
+				}
+				
+				// Logs current cards
+				log.logCurrentCards(model.getPlayers());
+				// Logs player hands
+				log.logHands(model.getPlayers(), (model.getHumanPlayer().getHandSize() != 0));
+				
 				// if human player is active
 				if(model.getActivePlayer().getName().equals(
 						model.getHumanPlayer().getName())) {
@@ -103,7 +139,14 @@ public class TopTrumpsCLIApplication {
 				// Check if game finished
 
 				if(model.getPlayersSize() == 1) {
+					
+					// logs winner
+					log.logWinner(model.getWinner().toString());
+					
+					// Displays winner
 					view.displayWinner();	
+					
+					// Ends loop
 					gamePlay = false;
 				}
 			}
