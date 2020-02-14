@@ -42,8 +42,8 @@ public class Player {
 	 * player's currentCard
 	 */
 	public void drawNewCard() 
-	{ 
-		currentCard = gameHand.getTopCard();
+	{ //done
+		currentCard = gameHand.newTopCard();
 	}
 	
 	/**

@@ -28,7 +28,9 @@ import java.util.Set;
  *	public ArrayList<Player> getPlayers()<br>
  *	public int[] getAttributeValues()<br>
  *	public ArrayList<PlayerStats> getPlayerStats()<br>
- *	public GameStats getGameStats()
+ *	public GameStats getGameStats()<br>
+ *	public ArrayList<card> getCommunalPile()
+ *
  */
 public class GameState {
 
@@ -387,5 +389,14 @@ public class GameState {
 	public GameStats getGameStats() {
 		
 		return new GameStats(this.winner, this.roundNumber, this.draws);
+	}
+	
+	/**
+	 * Returns the communalPile
+	 * @return ArrayList<Card>
+	 */
+	public ArrayList<Card> getCommunalPile(){
+		
+		return communalPile;
 	}
 }
