@@ -57,8 +57,8 @@ class GameStateTest {
 
     @Test
     public void testDrawNewCard() {
-        Card topCard = g.getHumanPlayer().getPlayerHand().getTopCard();
+        Card topCard = g.getHumanPlayer().getPlayerHand().newTopCard();
         g.drawNewCard();
-        assertNotEquals(topCard, g.getHumanPlayer().getPlayerHand().getTopCard());
+        assertNotEquals(topCard, g.getHumanPlayer().getPlayerHand().newTopCard());
     }
 }
