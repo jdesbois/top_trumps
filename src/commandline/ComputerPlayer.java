@@ -2,7 +2,11 @@ package commandline;
 /**
  * 
  * @author Mike
- *   int getHighestAttribute() <br>
+ * matric 2205885M
+ * <br><br>
+ * constructor: <br>
+ * String name, PlayerHand gameHand <br><br>
+ * int getHighestAttribute() <br>
  *
  */
 
