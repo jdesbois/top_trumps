@@ -40,6 +40,7 @@ public class TopTrumpsRESTAPI {
 	 * into JSON strings easily. */
 	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 	GameState model;
+
 	
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
@@ -52,6 +53,7 @@ public class TopTrumpsRESTAPI {
 		// Add relevant initalization here
 		// ----------------------------------------------------
 //		model = new GameState();
+
 	}
 	
 	// ----------------------------------------------------
