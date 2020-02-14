@@ -18,7 +18,7 @@ public class PlayerHand {
     public ArrayList<Card> getHand() {
         return this.hand;
     }
-    public Card getTopCard() {
+    public Card newTopCard() {
         return this.hand.remove(0);
     }
     public String toString() {
