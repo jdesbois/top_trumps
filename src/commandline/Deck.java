@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.io.*;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 /*
 The deck class will read in the cards from a .txt file
 Create the card objects
@@ -46,7 +50,18 @@ public class Deck {
             System.out.println(e);
         }
     }
-
+    /**
+ * Constructor <br>
+ * @param String file name of the deck to import
+ */
+    public Deck(String deckFileName) {
+        //Creates deck by using the import deck function
+        try {
+            importDeck(deckFileName);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
     //getters/setters
     /**
      * Getter method to return deck variable 
@@ -152,8 +167,60 @@ public class Deck {
      * @throws Exception due to use of FileReader object
      */
     public void importDeck() throws Exception {
+        JSONParser parser = new JSONParser();
+        String deckFileName = "";
+
+        try {
+            Object object = parser.parse(new FileReader("TopTrumps.json"));
+            JSONObject jsonObject = (JSONObject)object;
+            deckFileName = (String) jsonObject.get("deckFile");
+        } catch (FileNotFoundException fe) {
+            fe.printStackTrace();
+        }
+
         //Creates file object
-        File file = new File("StarCitizenDeck.txt");
+        File file = new File(deckFileName);
+        //Retrieves file absolute path
+        String path = file.getAbsolutePath();
+        //Creates file reader and loads in file
+        FileReader fr = new FileReader(path);
+        //Passes file contents to scanner
+        Scanner myScanner = new Scanner(fr);
+        //Creates attributes array to be passed to Card Constructor
+        String[] attributes = new String[5];
+
+        /*
+        These lines strip the first line from the file
+        Split the first line into an array
+        Iterates over the split array and puts the attribute headers into the attribues array
+        */
+        String firstLine = myScanner.nextLine();
+        String[] firstLineSplit = firstLine.split(" ");
+        for (int i=1; i < firstLineSplit.length; i++) {
+            attributes[i-1] = firstLineSplit[i];
+        }
+        
+        /*
+        Iterates over rest of file in scanner line by line
+        Takes a line and splits its contents
+        Iterates over line from position 1, to avoid taking in the string, and puts values into values array
+        Then creates a card object for each line in file, passing Description name, attributes headers and values to constructor
+        */
+        while (myScanner.hasNext()) {
+            int[] values = new int[5];
+            String[] split = myScanner.nextLine().split(" ");
+            for (int i=1; i < split.length; i++) {
+                int value = Integer.parseInt(split[i]);
+                values[i-1] = value;
+            }
+            deck.add(new Card(split[0], attributes, values));
+        }
+        myScanner.close();
+    }
+    public void importDeck(String deckFileName) throws Exception {
+
+        //Creates file object
+        File file = new File(deckFileName);
         //Retrieves file absolute path
         String path = file.getAbsolutePath();
         //Creates file reader and loads in file

@@ -49,11 +49,8 @@ public class PlayerHand {
     public ArrayList<Card> getHand() {
         return this.hand;
     }
-/**
- * Method to remove and return the first card in the hand ArrayList
- * @return Card that is remove from the 0th index of the hand ArrayList
- */
-    public Card getTopCard() {
+
+    public Card newTopCard() {
         return this.hand.remove(0);
     }
 /**
