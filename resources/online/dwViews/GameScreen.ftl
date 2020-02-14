@@ -607,7 +607,9 @@
 					$("#gameWinner").empty();
 					$("#gameWinner").hide();
 
+					// log sessionID to console
 					console.log("SID:" + sessionStorage.getItem('sid'));
+
 					// check active player
 					getActivePlayer();
 
@@ -615,63 +617,7 @@
 				xhr.send();
 			 }
 
-			// function to check if a player has won
-			function startRound() {
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers?sid=" + sessionStorage.getItem('sid'));
-
-				// empty list of cards
-				$(".list").empty();
-
-				if(!xhr) {
-					alert("CORS not supported");
-				}
-				xhr.onload = function(e) {
-					var responseText = xhr.response;
-
-					// convert to JSON object
-					var jsonPlayers = JSON.parse(responseText);
-
-					// for testing
-					// console.log("Players length: " + jsonPlayers.length);
-
-					// if only 1 player left, game over and announce winner
-					if(jsonPlayers.length == 1){
-
-						// show text that player has won game
-						$("#gameWinner").show();
-						$("#gameWinner").append("<h2>" + jsonPlayers[0].name + " wins the game!</h2>");
-
-						// Show new game instead of next round
-						$("#newGame").show();
-						$("#nextRound").hide();
-					}
-
-					// else check whose turn it is and start game
-					else{
-						getCommunalPileSize();
-					}
-
-				}
-				xhr.send();
-			}
-
-			// get communal pile size
-			function getCommunalPileSize(){
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/communalPileSize?sid=" + sessionStorage.getItem('sid'));
-
-				if(!xhr) {
-					alert("CORS not supported");
-				}
-				xhr.onload = function(e) {
-					var result = xhr.response;
-
-					$("#communalPileSize").text("Communal pile size: " + result);
-
-					getActivePlayer();					
-					
-				}
-				xhr.send();
-			}
+			
 
 			// function to get active player
 			function getActivePlayer(){
@@ -1049,6 +995,86 @@
 					}
 
 					$("#nextRound").show();
+
+				}
+				xhr.send();
+			}
+
+			// function to check if a player has won
+			// If player has won, display result and log stats
+			// If no winner, get communal pile size to start new round
+			function startRound() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/showPlayers?sid=" + sessionStorage.getItem('sid'));
+
+				// empty list of cards
+				$(".list").empty();
+
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var responseText = xhr.response;
+
+					// convert to JSON object
+					var jsonPlayers = JSON.parse(responseText);
+
+					// for testing
+					// console.log("Players length: " + jsonPlayers.length);
+
+					// if only 1 player left, game over and announce winner
+					if(jsonPlayers.length == 1){
+
+						// show text that player has won game
+						$("#gameWinner").show();
+						$("#gameWinner").append("<h2>" + jsonPlayers[0].name + " wins the game!</h2>");
+
+						// log game stats to database
+						logGameStats();	
+					}
+
+					// else check whose turn it is and start new round
+					else{
+						getCommunalPileSize();
+					}
+
+				}
+				xhr.send();
+			}
+
+			// get communal pile size
+			function getCommunalPileSize(){
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/communalPileSize?sid=" + sessionStorage.getItem('sid'));
+
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+					var result = xhr.response;
+
+					$("#communalPileSize").text("Communal pile size: " + result);
+
+					getActivePlayer();					
+					
+				}
+				xhr.send();
+			}
+
+			// function to log game stats to database at end of game
+			function logGameStats() {
+				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/logGameStats?sid=" + sessionStorage.getItem('sid'));
+				if(!xhr) {
+					alert("CORS not supported");
+				}
+				xhr.onload = function(e) {
+
+					var responseText = xhr.response;
+
+					// for testing
+					console.log("/logGameStats response: " + responseText);
+
+					// Show new game button instead of next round
+					$("#newGame").show();
+					$("#nextRound").hide();
 
 				}
 				xhr.send();
