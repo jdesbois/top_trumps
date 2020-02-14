@@ -46,7 +46,7 @@ public class PlayerHandTest {
     @Test
     public void testGetTopCard() {
 
-        assertNotNull(hand.getTopCard()); //testing to make sure the method doesn't not return a null object
+        assertNotNull(hand.newTopCard()); //testing to make sure the method doesn't not return a null object
     }
 
 }
