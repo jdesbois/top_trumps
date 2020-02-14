@@ -14,9 +14,33 @@ The deck class will read in the cards from a .txt file
 Create the card objects
 Store them in an array list
 */
+
+/**
+ * Deck class for Top Trumps game
+ * @author John Desbois
+ * <br><br>
+ * 
+ * Constructor:<br>
+ * 	Deck()<br><br>
+ * 
+ * Public methods:<br>
+ * 	public ArrayList<Card> getDesk()<br>
+ * 	public Card getCard(int)<br>
+ *  public String toString()<br>
+ *  public void shuffleDeck()<br>
+ *  public ArrayList<PlayerHand> deal()<br>
+ *  public ArrayList<PlayerHand> deal(int)<br>
+ *  public void importDeck() throws Exception
+ * 
+ */
 public class Deck {
     ArrayList<Card> deck = new ArrayList<Card>();
     ArrayList<PlayerHand> hands = new ArrayList<PlayerHand>();
+
+/**
+ * Constructor <br>
+ * No parameters just runs the importDeck() method
+ */
 
     public Deck() {
         //Creates deck by using the import deck function
@@ -26,6 +50,10 @@ public class Deck {
             System.out.println(e);
         }
     }
+    /**
+ * Constructor <br>
+ * @param String file name of the deck to import
+ */
     public Deck(String deckFileName) {
         //Creates deck by using the import deck function
         try {
@@ -35,10 +63,19 @@ public class Deck {
         }
     }
     //getters/setters
+    /**
+     * Getter method to return deck variable 
+     * @return ArrayList<Card> of Card objects that were imported from deck text file
+     */
     public ArrayList<Card> getDeck() {
         return deck;
     }
     //Returns the card using the toString() method of the card object
+    /**
+     * Getter method to return a Card object at a specific index in the ArrayList.
+     * @param int index of Card object to be returned
+     * @return Card object at specified index
+     */
     public Card getCard(int i) {
         return deck.get(i);
     }
@@ -46,6 +83,10 @@ public class Deck {
     This is the toString() method which iterates over the deck, adds each card to the String on a new line
     Returns the completed String as a whole.
     */
+    /**
+     * toString method which iterates over the deck, adds each card in String format to a new line.
+     * @return String with every card in deck object printed on a new line.
+     */
     public String toString() {
         String output = "";
         for (int i = 0; i < deck.size(); i++) {
@@ -53,7 +94,9 @@ public class Deck {
         }    
         return output;    
     }
-
+    /**
+     * Method that is able to shuffle deck. This is achieved via the built in shuffle method for Java Collections.
+     */
     //Method to shuffle deck 
     public void shuffleDeck() {
         Collections.shuffle(this.deck);
@@ -64,6 +107,11 @@ public class Deck {
     Instaniates 5 player hand objects, adds these playerhand objects to a Hands arraylist
     While the deck is not equal to 0, method iterates over player hands, taking 0th index item, removing it from deck and placing it into a player hand. 
     */
+    /**
+     * Deal method which creates 5 PlayerHand objects, iterates over the deck and passes a card to each hand one at a time.
+     * Each PlayerHand is put into an ArrayList to be returned.
+     * @return ArrayList<PlayerHand> of all 5 PlayerHand objects with hands of Card objects. 
+     */
     public ArrayList<PlayerHand> deal() {
         //Create 5 Player hand objects (will later be modified to accept int and create only those about of hands)
         PlayerHand hand1 = new PlayerHand();
@@ -88,13 +136,17 @@ public class Deck {
     Instaniates n player hand objects, adds these playerhand objects to a Hands arraylist
     While the deck is not equal to 0, method iterates over player hands, taking 0th index item, removing it from deck and placing it into a player hand. 
     */
+    /**
+     * Overloaded deal method that accepts an integer referring to the number of players or playerhands needed.
+     * @param int referring to the number of players or the number of hands required.
+     * @return ArrayList<PlayerHand> of n amount of hands.
+     */
     public ArrayList<PlayerHand> deal(int n) {
         //Creates n amount of PlayerHand object and adds them to hands ArrayList
         for (int i=0; i<n; i++) {
             PlayerHand hand = new PlayerHand();
             hands.add(hand);
         }
-
         //Will perform until deck reaches 0
         while (deck.size() != 0) {
             //iterates over the hands arraylist adding top card from deck to each hand, until deck is empty
@@ -108,7 +160,12 @@ public class Deck {
         }
         return hands;
     }
-
+    /**
+     * Method to import the deck from a text file. 
+     * File name is currently hardcoded, and file must be in the same directory as the JAR file to be read.
+     * 
+     * @throws Exception due to use of FileReader object
+     */
     public void importDeck() throws Exception {
         JSONParser parser = new JSONParser();
         String deckFileName = "";
