@@ -137,10 +137,17 @@ public class TopTrumpsRESTAPI {
 		int sidInt = Integer.parseInt(sid);
 		 
 		// Create a new model and store it in modelMap under key of sidInt
-		this.modelMap.put(sidInt, new GameState(deck, this.jsonConfig.getNumAIPlayers()));
-
-		// Return 1 to indicate API call complete
-		return "1";
+		this.modelMap.put(sidInt, new GameState(deck, (this.jsonConfig.getNumAIPlayers() + 1)));
+		
+		// Get the attribute names to be used
+		String[] attri = this.modelMap.get(sidInt).getHumanPlayer().getPlayerHand().getHand().get(0).getAttri();
+		String attriStr = oWriter.writeValueAsString(attri);
+		
+		// for testing
+		// System.out.println(attriStr);
+		
+		// Return attributes to be used for this game
+		return attriStr;
 
 	}
 	

@@ -111,11 +111,11 @@
 
 		                        <div class="btn-group-vertical bg-secondary my_buttons" id="categories">
 		                            <h5> Please select a category</h5>
-		                            <button onclick="selectCategory(1)" type="button" class="btn btn-default card_Value_0"> Select Size </button>
-		                            <button onclick="selectCategory(2)" type="button" class="btn btn-default card_Value_1"> Select Speed </button>
-		                            <button onclick="selectCategory(3)" type="button" class="btn btn-default card_Value_2"> Select Range </button>
-		                            <button onclick="selectCategory(4)" type="button" class="btn btn-default card_Value_3"> Select Firepower </button>
-		                            <button onclick="selectCategory(5)" type="button" class="btn btn-default card_Value_4"> Select Cargo </button>
+		                            <button onclick="selectCategory(1)" type="button" class="btn btn-default card_Value_0" id="btn1"> Select Size </button>
+		                            <button onclick="selectCategory(2)" type="button" class="btn btn-default card_Value_1" id="btn2"> Select Speed </button>
+		                            <button onclick="selectCategory(3)" type="button" class="btn btn-default card_Value_2" id="btn3"> Select Range </button>
+		                            <button onclick="selectCategory(4)" type="button" class="btn btn-default card_Value_3" id="btn4"> Select Firepower </button>
+		                            <button onclick="selectCategory(5)" type="button" class="btn btn-default card_Value_4" id="btn5"> Select Cargo </button>
 		                        </div>
 
 		                        <!-- text description fields -->
@@ -158,8 +158,8 @@
 		                                        </div>
 		                                        <div class="card-text">
 		                                            <div class="row justify-content-around card_row0">
-		                                                <div class="col-6 card_col1">
-		                                                    Size
+		                                                <div class="col-6 card_col1 sizeL attribute1">
+		                                                    <!-- Size -->
 		                                                </div>
 		                                                <div class="col-4 card_col2">
 		                                                    <div class="Hp_val0" id="size1">
@@ -168,8 +168,8 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row1">
-		                                                <div class="col-6 card_col1">
-		                                                    Speed
+		                                                <div class="col-6 card_col1 attribute2">
+		                                                    <!-- Speed -->
 		                                                </div>
 		                                                <div class="col-4 card_col2">
 		                                                    <div class="Hp_val1" id="speed1">
@@ -178,7 +178,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row2">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute3">
 		                                                    Range
 		                                                </div>
 		                                                <div class="col-4 card_col2">
@@ -188,7 +188,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row3">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute4">
 		                                                    Firepower
 		                                                </div>
 		                                                <div class="col-4 card_col2" id="firepower1">
@@ -198,7 +198,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row_4">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute5">
 		                                                    Cargo
 		                                                </div>
 		                                                <div class="col-4 card_col2" id="cargo1">
@@ -230,7 +230,7 @@
 		                                        </div>
 		                                        <div class="card-text">
 		                                            <div class="row justify-content-around card_row0">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute1">
 		                                                    Size
 		                                                </div>
 		                                                <div class="col-4 card_col2" id="size2">
@@ -240,7 +240,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row1">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute2">
 		                                                    Speed
 		                                                </div>
 		                                                <div class="col-4 card_col2">
@@ -250,7 +250,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row2">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute3">
 		                                                    Range
 		                                                </div>
 		                                                <div class="col-4 card_col2">
@@ -260,7 +260,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row3">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute4">
 		                                                    Firepower
 		                                                </div>
 		                                                <div class="col-4 card_col2">
@@ -270,7 +270,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row_4">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute5">
 		                                                    Cargo
 		                                                </div>
 		                                                <div class="col-4 card_col2">
@@ -302,7 +302,7 @@
 		                                        </div>
 		                                        <div class="card-text">
 		                                            <div class="row justify-content-around card_row0">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute1">
 		                                                    Size
 		                                                </div>
 		                                                <div class="col-4 card_col2">
@@ -312,7 +312,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row1">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute2">
 		                                                    Speed
 		                                                </div>
 		                                                <div class="col-4 card_col2">
@@ -322,7 +322,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row2">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute3">
 		                                                    Range
 		                                                </div>
 		                                                <div class="col-4 card_col2">
@@ -332,7 +332,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row3">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute4">
 		                                                    Firepower
 		                                                </div>
 		                                                <div class="col-4 card_col2">
@@ -342,7 +342,7 @@
 		                                                </div>
 		                                            </div>
 		                                            <div class="row justify-content-around card_row_4">
-		                                                <div class="col-6 card_col1">
+		                                                <div class="col-6 card_col1 attribute5">
 		                                                    Cargo
 		                                                </div>
 		                                                <div class="col-4 card_col2">
@@ -378,7 +378,7 @@
 		                                    </div>
 		                                    <div class="card-text">
 		                                        <div class="row justify-content-around card_row0">
-		                                            <div class="col-6 card_col1">
+		                                            <div class="col-6 card_col1 attribute1">
 		                                                Size
 		                                            </div>
 		                                            <div class="col-4 card_col2">
@@ -388,7 +388,7 @@
 		                                            </div>
 		                                        </div>
 		                                        <div class="row justify-content-around card_row1">
-		                                            <div class="col-6 card_col1">
+		                                            <div class="col-6 card_col1 attribute2">
 		                                                Speed
 		                                            </div>
 		                                            <div class="col-4 card_col2">
@@ -398,7 +398,7 @@
 		                                            </div>
 		                                        </div>
 		                                        <div class="row justify-content-around card_row2">
-		                                            <div class="col-6 card_col1">
+		                                            <div class="col-6 card_col1 attribute3">
 		                                                Range
 		                                            </div>
 		                                            <div class="col-4 card_col2">
@@ -408,7 +408,7 @@
 		                                            </div>
 		                                        </div>
 		                                        <div class="row justify-content-around card_row3">
-		                                            <div class="col-6 card_col1">
+		                                            <div class="col-6 card_col1 attribute4">
 		                                                Firepower
 		                                            </div>
 		                                            <div class="col-4 card_col2">
@@ -418,7 +418,7 @@
 		                                            </div>
 		                                        </div>
 		                                        <div class="row justify-content-around card_row_4">
-		                                            <div class="col-6 card_col1">
+		                                            <div class="col-6 card_col1 attribute5">
 		                                                Cargo
 		                                            </div>
 		                                            <div class="col-4 card_col2">
@@ -449,7 +449,7 @@
 		                                    </div>
 		                                    <div class="card-text">
 		                                        <div class="row justify-content-around card_row0">
-		                                            <div class="col-6 card_col1">
+		                                            <div class="col-6 card_col1 attribute1">
 		                                                Size
 		                                            </div>
 		                                            <div class="col-4 card_col2">
@@ -459,7 +459,7 @@
 		                                            </div>
 		                                        </div>
 		                                        <div class="row justify-content-around card_row1">
-		                                            <div class="col-6 card_col1">
+		                                            <div class="col-6 card_col1 attribute2">
 		                                                Speed
 		                                            </div>
 		                                            <div class="col-4 card_col2">
@@ -469,7 +469,7 @@
 		                                            </div>
 		                                        </div>
 		                                        <div class="row justify-content-around card_row2">
-		                                            <div class="col-6 card_col1">
+		                                            <div class="col-6 card_col1 attribute3">
 		                                                Range
 		                                            </div>
 		                                            <div class="col-4 card_col2">
@@ -479,7 +479,7 @@
 		                                            </div>
 		                                        </div>
 		                                        <div class="row justify-content-around card_row3">
-		                                            <div class="col-6 card_col1">
+		                                            <div class="col-6 card_col1 attribute4">
 		                                                Firepower
 		                                            </div>
 		                                            <div class="col-4 card_col2">
@@ -489,7 +489,7 @@
 		                                            </div>
 		                                        </div>
 		                                        <div class="row justify-content-around card_row_4">
-		                                            <div class="col-6 card_col1">
+		                                            <div class="col-6 card_col1 attribute5">
 		                                                Cargo
 		                                            </div>
 		                                            <div class="col-4 card_col2">
@@ -601,6 +601,10 @@
 					alert("CORS not supported");
 				}
 				xhr.onload = function(e) {
+
+					// get details of human player and convert to JSON
+					var responseText = xhr.response;
+					var attributes = JSON.parse(responseText);
 					
 					// hide buttons
 					$("#newGame").hide();
@@ -609,6 +613,22 @@
 
 					// log sessionID to console
 					console.log("SID:" + sessionStorage.getItem('sid'));
+
+					// for testing
+					console.log("Attributes array: " + attributes);
+
+					// set labels for attributes
+					$(".attribute1").each(function() {$( this ).text(attributes[0])});
+					$(".attribute2").each(function() {$( this ).text(attributes[1])});
+					$(".attribute3").each(function() {$( this ).text(attributes[2])});
+					$(".attribute4").each(function() {$( this ).text(attributes[3])});
+					$(".attribute5").each(function() {$( this ).text(attributes[4])});
+
+					$("#btn1").text(" Select " + attributes[0]);
+					$("#btn2").text(" Select " + attributes[1]);
+					$("#btn3").text(" Select " + attributes[2]);
+					$("#btn4").text(" Select " + attributes[3]);
+					$("#btn5").text(" Select " + attributes[4]);
 
 					// check active player
 					getActivePlayer();
@@ -721,6 +741,8 @@
 					// get details of human player and convert to JSON
 					var responseText = xhr.response;
 					var jsonHumanPlayer = JSON.parse(responseText);
+
+					console.log(jsonHumanPlayer);
 
 					// player name
 					var playerNo = jsonHumanPlayer.name
