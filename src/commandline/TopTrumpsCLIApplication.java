@@ -56,9 +56,31 @@ public class TopTrumpsCLIApplication {
 			while(playChoice != 1) {
 				playChoice = view.selectStats();
 				if(playChoice == 2) {
-					/*
-					 *  Insert logic to view stats
-					 */
+					
+					averageDraws ad = new averageDraws();
+					int average = ad.drawsAverage();
+					
+					System.out.println(String.format("%d : average number of draws", average));
+					
+					computeWins cw = new computeWins();
+					cw.connect();
+					
+					int totalWins = cw.totalWins();
+					System.out.println(String.format("%d : total player X wins", totalWins));
+					
+					mostRounds mr = new mostRounds(); //Create instance of class
+					int maxRounds = mr.countRounds(); //Instantiates countRounds method, stores in maxRounds
+					
+					System.out.println(String.format("%d : most rounds in a game", maxRounds));
+					
+					totalGames gm = new totalGames();
+					gm.connect();
+					
+					int total = gm.overallGameCount();
+					
+					System.out.println(String.format("%d : total games played", total));	
+					
+					
 				}
 			}
 			
@@ -173,16 +195,15 @@ public class TopTrumpsCLIApplication {
 			
 			insertGameStats inG = new insertGameStats();
 			
-//			Game newGame = new Game(45, 67, "Player_2");
-			
 			GameStats newGame = model.getGameStats();
 			
 			int gid = (int) inG.insert(newGame); 
 			
-		ArrayList<PlayerStats> stats = model.getPlayerStats();
+			ArrayList<PlayerStats> stats = model.getPlayerStats();
 
-		insertPlayerStats in = new insertPlayerStats();
-		in.insertData(gid, stats);
+			insertPlayerStats in = new insertPlayerStats();
+			
+			in.insertData(gid, stats);
 	
 
 			userWantsToQuit=true; // use this when the user wants to exit the game
