@@ -72,7 +72,7 @@
   
   	<!-- Where do our Java sources come from? -->
     <sourceDirectory>src</sourceDirectory>
-	
+	<finalName>TopTrumps</finalName>
 	<resources>
 		<resource>
 			<directory>resources</directory>
