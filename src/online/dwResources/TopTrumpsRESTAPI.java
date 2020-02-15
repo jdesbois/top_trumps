@@ -20,7 +20,9 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import commandline.Card;
 import commandline.Deck;
 import commandline.GameState;
+import commandline.GameStats;
 import commandline.Player;
+import commandline.PlayerStats;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
@@ -127,6 +129,9 @@ public class TopTrumpsRESTAPI {
 		
 		// Create a new deck
 		Deck deck = new Deck();
+
+		// Shuffle deck
+		deck.shuffleDeck();
 		
 		// Parse query sid and convert to int
 		int sidInt = Integer.parseInt(sid);
@@ -422,5 +427,29 @@ public class TopTrumpsRESTAPI {
 			
 	}
 	
+	@GET
+	@Path("/logGameStats")
+	
+	public String logGameStats(@QueryParam("sid") String sid) throws IOException {
+		
+		// Parse query sid and convert to int
+		int sidInt = Integer.parseInt(sid);
+		
+		GameStats gameStats = this.modelMap.get(sidInt).getGameStats();
+		
+		System.out.println("Rounds: " + gameStats.getRounds()
+				+ "\nDraws: " + gameStats.getDraws()
+				+ "\nWinner: " + gameStats.getWinner());
+		
+		ArrayList<PlayerStats> playerStats = this.modelMap.get(sidInt).getPlayerStats();
+		
+		for(PlayerStats p: playerStats) {
+			System.out.println("\nPlayer:" + p.getPlayer() 
+								+ "\nRounds won: " + p.getScore());
+		}
+		
+
+		return "1";	
+	}
 	
 }
