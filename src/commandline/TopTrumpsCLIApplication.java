@@ -167,7 +167,20 @@ public class TopTrumpsCLIApplication {
 				}
 			}
 			
+			insertGameStats inG = new insertGameStats();
 			
+//			Game newGame = new Game(45, 67, "Player_2");
+			
+			GameStats newGame = model.getGameStats();
+			
+			int gid = (int) inG.insert(newGame); 
+			
+		ArrayList<PlayerStats> stats = model.getPlayerStats();
+
+		insertPlayerStats in = new insertPlayerStats();
+		in.insertData(gid, stats);
+	
+
 			userWantsToQuit=true; // use this when the user wants to exit the game
 			
 		}
