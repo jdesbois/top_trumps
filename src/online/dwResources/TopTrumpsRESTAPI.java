@@ -23,6 +23,10 @@ import commandline.GameState;
 import commandline.GameStats;
 import commandline.Player;
 import commandline.PlayerStats;
+import commandline.averageDraws;
+import commandline.computeWins;
+import commandline.mostRounds;
+import commandline.totalGames;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
@@ -458,5 +462,40 @@ public class TopTrumpsRESTAPI {
 
 		return "1";	
 	}
+	
+	@GET
+	@Path("/getGameStats")
+	
+	public String getGameStats() throws IOException {
+		
+		ArrayList<Integer> stats = new ArrayList<Integer>();
+		
+
+		averageDraws ad = new averageDraws();
+		int average = ad.drawsAverage();
+		stats.add(average);
+		System.out.println(String.format("%d : average number of draws", average));
+		
+		computeWins cw = new computeWins();
+//		cw.connect();
+		int totalWins = cw.totalWins();
+		stats.add(totalWins);
+		System.out.println(String.format("%d : total player X wins", totalWins));
+		
+		mostRounds mr = new mostRounds(); 
+		int maxRounds = mr.countRounds(); 
+		stats.add(maxRounds);
+		System.out.println(String.format("%d : most rounds in a game", maxRounds));
+		
+		totalGames gm = new totalGames();
+		int total = gm.overallGameCount();
+		stats.add(total);
+		System.out.println(String.format("%d : total games played", total));	
+		
+		String statsString = oWriter.writeValueAsString(stats);
+
+		return statsString;	
+	}
+	
 	
 }
