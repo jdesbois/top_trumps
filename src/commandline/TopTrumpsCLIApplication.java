@@ -29,7 +29,7 @@ public class TopTrumpsCLIApplication {
 			// ----------------------------------------------------
 			
 			// Creates a TestLog file which will only activate if the log option is chosen
-			TestLog log = new TestLog(new File("TestLog.txt"), writeGameLogsToFile);
+			TestLog log = new TestLog(new File("toptrumps.log"), writeGameLogsToFile);
 						
 			// Initialises new deck
 			Deck deck = new Deck();
@@ -80,6 +80,9 @@ public class TopTrumpsCLIApplication {
 				// Display round number
 				view.roundNumber();
 				
+				// Logs round number
+				log.logRoundNumber(model.getRoundNumber());
+				
 				//Displayer remaining number of cards in hand
 				view.displayHumanHandSize();
 				
@@ -88,6 +91,12 @@ public class TopTrumpsCLIApplication {
 				
 				// All Player Objects draw new Card
 				model.drawNewCard();
+				
+				// Logs current cards
+				log.logCurrentCards(model.getPlayers());
+				
+				// Logs player hands
+				log.logHands(model.getPlayers(), (model.getHumanPlayer().getHandSize() != 0));
 				
 				// Checks if log has been chosen - otherwise will not perfom logic
 				if(writeGameLogsToFile) {
@@ -109,11 +118,6 @@ public class TopTrumpsCLIApplication {
 					// Logs category and values
 					log.logCategoryandValues(att, vals, (model.getHumanPlayer().getHandSize() != 0));
 				}
-				
-				// Logs current cards
-				log.logCurrentCards(model.getPlayers());
-				// Logs player hands
-				log.logHands(model.getPlayers(), (model.getHumanPlayer().getHandSize() != 0));
 				
 				// Temporarily stores communal pile
 				// This is due to get result automatically dealing communal Pile to a winner
@@ -157,7 +161,7 @@ public class TopTrumpsCLIApplication {
 				if(model.getPlayersSize() == 1) {
 					
 					// logs winner
-					log.logWinner(model.getWinner().toString());
+					log.logWinner(model.getWinner().getName());
 					
 					// Displays winner
 					view.displayWinner();	

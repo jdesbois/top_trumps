@@ -18,6 +18,7 @@ import java.util.ArrayList;
  *	public void logDeck(String)<br>
  *	public void logShuffledDeck(String)<br>
  *	public void logStartingHands(ArrayLisy<Player>)<br>
+ *	public voig logRoundNumber(int)<br>
  *	public void logCommunalPile(ArrayList<Card>)<br>
  *	public void logCurrentCards(ArrayList<Player>)<br>
  *	public void logCategoryandValues(String, int[], boolean)<br>
@@ -56,7 +57,6 @@ public class TestLog {
 	/**
 	 * Logs the deck state when it's loaded from file
 	 * @param String toString of Deck
-	 * @return Boolean if write was successful
 	 */
 	public void logDeck(String s) {
 		
@@ -82,7 +82,6 @@ public class TestLog {
 	/**
 	 * Logs the deck after its been shuffled
 	 * @param String toString of Deck after shuffle
-	 * @return Boolean if write was successful
 	 */
 	public void logShuffledDeck(String s) {
 		
@@ -109,7 +108,6 @@ public class TestLog {
 	 * Logs the Player hands at the start of the game
 	 * Note: Expects HumanPlayer as the first entry as it's initialised before AI players
 	 * @param String toString of playerHands
-	 * @return Boolean if write was successful
 	 */
 	public void logStartingHands(ArrayList<Player> p) {
 		
@@ -144,9 +142,27 @@ public class TestLog {
 	}
 	
 	/**
+	 * Logs the round number at the beginning of each round
+	 * @param int roundNumber
+	 */
+	public void logRoundNumber(int roundNumber) {
+		
+		// Formats log
+		String st = new String("========================================================\n" + "Round Number: " + roundNumber + "\n");
+				
+		// Writes to file
+		try {
+					
+			w.write(st);
+		} catch (IOException e) {
+					
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Logs the communal pile after cards are added or removed
 	 * @param String communal pile
-	 * @return Boolean if write was successful
 	 */
 	public void logCommunalPile(ArrayList<Card> cP) {
 		
@@ -180,7 +196,6 @@ public class TestLog {
 	/**
 	 * Logs cards in play
 	 * @param String each players top card 
-	 * @return Boolean if write was successful
 	 */
 	public void logCurrentCards(ArrayList<Player> p) {
 		
@@ -219,9 +234,8 @@ public class TestLog {
 	 * @param String Category 
 	 * @param int Values
 	 * @param boolean representing whether the humanPlayer is active
-	 * @return Boolean if write was successful
 	 */
-	public void logCategoryandValues(String s, int[] n, boolean b) {
+	public void logCategoryandValues(String s, int[] v, boolean b) {
 		
 		// If the user doesn't want to write to log return
 		if(!shouldWrite) {
@@ -232,14 +246,14 @@ public class TestLog {
 		StringBuffer sb = new StringBuffer("Player card values for the chosen attribute are:\n");
 			
 		// Loops through all values and separates human player from ai players
-		for(int i = 0; i < n.length; i++) {
+		for(int i = 0; i < v.length; i++) {
 				
 			if(i == 0 && b) {
 					
-				sb.append("Human Player value is: " + n[i] + "\n");
+				sb.append("Human Player value is: " + v[i] + "\n");
 			} else {
 					
-				sb.append("AI Player values is: " + n[i] + "\n");
+				sb.append("AI Player values is: " + v[i] + "\n");
 			}
 		}
 		
@@ -262,7 +276,6 @@ public class TestLog {
 	 * Note: Expects HumanPlayer as the first entry as it's initialised before AI players
 	 * @param String each player's hand contents
 	 * @param Boolean is humanPlayer active
-	 * @return Boolean if write was successful
 	 */
 	public void logHands(ArrayList<Player> p, boolean b) {
 		
@@ -277,13 +290,13 @@ public class TestLog {
 		// Checks if humanPlayer is null and if not, appends hand
 		if(b) {
 			
-			sb.append("HumanPlayer:\n" + p.get(0).getCard().toString());
+			sb.append("HumanPlayer:\n" + p.get(0).getPlayerHand().toString());
 		}
 				
 		// Loops through all AiPlayers and prints their hand
 		for(int i = 1; i < p.size(); i++) {
 			
-			sb.append("AIPlayer" + (i + 1) + ":\n" + p.get(i).getCard().toString());
+			sb.append("\nAIPlayer" + (i + 1) + ":\n" + p.get(i).getPlayerHand().toString());
 		}
 		
 		// Formats log
@@ -302,7 +315,6 @@ public class TestLog {
 	/**
 	 * Logs the game winner
 	 * @param String winner
-	 * @return Boolean if write was successful
 	 */
 	public void logWinner(String s) {
 		
