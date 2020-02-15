@@ -34,7 +34,7 @@ public class DeckTest {
     @Test 
     public void testGetCard() {
 
-        assertEquals(card.toString(), deck.getCard(0).toString());
+        assertEquals(deck2.getCard(0).toString(), deck.getCard(0).toString());
     }
 
     @Test
