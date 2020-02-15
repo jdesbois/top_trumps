@@ -17,6 +17,35 @@
     	<link rel="stylesheet" href="http://dcs.gla.ac.uk/~richardm/assets/stylesheets/vex-theme-os.css"/>
     	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"\>
+			
+		<style>
+
+		.button {
+		  background-color: #e7e7e7; color: black;
+		  border: 2px solid #555555;
+		  color: black;
+		  padding: 32px 16px;
+		  text-align: center;
+		  display: inline-block;
+		  font-size: 16px;
+		  margin: 32px 16px;
+		  cursor: pointer;
+		  -webkit-transition-duration: 0.4s; /* Safari */
+		  transition-duration: 0.4s;
+		}
+
+		.button:hover {
+		  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+		}
+
+				
+		body {background-color: white}
+		h1 {color: black}
+		p {color: black}
+		</style>
 
 	</head>
 
@@ -24,7 +53,31 @@
     	
     	<div class="container">
 
-			<!-- Add your HTML Here -->
+		<a href="/toptrumps/"> <button class="button" >Menu</button></a>
+
+			<div style="text-align:center;">
+			<h1> Game Statistics</h1>
+			</div>
+
+			<div style="text-align:center;">
+			<p>Total Games Played</p>
+			</div>
+
+			<div style="text-align:center;"
+			<p>Computer wins</p>
+			</div>
+
+			<div style="text-align:center;"
+			<p>Your wins</p>
+			</div>
+
+			<div style="text-align:center;"
+			<p>Average draws per game</p>
+			</div>
+
+			<div style="text-align:center;"
+			<p>Most rounds played</p>
+			</div>
 		
 		</div>
 		

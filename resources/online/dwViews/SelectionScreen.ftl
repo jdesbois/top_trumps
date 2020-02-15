@@ -80,7 +80,7 @@
                 <a href="/toptrumps/game" class="btn bg-secondary newGame"> Play new game </a>
             </div>
             <div class="col-3 bg-secondary my_col1">
-                <a href="#" class="btn bg-secondary statistics"> View statistics </a>
+                <a href="/toptrumps/stats" class="btn bg-secondary statistics"> View statistics </a>
             </div>
         </div>
 
