@@ -150,7 +150,7 @@
 					var JSONstats =  JSON.parse(responseText);
 					var gamesPlayed =  JSONstats[0];
 					var cWins =  JSONstats[1];
-					var yWins = JSNONstate[2]
+					var yWins = JSONstats[2];
 					var draws =  JSONstats[3];
 					var maxRounds =  JSONstats[4];
 					$("#gamesPlayed").text(gamesPlayed);

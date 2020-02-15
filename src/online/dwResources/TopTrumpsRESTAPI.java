@@ -481,7 +481,8 @@ public class TopTrumpsRESTAPI {
 		stats.add(AIWins);
 		System.out.println(String.format("%d : AI wins", AIWins));
 		
-		int humanWins = cw.youWins();
+		computeWins yWins = new computeWins();
+		int humanWins = yWins.youWins();
 		stats.add(humanWins);
 		System.out.println(String.format("%d : your wins", humanWins));
 		
