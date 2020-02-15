@@ -18,9 +18,9 @@ public class mostRounds {
 	 *@throws java.sql.SQLException
 	 * */
 	
-	private final String url = "jdbc:postgresql://localhost:5432/TopTrumps3";
-	private final String username = "postgres";
-	private final String password = "bex182";
+	private final String url = "jdbc:postgresql://52.24.215.108:5432/MakeTrumpsGreatAgain";
+	private final String username = "MakeTrumpsGreatAgain";
+	private final String password = "MakeTrumpsGreatAgain";
 	
 	public Connection connect() throws SQLException {
 		return DriverManager.getConnection(url, username, password);	

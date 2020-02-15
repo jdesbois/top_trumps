@@ -73,7 +73,7 @@
 
 			<div style="text-align:center;"
 			<p>Your wins</p>
-			<p id=""> </p>
+			<p id="yWins"> </p>
 			</div>
 
 			<div style="text-align:center;"
@@ -150,10 +150,12 @@
 					var JSONstats =  JSON.parse(responseText);
 					var gamesPlayed =  JSONstats[0];
 					var cWins =  JSONstats[1];
-					var draws =  JSONstats[2];
-					var maxRounds =  JSONstats[3];
+					var yWins = JSNONstate[2]
+					var draws =  JSONstats[3];
+					var maxRounds =  JSONstats[4];
 					$("#gamesPlayed").text(gamesPlayed);
 					$("#cWins").text(cWins);
+					$("#yWins").text(yWins);
 					$("#draws").text(draws);
 					$("#maxRounds").text(maxRounds);
 				};
