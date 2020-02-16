@@ -17,6 +17,7 @@ public class insertGameStats {
 	 *@return Connection object
 	 *@throws java.sql.SQLException
 	 * */	
+	
 	private final String url = "jdbc:postgresql://52.24.215.108:5432/MakeTrumpsGreatAgain";
 	private final String username = "MakeTrumpsGreatAgain";
 	private final String password = "MakeTrumpsGreatAgain";
@@ -31,7 +32,9 @@ public class insertGameStats {
 	 *@returns count largest integer in column 
 	 *@throws java.sql.SQLException */
 	
-	public long insert(GameStats g1) { 	//GameStats object passed to insert method					
+	public long insert(GameStats g1) { 	//GameStats object passed to insert method
+		
+		//String stores SQL query
 		String SQL = "INSERT INTO games(no_rounds,no_draws,winner)" + "VALUES(?,?,?)"; 
 		
 		long count = 0;

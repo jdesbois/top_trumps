@@ -41,6 +41,7 @@ public class computeWins {
 	
 	public int AIWins() {
 		
+		//String stores SQL query
 		String SQL = "SELECT COUNT (winner) FROM games WHERE winner LIKE 'A%'";
 		
 		int count = 0; //Stores results of query

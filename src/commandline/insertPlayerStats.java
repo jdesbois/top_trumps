@@ -37,7 +37,7 @@ public class insertPlayerStats {
 	
 	public void insertData(int gid, ArrayList <PlayerStats> list) {   //game_id is foreign key from Games table, entered as id SERIAL using SQL
 																	 //PlayerStats ArrayList passed to insertData method 
-		
+		//String stores SQL query
 		String SQL = "INSERT INTO player(game_id,player_id,rounds_won)" + "VALUES (?,?,?)"; 
 		
 		try ( Connection conn = connect(); //Create Connection object
@@ -47,13 +47,13 @@ public class insertPlayerStats {
 			
 			for (PlayerStats player : list) {  //List of PlayerStats objects passed into loop for insertion into table
 				statement.setInt(1, gid); ////setInt method called on PreparedStatement object, set to the game_id from Games table
-				statement.setString(2, player.getPlayer()); //setInt method called on PreparedStatement object, getPlayer called on game object to get value for insertion into game table, value inserted into index 
-				statement.setInt(3, player.getScore()); //setInt method called on PreparedStateement object, getScore 
+				statement.setString(2, player.getPlayer()); //setInt method called on PreparedStatement object, getPlayer called to insert player_id 
+				statement.setInt(3, player.getScore()); //setInt method called on PreparedStateement object, getScore called to get rounds_won 
 				
-				statement.addBatch();
+				statement.addBatch(); //addBatch method of PreparedStatement called to add ArrayList of players to table
 				count++;
 			}
-		statement.executeBatch();
+		statement.executeBatch(); //executeBatch method called 
 		
 	}catch(SQLException e) {
 		

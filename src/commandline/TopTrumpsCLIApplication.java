@@ -203,16 +203,22 @@ public class TopTrumpsCLIApplication {
 				}
 			}
 			
+			 // creates instance of insertGameStats class
 			insertGameStats inG = new insertGameStats();
 			
+			//Creates GameState object, gets from model
 			GameStats newGame = model.getGameStats();
 			
+			//create integer for game_id
 			int gid = (int) inG.insert(newGame); 
 			
+			//Gets PlayerStats to fill ArrayList
 			ArrayList<PlayerStats> stats = model.getPlayerStats();
-
+		
+			//creates instance of insertPlayerStats class
 			insertPlayerStats in = new insertPlayerStats();
 			
+			//inserts game_id, stats ArrayList into table
 			in.insertData(gid, stats);
 	
 			
