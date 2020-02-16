@@ -25,6 +25,8 @@ import commandline.Player;
 import commandline.PlayerStats;
 import commandline.averageDraws;
 import commandline.computeWins;
+import commandline.insertGameStats;
+import commandline.insertPlayerStats;
 import commandline.mostRounds;
 import commandline.totalGames;
 
@@ -457,8 +459,20 @@ public class TopTrumpsRESTAPI {
 		for(PlayerStats p: playerStats) {
 			System.out.println("\nPlayer:" + p.getPlayer() 
 								+ "\nRounds won: " + p.getScore());
+		
 		}
 		
+		 // creates instance of insertGameStats class
+		insertGameStats inG = new insertGameStats();
+		
+		//create integer for game_id
+		int gid = (int) inG.insert(gameStats); 
+		
+		//creates instance of insertPlayerStats class
+		insertPlayerStats in = new insertPlayerStats();
+		
+		//inserts game_id, stats ArrayList into table
+		in.insertData(gid, playerStats);
 
 		return "1";	
 	}
@@ -470,27 +484,31 @@ public class TopTrumpsRESTAPI {
 		
 		ArrayList<Integer> stats = new ArrayList<Integer>();
 		
-
+		//Calls method to compute average draws per game
 		averageDraws ad = new averageDraws();
 		int average = ad.drawsAverage();
 		stats.add(average);
 		System.out.println(String.format("%d : average number of draws", average));
 		
+		//Calls method to compute how many times AI's have won
 		computeWins cw = new computeWins();
 		int AIWins = cw.AIWins();
 		stats.add(AIWins);
 		System.out.println(String.format("%d : AI wins", AIWins));
 		
+		//Calls method to compute how many times human has once
 		computeWins yWins = new computeWins();
 		int humanWins = yWins.youWins();
 		stats.add(humanWins);
 		System.out.println(String.format("%d : your wins", humanWins));
 		
+		//Calls method to compute most rounds in single game
 		mostRounds mr = new mostRounds(); 
 		int maxRounds = mr.countRounds(); 
 		stats.add(maxRounds);
 		System.out.println(String.format("%d : most rounds in a game", maxRounds));
 		
+		//Calls method to compute how many games player overall
 		totalGames gm = new totalGames();
 		int total = gm.overallGameCount();
 		stats.add(total);

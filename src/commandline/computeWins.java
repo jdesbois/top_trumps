@@ -17,7 +17,7 @@ public class computeWins {
 	 *@return Connection object
 	 *@throws java.sql.SQLException
 	 * */
-	
+
 	private final String url = "jdbc:postgresql://52.24.215.108:5432/MakeTrumpsGreatAgain";
 	private final String username = "MakeTrumpsGreatAgain";
 	private final String password = "MakeTrumpsGreatAgain";
@@ -41,6 +41,7 @@ public class computeWins {
 	
 	public int AIWins() {
 		
+		//String stores SQL query
 		String SQL = "SELECT COUNT (winner) FROM games WHERE winner LIKE 'A%'";
 		
 		int count = 0; //Stores results of query

@@ -16,7 +16,7 @@ public class insertGameStats {
 	 *@param password database password
 	 *@return Connection object
 	 *@throws java.sql.SQLException
-	 * */
+	 * */	
 	
 	private final String url = "jdbc:postgresql://52.24.215.108:5432/MakeTrumpsGreatAgain";
 	private final String username = "MakeTrumpsGreatAgain";
@@ -32,7 +32,9 @@ public class insertGameStats {
 	 *@returns count largest integer in column 
 	 *@throws java.sql.SQLException */
 	
-	public long insert(GameStats g1) { 						
+	public long insert(GameStats g1) { 	//GameStats object passed to insert method
+		
+		//String stores SQL query
 		String SQL = "INSERT INTO games(no_rounds,no_draws,winner)" + "VALUES(?,?,?)"; 
 		
 		long count = 0;
@@ -51,12 +53,12 @@ public class insertGameStats {
 			if(affectedRows>0) { 
 				
 				try(ResultSet rs = pstmt.getGeneratedKeys()) { //ResultSet object created, getGenerateKeys method called on PreparedStatement 
-					if(rs.next()) { 
-						count = rs.getLong(1);
+					if(rs.next()) { //next() method of ResultSet moves pointer to next row (1st row) from initial position (0)
+						count = rs.getLong(1); //Gets the value from ResultSet 
 					}
 					
 				}catch (SQLException e) {
-					System.out.println(e.getMessage());
+					System.out.println(e.getMessage()); //Obtains JDBC driver's error message for an error handled by driver or Oracle error number and message for database error
 				}
 			}
 		}catch (SQLException e) {
