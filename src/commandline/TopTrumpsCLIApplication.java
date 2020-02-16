@@ -130,16 +130,6 @@ public class TopTrumpsCLIApplication {
 				// Logs player hands
 				log.logHands(model.getPlayers(), (model.getHumanPlayer().getHandSize() != 0));
 				
-				// Checks if log has been chosen - otherwise will not perfom logic
-				if(writeGameLogsToFile) {
-					
-					// Converts chosen attribute to string
-					String att = model.getActivePlayer().getCard().getAttri()[model.getCurrentAttribute()];
-					
-					// Logs category and values
-					log.logCategoryandValues(att, model.getPlayers(), model.getCurrentAttribute(), (model.getHumanPlayer().getHandSize() != 0));
-				}
-				
 				// Temporarily stores communal pile
 				// This is due to get result automatically dealing communal Pile to a winner
 				ArrayList<Card> communalPile = model.getCommunalPile();
@@ -154,7 +144,12 @@ public class TopTrumpsCLIApplication {
 				else {
 					result = controller.AIRound();
 				}
-				
+
+				// Converts chosen attribute to string
+				String att = model.getActivePlayer().getCard().getAttri()[model.getCurrentAttribute()];	
+				// Logs category and values
+				log.logCategoryandValues(att, model.getPlayers(), model.getCurrentAttribute(), (model.getHumanPlayer().getHandSize() != 0));
+
 				// Result
 				
 				// Logs communal pile after new cards are added
