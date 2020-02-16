@@ -21,50 +21,17 @@ public class CLIView {
 	private GameState model;
 	
 	// Scanner object for reading user input
-	Scanner s = new Scanner(System.in);
+	Scanner s;
 	
 	/*
 	 *  Constructor
 	 *  To be updated to take model and controller as parameters
 	 */
-	public CLIView(GameState model){
+	public CLIView(GameState model, Scanner s){
 		this.model = model;
+		this.s = s;
 	}
 	
-	/**
-	 * Method to prompt the user to select between playing
-	 * a new game or viewing statistics from previous games
-	 * 
-	 * @return 2 if game selected, 1 if stats selected, 0 if input invalid
-	 */
-	public int selectStats() {
-		
-		// String to store answer
-		String choice = "";
-
-		System.out.println("Select 'G' to play, "
-				+ "or 'S' to view statistics from previous games:");
-		
-		// Take user input from scanner
-		choice = s.nextLine();
-		
-		// If new game is selected
-		if(choice.toUpperCase().equals("G")) {
-			System.out.println("Player selected 'G' to play a new game\n");
-			return 1;
-		}
-		
-		// If view statistics is selected
-		else if(choice.toUpperCase().equals("S")) {
-			System.out.println("Player selected 'S' to see statistics\n");
-			return 2;
-		}
-		
-		// If no valid choice input, return 0
-		System.out.println();
-		return 0;
-
-	}
 	
 	/**
 	 * Method to indicate game has started
@@ -209,6 +176,6 @@ public class CLIView {
 	 * Method to display overall game winner
 	 */
 	public void displayWinner() {
-		System.out.println(model.getWinner().getName() + " has won the game!");
+		System.out.println(model.getWinner().getName() + " has won the game!\n");
 	}
 }

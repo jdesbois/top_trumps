@@ -2,6 +2,7 @@ package commandline;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Top Trumps command line application
@@ -21,6 +22,9 @@ public class TopTrumpsCLIApplication {
 		// State
 		boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
 		
+		// Scanner object for reading user input
+		Scanner t = new Scanner(System.in);
+
 		// Loop until the user wants to exit the game
 		while (!userWantsToQuit) {
 
@@ -28,35 +32,29 @@ public class TopTrumpsCLIApplication {
 			// Add your game logic here based on the requirements
 			// ----------------------------------------------------
 			
-			// Creates a TestLog file which will only activate if the log option is chosen
-			TestLog log = new TestLog(new File("toptrumps.log"), writeGameLogsToFile);
-						
-			// Initialises new deck
-			Deck deck = new Deck();
-			
-			log.logDeck(deck.toString());
-			deck.shuffleDeck();
-			log.logShuffledDeck(deck.toString());
-			
-			//MVC initialisation
-			GameState model = new GameState(deck, 5); // In CLI, number of players defaults to 5
-			CLIView view = new CLIView(model);
-			CLIController controller = new CLIController(model, view);
-			
-		
 			/*
 			 * Select between game and historical data
 			 */	
 			
-			int playChoice = 0;
 			
-			/*
-			 * Loop until new game selected (when value of 1 is returned from view)
-			 */
-			while(playChoice != 1) {
-				playChoice = view.selectStats();
-				if(playChoice == 2) {
+			// User choice
+			String playChoice = ""; 
+			
+			
+			  /* Prompt the user to select between playing
+			  * a new game or viewing statistics from previous games
+			  */ 
+			while(!playChoice.toUpperCase().contentEquals("G") ) {
+				
+				System.out.println("Select 'G' to play, "
+						+ "or 'S' to view statistics from previous games:");
+				
+				playChoice = t.nextLine();
+								
+				if(playChoice.toUpperCase().equals("S")) {
 					
+					System.out.println("Player selected 'S' to see statistics\n");
+
 					averageDraws ad = new averageDraws();
 					int average = ad.drawsAverage();
 					
@@ -80,9 +78,26 @@ public class TopTrumpsCLIApplication {
 					
 					System.out.println(String.format("%d : total games played", total));	
 					
-					
+
 				}
 			}
+
+			System.out.println("Player selected 'G' to play a new game\n");	
+
+			// Creates a TestLog file which will only activate if the log option is chosen
+			TestLog log = new TestLog(new File("toptrumps.log"), writeGameLogsToFile);
+						
+			// Initialises new deck
+			Deck deck = new Deck();
+			
+			log.logDeck(deck.toString());
+			deck.shuffleDeck();
+			log.logShuffledDeck(deck.toString());
+			
+			//MVC initialisation
+			GameState model = new GameState(deck, 5); // In CLI, number of players defaults to 5
+			CLIView view = new CLIView(model, t);
+			CLIController controller = new CLIController(model, view);
 			
 			/*
 			 * Game loop
@@ -205,8 +220,6 @@ public class TopTrumpsCLIApplication {
 			
 			in.insertData(gid, stats);
 	
-
-			userWantsToQuit=true; // use this when the user wants to exit the game
 			
 		}
 
