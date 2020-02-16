@@ -145,7 +145,7 @@
 		                                    <div class="card-header getHp_Name" id="nameAndDeckSize1">
 		                                        Hp name + deckSize
 		                                    </div>
-		                                    <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid min-vh-5 min-vw-5 myImg">
+		                                    <img src="http://localhost:7777/assets/logo.jpg" alt="" class="img-fluid min-vh-5 min-vw-5 myImg">
 		                                    <div class="card-block">
 		                                        <div class="card-title">
 		                                            <div class="row justify-content-around Title_row">
@@ -217,7 +217,7 @@
 		                                    <div class="card-header getPlayer_a" id="nameAndDeckSize2">
 		                                        pName pdecksize
 		                                    </div>
-		                                    <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid min-vh-5 min-vw-5 myImg">
+		                                    <img src="http://localhost:7777/assets/logo.jpg" alt="" class="img-fluid min-vh-5 min-vw-5 myImg">
 		                                    <div class="card-block">
 		                                        <div class="card-title">
 		                                            <div class="row justify-content-around Title_row">
@@ -289,7 +289,7 @@
 		                                    <div class="card-header bPlayer" id="nameAndDeckSize3">
 		                                        bName bdeck
 		                                    </div>
-		                                    <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid min-vh-5 min-vw-5 myImg">
+		                                    <img src="http://localhost:7777/assets/logo.jpg" alt="" class="img-fluid min-vh-5 min-vw-5 myImg">
 		                                    <div class="card-block">
 		                                        <div class="card-title">
 		                                            <div class="row justify-content-around Title_row">
@@ -365,7 +365,7 @@
 		                                <div class="card-header cPlayer" id="nameAndDeckSize4">
 		                                    cName cDeck
 		                                </div>
-		                                <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid min-vh-5 min-vw-5 myImg">
+		                                <img src="http://localhost:7777/assets/logo.jpg" alt="" class="img-fluid min-vh-5 min-vw-5 myImg">
 		                                <div class="card-block">
 		                                    <div class="card-title">
 		                                        <div class="row justify-content-around Title_row">
@@ -436,7 +436,7 @@
 		                                <div class="card-header dPlayer" id="nameAndDeckSize5">
 		                                    dName dDeck
 		                                </div>
-		                                <img src="https://smileybooth.co.uk/wp-content/uploads/2016/04/Top-Trumps-Play-Discover-Logo-1-copy.jpg" alt="" class="img-fluid min-vh-5 min-vw-5 myImg">
+		                                <img src="http://localhost:7777/assets/logo.jpg" alt="" class="img-fluid min-vh-5 min-vw-5 myImg">
 		                                <div class="card-block">
 		                                    <div class="card-title">
 		                                        <div class="row justify-content-around Title_row">

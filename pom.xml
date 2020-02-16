@@ -31,13 +31,21 @@
     	<version>${dropwizard.version}</version>
 	</dependency>
 	
+	<!-- https://mvnrepository.com/artifact/io.dropwizard/dropwizard-assets -->
+	<dependency>
+    	<groupId>io.dropwizard</groupId>
+    	<artifactId>dropwizard-assets</artifactId>
+    	<version>${dropwizard.version}</version>
+	</dependency>
+	
 	<!-- One of the requirements is to save results in a (mysql) database, so lets import the
 	     database connection driver libruary for that as well -->
-	<dependency>
+	     <dependency>
     	<groupId>mysql</groupId>
     	<artifactId>mysql-connector-java</artifactId>
     	<version>5.1.38</version>
 	</dependency>
+	
 	<!-- Junit to run the unit test runner classes -->
 	<dependency>
 		<groupId>org.junit.jupiter</groupId>
@@ -51,6 +59,9 @@
 		<version>5.6.0</version>
 		<!-- <scope>test</scope> -->
 	</dependency>
+	
+	
+	
 	<!-- added in order to read JSON file -->
 	<dependency>
 		<groupId>com.googlecode.json-simple</groupId>
