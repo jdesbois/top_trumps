@@ -412,7 +412,7 @@
 		                                                Firepower
 		                                            </div>
 		                                            <div class="col-4 card_col2">
-		                                                <div class="Pc_val3" id="firepoer4">
+		                                                <div class="Pc_val3" id="firepower4">
 		                                                    10
 		                                                </div>
 		                                            </div>
@@ -615,7 +615,7 @@
 					console.log("SID:" + sessionStorage.getItem('sid'));
 
 					// for testing
-					console.log("Attributes array: " + attributes);
+					// console.log("Attributes array: " + attributes);
 
 					// set labels for attributes
 					$(".attribute1").each(function() {$( this ).text(attributes[0])});
@@ -649,7 +649,9 @@
 				xhr.onload = function(e) {
 					var result = xhr.response;
 
-					console.log("/getActivePlayer response: " + result);
+					// for testing
+					// console.log("/getActivePlayer response: " + result);
+
 					$("#activePlayer").text("Active player: " + result);
 
 					drawCards();					
@@ -719,7 +721,7 @@
 					}
 			
 					// for testing
-					console.log("Check player API response: " + responseText);
+					// console.log("Check player API response: " + responseText);
 				}
 				xhr.send();
 			 }
@@ -742,7 +744,8 @@
 					var responseText = xhr.response;
 					var jsonHumanPlayer = JSON.parse(responseText);
 
-					console.log(jsonHumanPlayer);
+					// for testing
+					// console.log(jsonHumanPlayer);
 
 					// player name
 					var playerNo = jsonHumanPlayer.name
@@ -836,7 +839,7 @@
 				xhr.onload = function(e) {
 
 					// for testing
-					console.log("Player selected category: " + xhr.response);
+					// console.log("Player selected category: " + xhr.response);
 
 					// display selected category
 					$("#selectedCat").text("Selected category: " + xhr.response);
@@ -866,7 +869,7 @@
 				xhr.onload = function(e) {
 
 					// for testing
-					console.log("AI selected category: " + xhr.response);
+					// console.log("AI selected category: " + xhr.response);
 
 					// display selected category
 					$("#selectedCat").text("Selected category: " + xhr.response);
@@ -896,6 +899,9 @@
 					var responseText = xhr.response;
 					var jsonPlayers = JSON.parse(responseText);
 
+					// for testing
+					// console.log(jsonPlayers);
+
 					// loop through all players
 					for(var i = 0; i < jsonPlayers.length; i++){
 
@@ -913,7 +919,9 @@
 
 						// player name and number of cards in deck
 						$("#nameAndDeckSize" + (i+1)).text(playerNo + "	Cards:" + cardsLeft);
-						console.log(playerNo + "	Cards:" + cardsLeft);
+
+						// for testing
+						// console.log(playerNo + "	Cards:" + cardsLeft);
 
 						// card name
 						$("#cName" + (i+1)).text(title);
@@ -952,7 +960,7 @@
 					var result = xhr.response;
 
 					// for testing
-					console.log("Win/draw int: " + result);
+					// console.log("Win/draw int: " + result);
 
 					// if a player has won, displayer winner
 					if(result == "1"){
@@ -963,9 +971,10 @@
 					// otherwise indicate draw
 					else{
 						$("#winDraw").text("Draw");
+						checkEliminations();
 					}
 
-					checkEliminations();
+					
 					
 				}
 				xhr.send();
@@ -981,7 +990,8 @@
 				xhr.onload = function(e) {
 					var result = xhr.response;
 					$("#winDraw").append("" + result);
-					
+
+					checkEliminations();				
 					
 				}
 				xhr.send();
@@ -1093,7 +1103,7 @@
 					var responseText = xhr.response;
 
 					// for testing
-					console.log("/logGameStats response: " + responseText);
+					// console.log("/logGameStats response: " + responseText);
 
 					// Show new game button instead of next round
 					$("#newGame").show();
