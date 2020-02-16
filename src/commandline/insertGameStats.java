@@ -64,9 +64,7 @@ public class insertGameStats {
 		}catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		
-			System.out.println(count);
-		
+
 		return count;
 	}
 	
