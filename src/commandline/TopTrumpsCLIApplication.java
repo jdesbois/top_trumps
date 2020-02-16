@@ -40,6 +40,10 @@ public class TopTrumpsCLIApplication {
 			// User choice
 			String playChoice = ""; 
 			
+			
+			  /* Prompt the user to select between playing
+			  * a new game or viewing statistics from previous games
+			  */ 
 			while(!playChoice.toUpperCase().contentEquals("G") ) {
 				
 				System.out.println("Select 'G' to play, "
@@ -204,20 +208,18 @@ public class TopTrumpsCLIApplication {
 				}
 			}
 			
-//			insertGameStats inG = new insertGameStats();
-//			
-//			GameStats newGame = model.getGameStats();
-//			
-//			int gid = (int) inG.insert(newGame); 
-//			
-//			ArrayList<PlayerStats> stats = model.getPlayerStats();
-//
-//			insertPlayerStats in = new insertPlayerStats();
-//			
-//			in.insertData(gid, stats);
-	
+			insertGameStats inG = new insertGameStats();
+			
+			GameStats newGame = model.getGameStats();
+			
+			int gid = (int) inG.insert(newGame); 
+			
+			ArrayList<PlayerStats> stats = model.getPlayerStats();
 
-			userWantsToQuit=true; // use this when the user wants to exit the game
+			insertPlayerStats in = new insertPlayerStats();
+			
+			in.insertData(gid, stats);
+	
 			
 		}
 
