@@ -1,12 +1,12 @@
 package commandline;
+import java.sql.*;
+
 /** 
  * Calculates the maximum number of rounds played in single game
  * @author Rebecca Dinneen
  *<br> <br>
  *
  *  */
-
-import java.sql.*;
 
 public class mostRounds {
 	
@@ -44,18 +44,10 @@ public class mostRounds {
 			rs.next();								//next() method of ResultSet moves pointer to next row (1st row) from initial position (0)
 			count = rs.getInt(1);					//Gets the value from ResultSet 
 		}catch (SQLException e) {
-			System.out.println(e.getMessage()); //Gets the JDBC driver's error message for an error handled by driver or Oracle error number and message for database error
+			System.out.println(e.getMessage()); //Obtains the JDBC driver's error message for an error handled by driver or Oracle error number and message for database error
 		}
 		return count;
 	}
 	
-	public static void main(String [] args) {
-		
-		mostRounds mr = new mostRounds(); //Create instance of class
-		int maxRounds = mr.countRounds(); //Instantiates countRounds method, stores in maxRounds
-		
-		System.out.println(String.format("%d : most rounds in a game", maxRounds));
-		
-	}
 
 }
