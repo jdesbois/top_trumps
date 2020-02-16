@@ -135,20 +135,9 @@ public class TopTrumpsCLIApplication {
 					
 					// Converts chosen attribute to string
 					String att = model.getActivePlayer().getCard().getAttri()[model.getCurrentAttribute()];
-					// Initialises an Array to store card attribute values
-					int[] vals = new int[model.getPlayersSize()];
-					
-					// Stores current players
-					ArrayList<Player> p = model.getPlayers();
-					
-					// Loops through every player and gets chosen value
-					for(int i = 0; i < model.getPlayersSize(); i++) {
-						
-						vals[i] = p.get(i).getCard().getValue(model.getCurrentAttribute());
-					}
 					
 					// Logs category and values
-					log.logCategoryandValues(att, vals, (model.getHumanPlayer().getHandSize() != 0));
+					log.logCategoryandValues(att, model.getPlayers(), model.getCurrentAttribute(), (model.getHumanPlayer().getHandSize() != 0));
 				}
 				
 				// Temporarily stores communal pile

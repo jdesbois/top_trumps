@@ -235,7 +235,7 @@ public class TestLog {
 	 * @param int Values
 	 * @param boolean representing whether the humanPlayer is active
 	 */
-	public void logCategoryandValues(String s, int[] v, boolean b) {
+	public void logCategoryandValues(String s, ArrayList<Player> players, int a, boolean b) {
 		
 		// If the user doesn't want to write to log return
 		if(!shouldWrite) {
@@ -245,16 +245,15 @@ public class TestLog {
 		
 		StringBuffer sb = new StringBuffer("Player card values for the chosen attribute are:\n");
 			
+		// Temporary player storage
+		Player p;
 		// Loops through all values and separates human player from ai players
-		for(int i = 0; i < v.length; i++) {
+		for(int i = 0; i < players.size(); i++) {
 				
-			if(i == 0 && b) {
-					
-				sb.append("Human Player value is: " + v[i] + "\n");
-			} else {
-					
-				sb.append("AI Player values is: " + v[i] + "\n");
-			}
+			// Stores player at index i
+			p = players.get(i);
+			
+			sb.append(p.getName() + " category value is: " + p.getCard().getValue(a) + "\n");
 		}
 		
 		
