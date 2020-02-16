@@ -295,7 +295,7 @@ public class TestLog {
 		// Loops through all AiPlayers and prints their hand
 		for(int i = 1; i < p.size(); i++) {
 			
-			sb.append("\nAIPlayer" + (i + 1) + ":\n" + p.get(i).getPlayerHand().toString());
+			sb.append("\nAIPlayer" + (i) + ":\n" + p.get(i).getPlayerHand().toString());
 		}
 		
 		// Formats log
