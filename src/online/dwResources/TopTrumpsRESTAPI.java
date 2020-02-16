@@ -477,10 +477,14 @@ public class TopTrumpsRESTAPI {
 		System.out.println(String.format("%d : average number of draws", average));
 		
 		computeWins cw = new computeWins();
-//		cw.connect();
-		int totalWins = cw.totalWins();
-		stats.add(totalWins);
-		System.out.println(String.format("%d : total player X wins", totalWins));
+		int AIWins = cw.AIWins();
+		stats.add(AIWins);
+		System.out.println(String.format("%d : AI wins", AIWins));
+		
+		computeWins yWins = new computeWins();
+		int humanWins = yWins.youWins();
+		stats.add(humanWins);
+		System.out.println(String.format("%d : your wins", humanWins));
 		
 		mostRounds mr = new mostRounds(); 
 		int maxRounds = mr.countRounds(); 

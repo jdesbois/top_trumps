@@ -1,44 +1,57 @@
 package commandline;
+import java.sql.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+/** 
+ * Inserts game data into Games table
+ * @author Rebecca Dinneen
+ *<br> <br>
+ *
+ *  */
 
 public class insertGameStats {
 	
+	/**Method establishes database connection to PostgreSQL server
+	 *@param url specifies location of database server and database name
+	 *@param username database user name
+	 *@param password database password
+	 *@return Connection object
+	 *@throws java.sql.SQLException
+	 * */
 	
-	private final String url = "jdbc:postgresql://localhost:5432/TopTrumps4"; 
-	private final String username = "postgres"; 
-	private final String password = "bex182";
+	private final String url = "jdbc:postgresql://52.24.215.108:5432/MakeTrumpsGreatAgain";
+	private final String username = "MakeTrumpsGreatAgain";
+	private final String password = "MakeTrumpsGreatAgain";
 	
 	public Connection connect() throws SQLException {  
 		return DriverManager.getConnection(url, username, password); 
 
 	}
 	
+	/** Method inserts no_rounds,no_draws,winner into Games table
+	 * @param rs ResultSet object represents database result set returned after query executed
+	 *@returns count largest integer in column 
+	 *@throws java.sql.SQLException */
+	
 	public long insert(GameStats g1) { 						
 		String SQL = "INSERT INTO games(no_rounds,no_draws,winner)" + "VALUES(?,?,?)"; 
 		
 		long count = 0;
 		
-		try (Connection conn = connect();
-				PreparedStatement pstmt = conn.prepareStatement(SQL,
-				Statement.RETURN_GENERATED_KEYS)) {
+		try (Connection conn = connect(); //Create Connection object
+				PreparedStatement pstmt = conn.prepareStatement(SQL, //PreparedStatement object created from Connection object, PreparedStatement object represents SQL query
+				Statement.RETURN_GENERATED_KEYS)) { //Passed to PreparedStatement object
 			
-			pstmt.setInt(1, g1.getRounds());
-			pstmt.setInt(2, g1.getDraws());
-			pstmt.setString(3, g1.getWinner());
+			pstmt.setInt(1, g1.getRounds()); //setInt method called on PreparedStatement object, getRounds called on game object to get value for insertion into game table, value inserted into index 1
+			pstmt.setInt(2, g1.getDraws()); //setInt method called on PreparedStatement object, getDraws called on game object to get value for insertion into game table, value inserted into index 2
+			pstmt.setString(3, g1.getWinner());  //setInt method called on PreparedStatement object, getWinner called on game object to get value for insertion into game table, value inserted into index 3
 	
 			
-			int affectedRows = pstmt.executeUpdate();
+			int affectedRows = pstmt.executeUpdate(); //excuteUpdate method called on PreparedStatement object
 			
-			if(affectedRows>0) {
+			if(affectedRows>0) { 
 				
-				try(ResultSet rs = pstmt.getGeneratedKeys()) {
-					if(rs.next()) {
+				try(ResultSet rs = pstmt.getGeneratedKeys()) { //ResultSet object created, getGenerateKeys method called on PreparedStatement 
+					if(rs.next()) { 
 						count = rs.getLong(1);
 					}
 					

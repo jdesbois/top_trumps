@@ -57,25 +57,20 @@ public class TopTrumpsCLIApplication {
 
 					averageDraws ad = new averageDraws();
 					int average = ad.drawsAverage();
-					
 					System.out.println(String.format("%d : average number of draws", average));
 					
 					computeWins cw = new computeWins();
-					cw.connect();
+					int AIWins = cw.AIWins();
+					int humanWins = cw.youWins();
+					System.out.println(String.format("%d : AI wins", AIWins));
+					System.out.println(String.format("%d : your wins", humanWins));
 					
-					int totalWins = cw.totalWins();
-					System.out.println(String.format("%d : total player X wins", totalWins));
-					
-					mostRounds mr = new mostRounds(); //Create instance of class
-					int maxRounds = mr.countRounds(); //Instantiates countRounds method, stores in maxRounds
-					
+					mostRounds mr = new mostRounds(); 
+					int maxRounds = mr.countRounds(); 
 					System.out.println(String.format("%d : most rounds in a game", maxRounds));
 					
 					totalGames gm = new totalGames();
-					gm.connect();
-					
 					int total = gm.overallGameCount();
-					
 					System.out.println(String.format("%d : total games played", total));	
 					
 
