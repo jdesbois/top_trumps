@@ -1051,6 +1051,7 @@
 						$("#gameWinner").append("<h2>" + jsonPlayers[0].name + " wins the game!</h2>");
 
 						// log game stats to database
+						$("#nextRound").hide();
 						logGameStats();	
 					}
 
@@ -1096,7 +1097,7 @@
 
 					// Show new game button instead of next round
 					$("#newGame").show();
-					$("#nextRound").hide();
+				
 
 				}
 				xhr.send();

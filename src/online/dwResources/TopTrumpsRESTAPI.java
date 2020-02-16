@@ -25,6 +25,8 @@ import commandline.Player;
 import commandline.PlayerStats;
 import commandline.averageDraws;
 import commandline.computeWins;
+import commandline.insertGameStats;
+import commandline.insertPlayerStats;
 import commandline.mostRounds;
 import commandline.totalGames;
 
@@ -457,8 +459,17 @@ public class TopTrumpsRESTAPI {
 		for(PlayerStats p: playerStats) {
 			System.out.println("\nPlayer:" + p.getPlayer() 
 								+ "\nRounds won: " + p.getScore());
+		
 		}
 		
+		insertGameStats inG = new insertGameStats();
+		
+		int gid = (int) inG.insert(gameStats); 
+		
+
+		insertPlayerStats in = new insertPlayerStats();
+		
+		in.insertData(gid, playerStats);
 
 		return "1";	
 	}
