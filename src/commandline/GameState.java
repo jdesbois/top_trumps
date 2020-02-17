@@ -43,7 +43,7 @@ public class GameState {
 	// The current round number
 	private int roundNumber = 1;
 	// The current number of draws
-	private int draws = 0;
+	int draws = 0;
 	// Stores Round winner
 	private Player winner;
 	// Stores the amount of round each player wins
