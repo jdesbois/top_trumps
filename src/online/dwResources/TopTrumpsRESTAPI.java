@@ -121,14 +121,14 @@ public class TopTrumpsRESTAPI {
 	// Add relevant API methods here
 	// ----------------------------------------------------
 	
+	
+	@GET
+	@Path("/newSessionID")
 	/**
 	 * Method to request a new session id
 	 * @return viewID New session ID
 	 * @throws IOException
 	 */
-	@GET
-	@Path("/newSessionID")
-
 	public String newSessionID() throws IOException {
 		
 		// local variable for sessionID to be returned
@@ -142,15 +142,15 @@ public class TopTrumpsRESTAPI {
 
 	}
 	
+	
+	@GET
+	@Path("/newGame")
 	/**
-	 * Start a new game but reseting the model and deck
+	 * Start a new game by reseting the model and deck
 	 * @param sid sessionID associated client request
 	 * @return "1"
 	 * @throws IOException
 	 */
-	@GET
-	@Path("/newGame")
-
 	public String newGame(@QueryParam("sid") String sid) throws IOException {
 		
 		// Create a new deck
@@ -178,14 +178,15 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	
+	
+	@GET
+	@Path("/getRoundNo")
 	/**
 	 * Method to return round number
+	 * @param sid sessionID associated client request
 	 * @return round number as string
 	 * @throws IOException
 	 */
-	@GET
-	@Path("/getRoundNo")
-
 	public String getRoundNo(@QueryParam("sid") String sid) throws IOException {
 		
 		// Parse query sid and convert to int
@@ -199,14 +200,15 @@ public class TopTrumpsRESTAPI {
 
 	}
 	
-	/**
-	 * Method to check if human player turn or AI turn
-	 * @return int 1 if player turn, two if AI turn
-	 * @throws IOException
-	 */
+	
 	@GET
 	@Path("/checkTurn")
-
+	/**
+	 * Method to check if human player turn or AI turn
+	 * @param sid sessionID associated client request
+	 * @return round number as string
+	 * @throws IOException
+	 */
 	public String checkTurn(@QueryParam("sid") String sid) throws IOException {
 		
 		// Parse query sid and convert to int
@@ -228,14 +230,15 @@ public class TopTrumpsRESTAPI {
 
 	}
 	
+	
+	@GET
+	@Path("/drawCards")
 	/**
 	 * Method to make all players draw new cards
+	 * @param sid sessionID associated client request
 	 * @return Message "New cards drawn"
 	 * @throws IOException
 	 */
-	@GET
-	@Path("/drawCards")
-
 	public String drawCards(@QueryParam("sid") String sid) throws IOException{
 		
 		// Parse query sid and convert to int
@@ -249,14 +252,15 @@ public class TopTrumpsRESTAPI {
 	}
 	
 	
+
+	@GET
+	@Path("/selectCategory")
 	/**
 	 * Method to set human player category
 	 * @param Category
+	 * @param sid sessionID associated client request
 	 * @return Category
 	 */
-	@GET
-	@Path("/selectCategory")
-	
 	public String selectCategory(@QueryParam("Category") String Category, @QueryParam("sid") String sid) {
 		
 		// Parse query category and convert to int
@@ -272,13 +276,14 @@ public class TopTrumpsRESTAPI {
 		
 	}
 	
-	/**
-	 * Method to set category when AI player active
-	 * @return Selected category
-	 */
+	
 	@GET
 	@Path("/AISelectCategory")
-	
+	/**
+	 * Method to set category when AI player active
+	 * @param sid sessionID associated client request
+	 * @return Selected category
+	 */
 	public String selectCategoryAI(@QueryParam("sid") String sid) {
 		
 		// Parse query sid and convert to int
@@ -298,13 +303,14 @@ public class TopTrumpsRESTAPI {
 		return catStr;
 	}
 	
-	/**
-	 * Method to check result (win or draw)
-	 * @return 1 if win, 2 if draw
-	 */
+	
 	@GET
 	@Path("/getResult")
-	
+	/**
+	 * Method to check result (win or draw)
+	 * @param sid sessionID associated client request
+	 * @return 1 if win, 2 if draw
+	 */
 	public String getResult(@QueryParam("sid") String sid) {
 		
 		// Parse query sid and convert to int
@@ -314,13 +320,14 @@ public class TopTrumpsRESTAPI {
 		return "" + this.modelMap.get(sidInt).getResult();
 	}
 	
-	/**
-	 * Method to get the name of the active player
-	 * @return active player name
-	 */
+	
 	@GET
 	@Path("/getActivePlayer")
-	
+	/**
+	 * Method to get the name of the active player
+	 * @param sid sessionID associated client request
+	 * @return active player name
+	 */
 	public String getActivePlayer(@QueryParam("sid") String sid) {
 		
 		// Parse query sid and convert to int
@@ -330,15 +337,15 @@ public class TopTrumpsRESTAPI {
 		return this.modelMap.get(sidInt).getActivePlayer().name;
 	}
 	
+	
+	@GET
+	@Path("/showPlayer")
 	/**
 	 * Method to return JSON string representing human player information
-	 * @param sid
+	 * @param sid sessionID associated client request
 	 * @return human player as JSON object
 	 * @throws IOException
 	 */
-	@GET
-	@Path("/showPlayer")
-
 	public String showPlayer(@QueryParam("sid") String sid) throws IOException {
 		
 		// Parse query sid and convert to int
@@ -351,15 +358,15 @@ public class TopTrumpsRESTAPI {
 
 	}
 	
+	
+	@GET
+	@Path("/showPlayers")
 	/**
 	 * Method to return JSON string representing all players and their information
-	 * @param sid
+	 * @param sid sessionID associated client request
 	 * @return players array as JSON string
 	 * @throws IOException
 	 */
-	@GET
-	@Path("/showPlayers")
-	
 	public String showPlayers(@QueryParam("sid") String sid) throws IOException {
 		
 		// Parse query sid and convert to int
@@ -377,15 +384,15 @@ public class TopTrumpsRESTAPI {
 		return playersStr;
 	}
 	
+	
+	@GET
+	@Path("/checkEliminations")
 	/**
 	 * Method to return a list of any eliminated players
-	 * @param sid
+	 * @param sid sessionID associated client request
 	 * @return list of eliminated players, otherwise '0'
 	 * @throws IOException
 	 */
-	@GET
-	@Path("/checkEliminations")
-	
 	public String checkEliminations(@QueryParam("sid") String sid) throws IOException{
 		
 		// Parse query sid and convert to int
@@ -410,14 +417,14 @@ public class TopTrumpsRESTAPI {
 			return "0";
 	}
 	
-	/**
-	 * Method to get communal pile size
-	 * @param sid
-	 * @return communal pile size
-	 */
+	
 	@GET
 	@Path("/communalPileSize")
-	
+	/**
+	 * Method to get communal pile size
+	 * @param sid sessionID associated client request
+	 * @return communal pile size
+	 */
 	public String communalPileSize(@QueryParam("sid") String sid) {
 		
 		// Parse query sid and convert to int
@@ -426,15 +433,15 @@ public class TopTrumpsRESTAPI {
 		return "" + this.modelMap.get(sidInt).getCommunalPileSize();
 	}
 	
+	
+	@GET
+	@Path("/checkHumanPlayer")
 	/**
-	 *  Method to check if human player still in game
-	 * @param sid
+	 * Method to check if human player still in game
+	 * @param sid sessionID associated client request
 	 * @return 1 if player still in game, 0 if not
 	 * @throws IOException
 	 */
-	@GET
-	@Path("/checkHumanPlayer")
-	
 	public String checkHumanPlayer(@QueryParam("sid") String sid) throws IOException {
 		
 		// Parse query sid and convert to int
@@ -462,7 +469,12 @@ public class TopTrumpsRESTAPI {
 	
 	@GET
 	@Path("/logGameStats")
-	
+	/**
+	 * Method to log game stats to database
+	 * @param sid sessionID associated client request
+	 * @return "1" to indicate completion
+	 * @throws IOException
+	 */
 	public String logGameStats(@QueryParam("sid") String sid) throws IOException {
 		
 		// Parse query sid and convert to int
@@ -470,17 +482,19 @@ public class TopTrumpsRESTAPI {
 		
 		GameStats gameStats = this.modelMap.get(sidInt).getGameStats();
 		
-		System.out.println("Rounds: " + gameStats.getRounds()
-				+ "\nDraws: " + gameStats.getDraws()
-				+ "\nWinner: " + gameStats.getWinner());
+//		// for testing
+//		System.out.println("Rounds: " + gameStats.getRounds()
+//				+ "\nDraws: " + gameStats.getDraws()
+//				+ "\nWinner: " + gameStats.getWinner());
 		
 		ArrayList<PlayerStats> playerStats = this.modelMap.get(sidInt).getPlayerStats();
 		
-		for(PlayerStats p: playerStats) {
-			System.out.println("\nPlayer:" + p.getPlayer() 
-								+ "\nRounds won: " + p.getScore());
-		
-		}
+//		// for testing
+//		for(PlayerStats p: playerStats) {
+//			System.out.println("\nPlayer:" + p.getPlayer() 
+//								+ "\nRounds won: " + p.getScore());
+//		
+//		}
 		
 		 // creates instance of insertGameStats class
 		insertGameStats inG = new insertGameStats();
@@ -499,7 +513,11 @@ public class TopTrumpsRESTAPI {
 	
 	@GET
 	@Path("/getGameStats")
-	
+	/**
+	 * Method to retrieve game stats from database
+	 * @return statsString JSON list of stats
+	 * @throws IOException
+	 */
 	public String getGameStats() throws IOException {
 		
 		ArrayList<Integer> stats = new ArrayList<Integer>();
@@ -508,31 +526,41 @@ public class TopTrumpsRESTAPI {
 		averageDraws ad = new averageDraws();
 		int average = ad.drawsAverage();
 		stats.add(average);
-		System.out.println(String.format("%d : average number of draws", average));
+		
+		// for testing
+		// System.out.println(String.format("%d : average number of draws", average));
 		
 		//Calls method to compute how many times AI's have won
 		computeWins cw = new computeWins();
 		int AIWins = cw.AIWins();
 		stats.add(AIWins);
-		System.out.println(String.format("%d : AI wins", AIWins));
+		
+		// for testing
+		// System.out.println(String.format("%d : AI wins", AIWins));
 		
 		//Calls method to compute how many times human has once
 		computeWins yWins = new computeWins();
 		int humanWins = yWins.youWins();
 		stats.add(humanWins);
-		System.out.println(String.format("%d : your wins", humanWins));
+		
+		// for testing
+		//System.out.println(String.format("%d : your wins", humanWins));
 		
 		//Calls method to compute most rounds in single game
 		mostRounds mr = new mostRounds(); 
 		int maxRounds = mr.countRounds(); 
 		stats.add(maxRounds);
-		System.out.println(String.format("%d : most rounds in a game", maxRounds));
+		
+		// for testing
+		// System.out.println(String.format("%d : most rounds in a game", maxRounds));
 		
 		//Calls method to compute how many games player overall
 		totalGames gm = new totalGames();
 		int total = gm.overallGameCount();
 		stats.add(total);
-		System.out.println(String.format("%d : total games played", total));	
+		
+		// for testing
+		// System.out.println(String.format("%d : total games played", total));	
 		
 		String statsString = oWriter.writeValueAsString(stats);
 
