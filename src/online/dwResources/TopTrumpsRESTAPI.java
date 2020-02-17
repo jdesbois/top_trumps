@@ -522,13 +522,15 @@ public class TopTrumpsRESTAPI {
 		
 		ArrayList<Integer> stats = new ArrayList<Integer>();
 		
-		//Calls method to compute average draws per game
-		averageDraws ad = new averageDraws();
-		int average = ad.drawsAverage();
-		stats.add(average);
+		
+		
+		//Calls method to compute how many games player overall
+		totalGames gm = new totalGames();
+		int total = gm.overallGameCount();
+		stats.add(total);
 		
 		// for testing
-		// System.out.println(String.format("%d : average number of draws", average));
+		// System.out.println(String.format("%d : total games played", total));	
 		
 		//Calls method to compute how many times AI's have won
 		computeWins cw = new computeWins();
@@ -546,6 +548,14 @@ public class TopTrumpsRESTAPI {
 		// for testing
 		//System.out.println(String.format("%d : your wins", humanWins));
 		
+		//Calls method to compute average draws per game
+		averageDraws ad = new averageDraws();
+		int average = ad.drawsAverage();
+		stats.add(average);
+		
+		// for testing
+		// System.out.println(String.format("%d : average number of draws", average));
+		
 		//Calls method to compute most rounds in single game
 		mostRounds mr = new mostRounds(); 
 		int maxRounds = mr.countRounds(); 
@@ -554,13 +564,7 @@ public class TopTrumpsRESTAPI {
 		// for testing
 		// System.out.println(String.format("%d : most rounds in a game", maxRounds));
 		
-		//Calls method to compute how many games player overall
-		totalGames gm = new totalGames();
-		int total = gm.overallGameCount();
-		stats.add(total);
 		
-		// for testing
-		// System.out.println(String.format("%d : total games played", total));	
 		
 		String statsString = oWriter.writeValueAsString(stats);
 
