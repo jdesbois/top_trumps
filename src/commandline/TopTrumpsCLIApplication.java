@@ -49,8 +49,12 @@ public class TopTrumpsCLIApplication {
 				System.out.println("Select 'G' to play, "
 						+ "or 'S' to view statistics from previous games:");
 				
+				// take input
 				playChoice = t.nextLine();
-								
+				
+				/*
+				 * If player selected 'S', retrieve relevant database info
+				 */
 				if(playChoice.toUpperCase().equals("S")) {
 					
 					System.out.println("Player selected 'S' to see statistics\n");
@@ -91,8 +95,8 @@ public class TopTrumpsCLIApplication {
 			
 			//MVC initialisation
 			GameState model = new GameState(deck, 5); // In CLI, number of players defaults to 5
-			CLIView view = new CLIView(model, t);
-			CLIController controller = new CLIController(model, view);
+			CLIView view = new CLIView(model, t); // Pass model and scanner into view
+			CLIController controller = new CLIController(model, view); // Pass model and view into controller
 			
 			/*
 			 * Game loop
@@ -135,12 +139,12 @@ public class TopTrumpsCLIApplication {
 				ArrayList<Card> communalPile = model.getCommunalPile();
 				
 				
-				// if human player is active
+				// if human player is active play human round via controller
 				if(model.getActivePlayer().getName().equals(
 						model.getHumanPlayer().getName())) {
 					result = controller.humanRound();
 				}
-				// if AI player is active 	
+				// if AI player is active play AI round via controller	
 				else {
 					result = controller.AIRound();
 				}
@@ -186,6 +190,10 @@ public class TopTrumpsCLIApplication {
 					gamePlay = false;
 				}
 			}
+			
+			/*
+			 * Log game info to database
+			 */
 			
 			 // creates instance of insertGameStats class
 			insertGameStats inG = new insertGameStats();

@@ -9,23 +9,32 @@ import java.util.Scanner;
  * <br><br>
  * 
  * Constructor:<br>
- * 	CLIViewr()<br><br>
+ * 	CLIView(GameState model, Scanner s)<br><br>
  * 
  * Public methods:<br>
- * 	public void selectCategory()<br>
- * 	public void selectStats()
+ * 	public void gameStarted()<br>
+ * 	public void roundNumber()<br>
+ * 	public void displayCard(Card c)<br>
+ * 	public void displayHumanPlayerCard()<br>
+ * 	public void displayHumanHandSize()<br>
+ * 	public int selectCategory()<br>
+ * 	public void displayResult(int r)<br>
+ * 	public void displayElimination()<br>
+ * 	public void breakLine()<br>
+ * 	public void displayWinner()
  *
  */
 
 public class CLIView {
+	
+	// Game model
 	private GameState model;
 	
 	// Scanner object for reading user input
 	Scanner s;
 	
 	/*
-	 *  Constructor
-	 *  To be updated to take model and controller as parameters
+	 *  View constructor - passed game model and scanner
 	 */
 	public CLIView(GameState model, Scanner s){
 		this.model = model;
@@ -124,6 +133,7 @@ public class CLIView {
 	
 	/**
 	 * Method to display round result
+	 * @param r result 1 indicated win, 2 indicated draw
 	 */
 	public void displayResult(int r) {
 		int result = r;

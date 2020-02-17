@@ -51,12 +51,12 @@ public class TopTrumpsRESTAPI {
 
 	
 	/**
-	 * HashMap to store model instances different ID's
+	 * HashMap to store model instances for different session IDs
 	 */
 	private HashMap<Integer, GameState> modelMap;
 	
 	/**
-	 * Variable to store sessionID
+	 * Variable to store next sessionID to be assigned
 	 */
 	private int sessionID;
 	
