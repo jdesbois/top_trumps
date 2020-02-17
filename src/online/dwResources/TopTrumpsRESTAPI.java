@@ -36,12 +36,32 @@ import commandline.totalGames;
 /**
  * This is a Dropwizard Resource that specifies what to provide when a user
  * requests a particular URL. In this case, the URLs are associated to the
- * different REST API methods that you will need to expose the game commands
+ * different REST API methods that expose the game commands
  * to the Web page.
+ * @author Andrew Allan
+ * <br><br>
  * 
- * Below are provided some sample methods that illustrate how to create
- * REST API methods in Dropwizard. You will need to replace these with
- * methods that allow a TopTrumps game to be controled from a Web page.
+ * Constructor:
+ * 	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf)
+ * 
+ * Public methods:<br>
+ * 	public String newSessionID()<br>
+ * 	public String newGame(@QueryParam("sid") String sid)<br>
+ * 	public String getRoundNo(@QueryParam("sid") String sid)<br>
+ * 	public String checkTurn(@QueryParam("sid") String sid)<br>
+ * 	public String drawCards(@QueryParam("sid") String sid)<br>
+ * 	public String selectCategory(@QueryParam("Category") String Category, @QueryParam("sid") String sid)<br>
+ *	public String selectCategoryAI(@QueryParam("sid")<br>
+ *	public String getResult(@QueryParam("sid") String sid)<br>
+ *	public String getActivePlayer(@QueryParam("sid") String sid)<br>
+ *	public String showPlayer(@QueryParam("sid") String sid)<br>
+ *	public String showPlayers(@QueryParam("sid") String sid)<br>
+ *	public String checkEliminations(@QueryParam("sid") String sid)<br>
+ *	public String communalPileSize(@QueryParam("sid") String sid)<br>
+ *	public String checkHumanPlayer(@QueryParam("sid") String sid)<br>
+ *	public String logGameStats(@QueryParam("sid") String sid)<br>
+ *	public String getGameStats()
+ *
  */
 public class TopTrumpsRESTAPI {
 

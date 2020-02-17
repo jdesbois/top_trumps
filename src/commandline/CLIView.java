@@ -9,7 +9,7 @@ import java.util.Scanner;
  * <br><br>
  * 
  * Constructor:<br>
- * 	CLIView(GameState model, Scanner s)<br><br>
+ * 	public CLIView(GameState model, Scanner s)<br><br>
  * 
  * Public methods:<br>
  * 	public void gameStarted()<br>
