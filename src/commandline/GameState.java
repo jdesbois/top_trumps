@@ -388,7 +388,7 @@ public class GameState {
 	 */
 	public GameStats getGameStats() {
 		
-		return new GameStats(this.winner, this.roundNumber, this.draws);
+		return new GameStats(this.winner, this.roundNumber - 1, this.draws);
 	}
 	
 	/**
